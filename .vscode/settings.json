@@ -1,0 +1,8 @@
+{
+  "editor.codeActionsOnSave": {
+    "source.organizeImports.biome": "always",
+    "source.removeUnusedImports": "always",
+    "source.fixAll.biome": "explicit"
+  },
+  "git.ignoreLimitWarning": true
+}

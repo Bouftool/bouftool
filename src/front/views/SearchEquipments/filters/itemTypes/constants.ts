@@ -1,0 +1,173 @@
+import type { TWakfuDescription } from "src/wakfu/types/description";
+import { WakfuItemTypeId } from "src/wakfu/types/itemType";
+
+export const ItemTypeLabels: Record<WakfuItemTypeId, TWakfuDescription> = {
+  [WakfuItemTypeId.AxeTwoHanded]: {
+    fr: "Hache (Deux-Mains)",
+    en: "Axe (Deux-Mains)",
+    es: "Hacha (Dos-Manos)",
+    pt: "Machado (Duas-Mãos)",
+  },
+  [WakfuItemTypeId.Ring]: {
+    fr: "Anneau",
+    en: "Ring",
+    es: "Anillo",
+    pt: "Anel",
+  },
+  [WakfuItemTypeId.WandOneHanded]: {
+    fr: "Bâton (Une-Main)",
+    en: "Wand (One-Handed)",
+    es: "Varita (Una-Mano)",
+    pt: "Varinha (Uma-Mão)",
+  },
+  [WakfuItemTypeId.SwordOneHanded]: {
+    fr: "Épée (Une-Main)",
+    en: "Sword (One-Handed)",
+    es: "Espada (Una-Mano)",
+    pt: "Espada (Uma-Mão)",
+  },
+  [WakfuItemTypeId.ShovelTwoHanded]: {
+    fr: "Pelle (Deux-Mains)",
+    en: "Shovel (Two-Handed)",
+    es: "Pala (Dos-Manos)",
+    pt: "Pá (Duas-Mãos)",
+  },
+  [WakfuItemTypeId.DaggerSecondHand]: {
+    fr: "Dague (Main Secondaire)",
+    en: "Dagger (Second-Hand)",
+    es: "Daga (Mano Secundaria)",
+    pt: "Adaga (Mão Secundária)",
+  },
+  [WakfuItemTypeId.StaffOneHanded]: {
+    fr: "Bâton (Une-Main)",
+    en: "Staff (One-Handed)",
+    es: "Bastón (Una-Mano)",
+    pt: "Cajado (Uma-Mão)",
+  },
+  [WakfuItemTypeId.HammerTwoHanded]: {
+    fr: "Marteau (Deux-Mains)",
+    en: "Hammer (Two-Handed)",
+    es: "Martillo (Dos-Manos)",
+    pt: "Martelo (Duas-Mãos)",
+  },
+  [WakfuItemTypeId.NeedleOneHanded]: {
+    fr: "Aiguille (Une-Main)",
+    en: "Needle (One-Handed)",
+    es: "Aguja (Una-Mano)",
+    pt: "Agulha (Uma-Mão)",
+  },
+  [WakfuItemTypeId.BowTwoHanded]: {
+    fr: "Arc (Deux-Mains)",
+    en: "Bow (Two-Handed)",
+    es: "Arco (Dos-Manos)",
+    pt: "Arco (Duas-Mãos)",
+  },
+  [WakfuItemTypeId.Amulet]: {
+    fr: "Amulette",
+    en: "Amulet",
+    es: "Amuleto",
+    pt: "Amuleto",
+  },
+  [WakfuItemTypeId.Boots]: {
+    fr: "Bottes",
+    en: "Boots",
+    es: "Botas",
+    pt: "Botas",
+  },
+  [WakfuItemTypeId.Cloak]: {
+    fr: "Cape",
+    en: "Cloak",
+    es: "Capa",
+    pt: "Capa",
+  },
+  [WakfuItemTypeId.Belt]: {
+    fr: "Ceinture",
+    en: "Belt",
+    es: "Cinturón",
+    pt: "Cinto",
+  },
+  [WakfuItemTypeId.Helmet]: {
+    fr: "Casque",
+    en: "Helmet",
+    es: "Casco",
+    pt: "Capacete",
+  },
+  [WakfuItemTypeId.Breastplate]: {
+    fr: "Plastron",
+    en: "Breastplate",
+    es: "Peto",
+    pt: "Peitoral",
+  },
+  [WakfuItemTypeId.Shoulders]: {
+    fr: "Epaulières",
+    en: "Shoulders",
+    es: "Hombreras",
+    pt: "Ombreiras",
+  },
+  [WakfuItemTypeId.ShieldSecondHand]: {
+    fr: "Bouclier (Main Secondaire)",
+    en: "Shield (Second-Hand)",
+    es: "Escudo (Mano Secundaria)",
+    pt: "Escudo (Mão Secundária)",
+  },
+  [WakfuItemTypeId.SwordTwoHanded]: {
+    fr: "Épée (Deux-Mains)",
+    en: "Sword (Two-Handed)",
+    es: "Espada (Dos-Manos)",
+    pt: "Espada (Duas-Mãos)",
+  },
+  [WakfuItemTypeId.StaffTwoHanded]: {
+    fr: "Bâton (Deux-Mains)",
+    en: "Staff (Two-Handed)",
+    es: "Bastón (Dos-Manos)",
+    pt: "Cajado (Duas-Mãos)",
+  },
+  [WakfuItemTypeId.CardOneHanded]: {
+    fr: "Carte (Une-Main)",
+    en: "Card (One-Handed)",
+    es: "Carta (Una-Mano)",
+    pt: "Carta (Uma-Mão)",
+  },
+  [WakfuItemTypeId.OneHandedWeapon]: {
+    fr: "Arme (Une-Main)",
+    en: "Weapon (One-Handed)",
+    es: "Arma (Una-Mano)",
+    pt: "Arma (Uma-Mão)",
+  },
+  [WakfuItemTypeId.TwoHandedWeapon]: {
+    fr: "Arme (Deux-Mains)",
+    en: "Weapon (Two-Handed)",
+    es: "Arma (Dos-Manos)",
+    pt: "Arma (Duas-Mãos)",
+  },
+  [WakfuItemTypeId.SecondHand]: {
+    fr: "Main Secondaire",
+    en: "Second-Hand",
+    es: "Mano Secundaria",
+    pt: "Mão Secundária",
+  },
+  [WakfuItemTypeId.Pet]: {
+    fr: "Familier",
+    en: "Pet",
+    es: "Mascota",
+    pt: "Animal de Estimação",
+  },
+  [WakfuItemTypeId.Mount]: {
+    fr: "Monture",
+    en: "Mount",
+    es: "Montura",
+    pt: "Montaria",
+  },
+  [WakfuItemTypeId.Emblem]: {
+    fr: "Emblème",
+    en: "Emblem",
+    es: "Emblema",
+    pt: "Emblema",
+  },
+  [WakfuItemTypeId.Enchantment]: {
+    fr: "Enchantement",
+    en: "Enchantment",
+    es: "Encantamiento",
+    pt: "Encantamento",
+  },
+};

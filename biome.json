@@ -1,0 +1,33 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.2.0/schema.json",
+  "files": {
+    "includes": [ "src/**/*" ]
+  },
+  "formatter": {
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineEnding": "lf",
+    "lineWidth": 120
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "style": {
+        "noRestrictedImports": {
+          "level": "error",
+          "options": {
+            "paths": {
+              "@mui/material": {
+                "importNames": [ "Popover" ],
+                "message": "Do not import Popover from @mui/material. Use 'src/front/components/Navigation/Popover' instead."
+              }
+            }
+          }
+        }
+      },
+      "complexity": {
+        "noForEach": "error"
+      }
+    }
+  }
+}
