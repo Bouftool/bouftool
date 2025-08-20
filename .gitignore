@@ -94,3 +94,6 @@ out/
 CLAUDE.md
 
 .yarn/
+
+# Bouftool
+builds/
