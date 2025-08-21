@@ -32,11 +32,11 @@ export const ItemSlotBox = styled(Box, {
     }),
     ...(onClick && {
       cursor: "pointer",
+      "&:hover": {
+        filter: "brightness(1)",
+        backgroundImage: `url(wakfu/slots/border/${rarity}2.png)`,
+      },
     }),
-    "&:hover": {
-      filter: "brightness(1)",
-      backgroundImage: `url(wakfu/slots/border/${rarity}2.png)`,
-    },
   },
   [`& .${itemSlotClasses.icon}`]: {
     position: "absolute",

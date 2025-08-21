@@ -8,18 +8,17 @@ import { sendElectronEvent } from "src/front/hooks/electron";
 import { WakfuStats } from "src/wakfu/types/action";
 import type { WakfuEquipmentPosition } from "src/wakfu/types/itemType";
 import { WakfuLevelsRange } from "src/wakfu/types/utils";
-import { SearchEquipments } from "../../SearchEquipments";
 import type { TSearchItemsFiltersForm } from "../../SearchEquipments/filters";
 import { useBuildDetailsContext } from "./context";
 import { BuildDetailsItems } from "./Items";
 import { ModalEquipConflict } from "./ModalEquipConflict";
-import { BuildDetailsNavbar } from "./Navbar";
 import { BuildDetailsPreferences } from "./Preferences";
 import { BuildDetailsStatsBase } from "./Stats/base";
 import { BuildDetailsStatsCombat } from "./Stats/combat";
 import { BuildDetailsStatsMastery } from "./Stats/mastery";
 import { BuildDetailsStatResistance } from "./Stats/resistance";
 import { BuildDetailsStatsSecondary } from "./Stats/secondary";
+import { BuildDetailsTabs } from "./Tabs";
 
 export const BuildDetails = () => {
   const build = useBuildDetailsContext();
@@ -106,10 +105,7 @@ export const BuildDetails = () => {
         </Typography>
         <BuildDetailsStatsSecondary />
       </Stack>
-      <Stack sx={{ flex: 1, overflow: "hidden" }}>
-        <BuildDetailsNavbar />
-        <SearchEquipments defaultFilters={defaultFilters} onEquipItem={equipItem} />
-      </Stack>
+      <BuildDetailsTabs defaultFilters={defaultFilters} onEquipItem={equipItem} />
       <ModalEquipConflict conflictPositions={conflictPositions} onClose={() => setConflictPositions(null)} />
     </Stack>
   );

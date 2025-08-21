@@ -12,6 +12,7 @@ export enum ElectronEvents {
   GetItemById = "data:get-item-by-id",
   GetItemTypeLabels = "data:get-itemtype-labels",
   GetItemTypesByEquipmentPosition = "data:get-itemtypes-by-equipment-position",
+  GetAllBuilds = "build:get-all",
   CreateBuild = "build:create",
   GetBuild = "build:get",
   BuildEquipItem = "build:equip",
@@ -25,6 +26,7 @@ export type ElectronEventsMain = {
   [ElectronEvents.GetItemById]: { id: number };
   [ElectronEvents.GetItemTypeLabels]: undefined;
   [ElectronEvents.GetItemTypesByEquipmentPosition]: { position: WakfuEquipmentPosition };
+  [ElectronEvents.GetAllBuilds]: undefined;
   [ElectronEvents.CreateBuild]: undefined;
   [ElectronEvents.GetBuild]: { buildId: number };
   [ElectronEvents.BuildEquipItem]: { buildId: number; itemId: number; position?: WakfuEquipmentPosition };
@@ -34,12 +36,13 @@ export type ElectronEventsMain = {
 
 export type ElectronEventsRenderer = {
   [ElectronEvents.AppReady]: { version: string; lang: WakfuLang };
-  [ElectronEvents.SearchItems]: ReturnType<typeof WakfuItem.prototype.toDisplay>[];
-  [ElectronEvents.GetItemById]: ReturnType<typeof WakfuItem.prototype.toDisplay>;
+  [ElectronEvents.SearchItems]: ReturnType<WakfuItem["toDisplay"]>[];
+  [ElectronEvents.GetItemById]: ReturnType<WakfuItem["toDisplay"]>;
   [ElectronEvents.GetItemTypeLabels]: Record<number, string>;
   [ElectronEvents.GetItemTypesByEquipmentPosition]: number[];
+  [ElectronEvents.GetAllBuilds]: ReturnType<typeof WakfuBuild.getBuilds>;
   [ElectronEvents.CreateBuild]: { buildId: number };
-  [ElectronEvents.GetBuild]: ReturnType<typeof WakfuBuild.prototype.toDisplay>;
+  [ElectronEvents.GetBuild]: ReturnType<WakfuBuild["toDisplay"]>;
   [ElectronEvents.BuildEquipItem]: undefined | WakfuEquipmentPosition[];
   [ElectronEvents.BuildUnequipItem]: undefined;
   [ElectronEvents.BuildSetPreferences]: undefined;

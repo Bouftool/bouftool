@@ -86,6 +86,10 @@ export class WakfuItem {
     return this.item.rarity;
   }
 
+  public getGfxId(): number {
+    return this.item.gfxId;
+  }
+
   public getStats(stats: WakfuStats): number {
     const statsToActionId = wakfuStatsToWakfuActionId[stats];
     const gainEffect = this.findEquipEffect(statsToActionId.gain, statsToActionId.params);

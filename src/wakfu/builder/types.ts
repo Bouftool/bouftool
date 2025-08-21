@@ -46,20 +46,11 @@ export const isWakfuBuildPreferences = (json: unknown) => {
     console.warn("Invalid JSON: Not an object");
     return false;
   }
-  if (
-    !("mastery" in json && isObject(json.mastery) && isArrayOf(json.mastery, isWakfuStats) && json.mastery.length === 4)
-  ) {
+  if (!("mastery" in json && isArrayOf(json.mastery, isWakfuStats) && json.mastery.length === 4)) {
     console.warn("Invalid JSON: Mastery is not valid");
     return false;
   }
-  if (
-    !(
-      "resistance" in json &&
-      isObject(json.resistance) &&
-      isArrayOf(json.resistance, isWakfuStats) &&
-      json.resistance.length === 4
-    )
-  ) {
+  if (!("resistance" in json && isArrayOf(json.resistance, isWakfuStats) && json.resistance.length === 4)) {
     console.warn("Invalid JSON: Resistance is not valid");
     return false;
   }

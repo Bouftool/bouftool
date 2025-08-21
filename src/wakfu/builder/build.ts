@@ -54,8 +54,36 @@ export class WakfuBuild {
   private savePromise: Promise<void> | null = null;
   private savePromiseResolve: (() => void) | null = null;
 
-  public static getBuilds(): WakfuBuild[] {
-    return WakfuBuild.builds;
+  public static getBuilds() {
+    return WakfuBuild.builds.map((build) => {
+      const getItemToDisplay = (position: WakfuEquipmentPosition) => {
+        const item = build.items[position];
+        return isWakfuBuildEquippedPositionStatus(item) ? item : item.toDisplay();
+      };
+      return {
+        id: build.getId(),
+        name: build.getName(),
+        breed: build.getBreed(),
+        level: build.getLevel(),
+        items: {
+          [WakfuEquipmentPosition.Head]: getItemToDisplay(WakfuEquipmentPosition.Head),
+          [WakfuEquipmentPosition.Back]: getItemToDisplay(WakfuEquipmentPosition.Back),
+          [WakfuEquipmentPosition.Neck]: getItemToDisplay(WakfuEquipmentPosition.Neck),
+          [WakfuEquipmentPosition.Shoulders]: getItemToDisplay(WakfuEquipmentPosition.Shoulders),
+          [WakfuEquipmentPosition.Chest]: getItemToDisplay(WakfuEquipmentPosition.Chest),
+          [WakfuEquipmentPosition.Belt]: getItemToDisplay(WakfuEquipmentPosition.Belt),
+          [WakfuEquipmentPosition.LeftHand]: getItemToDisplay(WakfuEquipmentPosition.LeftHand),
+          [WakfuEquipmentPosition.RightHand]: getItemToDisplay(WakfuEquipmentPosition.RightHand),
+          [WakfuEquipmentPosition.Legs]: getItemToDisplay(WakfuEquipmentPosition.Legs),
+          [WakfuEquipmentPosition.FirstWeapon]: getItemToDisplay(WakfuEquipmentPosition.FirstWeapon),
+          [WakfuEquipmentPosition.SecondWeapon]: getItemToDisplay(WakfuEquipmentPosition.SecondWeapon),
+          [WakfuEquipmentPosition.Accessory]: getItemToDisplay(WakfuEquipmentPosition.Accessory),
+          [WakfuEquipmentPosition.Pet]: getItemToDisplay(WakfuEquipmentPosition.Pet),
+          [WakfuEquipmentPosition.Mount]: getItemToDisplay(WakfuEquipmentPosition.Mount),
+          [WakfuEquipmentPosition.Costume]: getItemToDisplay(WakfuEquipmentPosition.Costume),
+        },
+      };
+    });
   }
 
   public static getBuildById(id: number): WakfuBuild | undefined {
@@ -77,7 +105,7 @@ export class WakfuBuild {
       const files = await fs.readdir(WakfuBuild.FolderPath);
       for (const file of files) {
         if (file.endsWith(".json")) {
-          const build = new WakfuBuild(Number(file));
+          const build = new WakfuBuild(Number.parseInt(file, 10));
           await build.loadBuild();
           WakfuBuild.builds.push(build);
           WakfuBuild.buildsMap.set(build.id, build);
@@ -85,7 +113,11 @@ export class WakfuBuild {
       }
       return WakfuBuild.builds;
     } catch (error) {
-      console.error("Error loading builds:", error);
+      if (isErrnoException(error) && error.code === "ENOENT") {
+        console.warn("No builds found.");
+      } else {
+        console.error("Error loading builds:", error);
+      }
       return [];
     }
   }

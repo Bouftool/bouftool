@@ -62,6 +62,12 @@ export const registerElectronEvents = () => {
     }
   });
 
+  manager.register(ElectronEvents.GetAllBuilds, async (reply) => {
+    await WakfuBuild.loadBuilds();
+    const builds = WakfuBuild.getBuilds();
+    reply(builds);
+  });
+
   manager.register(ElectronEvents.CreateBuild, async (reply) => {
     const newBuild = await WakfuBuild.createBuild();
     reply({
