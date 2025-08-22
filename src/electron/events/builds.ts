@@ -17,6 +17,12 @@ export const registerElectronBuildsEvents = (manager: ElectronEventManager) => {
     });
   });
 
+  manager.register(ElectronEvents.BuildDelete, async (reply, { buildId }) => {
+    await WakfuBuild.deleteBuild(buildId);
+    ElectronEventManager.send(ElectronEvents.GetAllBuilds, WakfuBuild.getBuilds());
+    reply(undefined);
+  });
+
   manager.register(ElectronEvents.GetBuild, (reply, { buildId }) => {
     const build = WakfuBuild.getBuildById(buildId);
     if (!build) {
@@ -25,12 +31,14 @@ export const registerElectronBuildsEvents = (manager: ElectronEventManager) => {
     reply(build.toDisplay());
   });
 
-  manager.register(ElectronEvents.BuildSetBreed, (reply, { buildId, breed }) => {
+  manager.register(ElectronEvents.BuildSetInfo, (reply, { buildId, breed, name, level }) => {
     const build = WakfuBuild.getBuildById(buildId);
     if (!build) {
       throw new Error(`Build with ID ${buildId} not found`);
     }
     build.setBreed(breed);
+    build.setName(name);
+    build.setLevel(level);
     ElectronEventManager.send(ElectronEvents.GetBuild, build.toDisplay());
     reply(undefined);
   });

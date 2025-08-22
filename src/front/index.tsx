@@ -2,6 +2,7 @@ import { Box, CssBaseline, Stack, ThemeProvider, Typography } from "@mui/materia
 import { useEffect } from "react";
 import { type ElectronAPI, ElectronEvents } from "src/electron/types";
 import { Loading } from "./components/Loading";
+import { ModalConfirmationProvider } from "./components/Modal/Confirmation";
 import { useElectronEvent } from "./hooks/electron";
 import { theme } from "./theme/material";
 import { Navbar } from "./views/Navbar";
@@ -39,12 +40,14 @@ export const App = () => {
             <Typography variant="body1">Loading...</Typography>
           </Loading>
         ) : (
-          <NavigationProvider>
-            <Stack sx={{ flex: 1, flexDirection: "column", alignItems: "stretch", overflow: "hidden" }}>
-              <Navbar />
-              <Navigation />
-            </Stack>
-          </NavigationProvider>
+          <ModalConfirmationProvider>
+            <NavigationProvider>
+              <Stack sx={{ flex: 1, flexDirection: "column", alignItems: "stretch", overflow: "hidden" }}>
+                <Navbar />
+                <Navigation />
+              </Stack>
+            </NavigationProvider>
+          </ModalConfirmationProvider>
         )}
       </Box>
     </ThemeProvider>

@@ -10,9 +10,9 @@ export const buildsDashboardCardClasses = {
 
 export const BuildsDashboardCardRoot = styled(Button)(({ theme }) => ({
   [`&.${buildsDashboardCardClasses.root}`]: {
+    flex: 1,
     display: "flex",
     flexDirection: "row",
-    borderRadius: "8px",
     padding: theme.spacing(1),
     alignItems: "center",
     gap: theme.spacing(1),

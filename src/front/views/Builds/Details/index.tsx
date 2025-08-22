@@ -1,8 +1,10 @@
 import { Stack, Typography } from "@mui/material";
+import { StackRow } from "src/front/components/Layout/StackRow";
 import { SearchItemsFiltersProvider } from "../../SearchEquipments/contexts/filters";
 import { SearchItemsPreferencesProvider } from "../../SearchEquipments/contexts/preferences";
 import { BuildDetailsInfo } from "./Info";
 import { BuildDetailsItems } from "./Items";
+import { BuildDetailsPreferences } from "./Preferences";
 import { BuildDetailsStatsBase } from "./Stats/base";
 import { BuildDetailsStatsCombat } from "./Stats/combat";
 import { BuildDetailsStatsMastery } from "./Stats/mastery";
@@ -18,12 +20,17 @@ export const BuildDetails = () => {
           <Stack
             sx={{
               flex: "0 0 450px",
+              maxWidth: 450,
               borderRight: (theme) => `1px solid ${theme.palette.divider}`,
               p: 1,
               gap: 1,
+              overflowY: "auto",
             }}
           >
-            <BuildDetailsInfo />
+            <StackRow sx={{ "&&": { alignItems: "start", justifyContent: "space-between" } }}>
+              <BuildDetailsInfo />
+              <BuildDetailsPreferences />
+            </StackRow>
             <BuildDetailsItems />
             <BuildDetailsStatsBase />
             <Typography variant="subtitle2" sx={{ alignSelf: "center" }}>

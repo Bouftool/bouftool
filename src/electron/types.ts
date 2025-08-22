@@ -16,8 +16,9 @@ export enum ElectronEvents {
   GetItemTypesByEquipmentPosition = "data:get-itemtypes-by-equipment-position",
   GetAllBuilds = "build:get-all",
   CreateBuild = "build:create",
+  BuildDelete = "build:delete",
   GetBuild = "build:get",
-  BuildSetBreed = "build:set-breed",
+  BuildSetInfo = "build:set-info",
   BuildEquipItem = "build:equip",
   BuildUnequipItem = "build:unequip",
   BuildSetPreferences = "build:set-preferences",
@@ -33,13 +34,14 @@ export type ElectronEventsMain = {
   [ElectronEvents.GetItemTypesByEquipmentPosition]: { position: WakfuEquipmentPosition };
   [ElectronEvents.GetAllBuilds]: undefined;
   [ElectronEvents.CreateBuild]: undefined;
+  [ElectronEvents.BuildDelete]: { buildId: number };
   [ElectronEvents.GetBuild]: { buildId: number };
   [ElectronEvents.BuildEquipItem]: { buildId: number; itemId: number; position?: WakfuEquipmentPosition };
   [ElectronEvents.BuildUnequipItem]: { buildId: number; position: WakfuEquipmentPosition };
   [ElectronEvents.BuildSetPreferences]: { buildId: number; preferences: Partial<TWakfuBuildPreferences> };
   [ElectronEvents.BuildAddAbilityLevel]: { buildId: number; ability: EnumAbilities; level: number };
   [ElectronEvents.BuildRemoveAbilityLevel]: { buildId: number; ability: EnumAbilities; level: number };
-  [ElectronEvents.BuildSetBreed]: { buildId: number; breed: WakfuBreed };
+  [ElectronEvents.BuildSetInfo]: { buildId: number; breed: WakfuBreed; name: string; level: number };
 };
 
 export type ElectronEventsRenderer = {
@@ -50,13 +52,14 @@ export type ElectronEventsRenderer = {
   [ElectronEvents.GetItemTypesByEquipmentPosition]: number[];
   [ElectronEvents.GetAllBuilds]: ReturnType<typeof WakfuBuild.getBuilds>;
   [ElectronEvents.CreateBuild]: { buildId: number };
+  [ElectronEvents.BuildDelete]: undefined;
   [ElectronEvents.GetBuild]: ReturnType<WakfuBuild["toDisplay"]>;
   [ElectronEvents.BuildEquipItem]: undefined | WakfuEquipmentPosition[];
   [ElectronEvents.BuildUnequipItem]: undefined;
   [ElectronEvents.BuildSetPreferences]: undefined;
   [ElectronEvents.BuildAddAbilityLevel]: undefined;
   [ElectronEvents.BuildRemoveAbilityLevel]: undefined;
-  [ElectronEvents.BuildSetBreed]: undefined;
+  [ElectronEvents.BuildSetInfo]: undefined;
 };
 
 export interface ElectronAPI {

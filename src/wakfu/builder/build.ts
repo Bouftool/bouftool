@@ -71,6 +71,17 @@ export class WakfuBuild {
     return build;
   }
 
+  public static async deleteBuild(buildId: number): Promise<boolean> {
+    const build = WakfuBuild.getBuildById(buildId);
+    if (!build) {
+      throw new Error(`Build with ID ${buildId} not found`);
+    }
+    WakfuBuild.builds = WakfuBuild.builds.filter((b) => b !== build);
+    WakfuBuild.buildsMap.delete(buildId);
+    await fs.rm(path.join(WakfuBuild.FolderPath, `${buildId}.json`));
+    return true;
+  }
+
   public static async loadBuilds(): Promise<WakfuBuild[]> {
     try {
       WakfuBuild.builds = [];
@@ -229,6 +240,7 @@ export class WakfuBuild {
 
   public setName(name: string): void {
     this.name = name;
+    this.saveBuild();
   }
 
   public getBreed(): WakfuBreed {
@@ -237,6 +249,7 @@ export class WakfuBuild {
 
   public setBreed(breed: WakfuBreed): void {
     this.breed = breed;
+    this.saveBuild();
   }
 
   public getLevel(): number {
@@ -245,6 +258,8 @@ export class WakfuBuild {
 
   public setLevel(level: number): void {
     this.level = level;
+    this.abilities.setLevel(level);
+    this.saveBuild();
   }
 
   public getPreferences() {

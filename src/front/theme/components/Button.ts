@@ -24,7 +24,7 @@ export const themeButton = {
         boxShadow: theme.palette.mode === "light" ? "inset 0 0 4px white" : "inset 0 0 4px black",
         border:
           theme.palette.mode === "light" ? "1px solid rgba(0, 0, 0, 0.12)" : "1px solid rgba(255, 255, 255, 0.12)",
-        color: theme.palette.mode === "light" ? "black" : "white",
+        color: theme.palette.mode === "light" ? "black" : theme.palette.text.primary,
         transition: "none",
         padding: "8px",
         "&:hover": {

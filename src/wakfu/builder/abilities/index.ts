@@ -10,6 +10,10 @@ export class WakfuAbilities {
     this.level = level;
   }
 
+  public setLevel(level: number): void {
+    this.level = level;
+  }
+
   public addAbilityLevel(ability: EnumAbilities, level: number): void {
     const category = getAbilityCategory(ability);
     if (!category) {
