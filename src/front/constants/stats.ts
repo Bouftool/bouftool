@@ -248,4 +248,10 @@ export const wakfuStatsLabels: Record<WakfuStats, TWakfuDescription> = {
     es: "Porcentaje de PV a la Armadura",
     pt: "Porcentagem de PV à Armadura",
   },
+  [WakfuStats.Barrier]: {
+    fr: "fois par tour, réduit les dégâts subit de 50% du niveau",
+    en: "once per turn, reduces damage taken by 50% of the level",
+    es: "una vez por turno, reduce el daño recibido en un 50% del nivel",
+    pt: "uma vez por turno, reduz o dano recebido em 50% do nível",
+  },
 };

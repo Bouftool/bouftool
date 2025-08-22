@@ -43,6 +43,7 @@ export enum WakfuStats {
   Armor,
   PercentHp,
   PercentHpToArmor,
+  Barrier,
 }
 
 export type TWakfuStatsElementalMastery =
@@ -130,6 +131,7 @@ export enum WakfuActionId {
   Armor = 39, // [#3] = 10 006
   PercentHp = 39, // [#3] = 10 007
   PercentHpToArmor = 39, // [#3] = 10 008
+  Barrier = 39, // [#3] = 10 009
 }
 
 export const wakfuStatsToWakfuActionId: Record<
@@ -250,6 +252,10 @@ export const wakfuStatsToWakfuActionId: Record<
   [WakfuStats.PercentHpToArmor]: {
     gain: WakfuActionId.PercentHpToArmor,
     params: [{ paramIndex: 3, value: 10008 }],
+  },
+  [WakfuStats.Barrier]: {
+    gain: WakfuActionId.Barrier,
+    params: [{ paramIndex: 3, value: 10009 }],
   },
 };
 

@@ -43,6 +43,7 @@ const StatsToIcon: Record<WakfuStats, string> = {
   [WakfuStats.Armor]: "ARMOR",
   [WakfuStats.PercentHp]: "HEAL_IN_PERCENT",
   [WakfuStats.PercentHpToArmor]: "ARMOR_PERCENT",
+  [WakfuStats.Barrier]: "BARRIER",
 };
 
 export type TStatsIconProps = Omit<HTMLProps<HTMLImageElement>, "children" | "src" | "alt"> & {

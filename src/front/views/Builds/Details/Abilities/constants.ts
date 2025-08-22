@@ -12,7 +12,7 @@ export const AbilitiesDisplay: Record<EnumAbilities, { icon: WakfuStats; label: 
     description: "Résistance aux dégâts de tous les éléments.",
   },
   [EnumAbilities.Barrier]: {
-    icon: WakfuStats.Armor,
+    icon: WakfuStats.Barrier,
     label: "Barrière",
   },
   [EnumAbilities.HealingReceived]: {
