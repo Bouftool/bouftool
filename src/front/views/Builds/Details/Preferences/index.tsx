@@ -11,7 +11,7 @@ export const BuildDetailsPreferences = () => {
   const build = useBuildDetailsContext();
 
   return (
-    <Stack sx={{ gap: 1 }}>
+    <Stack sx={{ gap: 1, overflow: "hidden" }}>
       <StackRow>
         <StatsIcon>{WakfuStats.Mastery}</StatsIcon>
         <BuildDetailsPreferencesSortable

@@ -9,7 +9,7 @@ export type TBuildDetailsPreferencesSortableItemProps = {
 };
 
 export const BuildDetailsPreferencesSortableItem = ({ id }: TBuildDetailsPreferencesSortableItemProps) => {
-  const { attributes, listeners, setNodeRef, transform, transition, isDragging, index } = useSortable({ id });
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id });
 
   const style = {
     transform: CSS.Transform.toString(transform),
