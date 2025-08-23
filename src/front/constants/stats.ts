@@ -212,6 +212,10 @@ export const wakfuStatsLabels: Record<WakfuStats, { title: TWakfuDescription; ef
   },
 };
 
+export const getWakfuStatsTitleLabel = (stat: WakfuStats) => {
+  return wakfuStatsLabels[stat].title.fr;
+};
+
 export const getWakfuStatsEffectLabel = (stat: WakfuStats) => {
   if (wakfuStatsLabels[stat].effect.fr.startsWith("%")) {
     return wakfuStatsLabels[stat].effect.fr;
