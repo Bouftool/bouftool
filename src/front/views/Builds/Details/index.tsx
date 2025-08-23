@@ -5,6 +5,7 @@ import { SearchItemsPreferencesProvider } from "../../SearchEquipments/contexts/
 import { BuildDetailsInfo } from "./Info";
 import { BuildDetailsItems } from "./Items";
 import { BuildDetailsPreferences } from "./Preferences";
+import { BuildDetailsAdditionalStats } from "./Stats/additionalStats";
 import { BuildDetailsStatsBase } from "./Stats/base";
 import { BuildDetailsStatsCombat } from "./Stats/combat";
 import { BuildDetailsStatsMastery } from "./Stats/mastery";
@@ -36,6 +37,7 @@ export const BuildDetails = () => {
             <Typography variant="subtitle2" sx={{ alignSelf: "center" }}>
               Maîtrises et Résistances
             </Typography>
+            <BuildDetailsAdditionalStats />
             <BuildDetailsStatsMastery />
             <BuildDetailsStatResistance />
             <Typography variant="subtitle2" sx={{ alignSelf: "center" }}>

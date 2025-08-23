@@ -7,6 +7,7 @@ import type { WakfuStats } from "src/wakfu/types/action";
 export type TBuildStatsProps = {
   stats: WakfuStats;
   value: string;
+  label?: string;
   hideLabel?: boolean;
   statsColor?: string;
   slotProps?: {
@@ -14,12 +15,12 @@ export type TBuildStatsProps = {
   };
 };
 
-export const BuildStats = ({ stats, value, hideLabel, statsColor, slotProps }: TBuildStatsProps) => {
+export const BuildStats = ({ stats, value, label, hideLabel, statsColor, slotProps }: TBuildStatsProps) => {
   return (
     <StackRow sx={{ justifyContent: "space-between", "&&": { gap: 0.5 } }}>
       <StackRow sx={{ "&&": { gap: 0.5 } }}>
         <StatsIcon height={20}>{stats}</StatsIcon>
-        {!hideLabel && <Typography variant="caption">{wakfuStatsLabels[stats].title.fr}</Typography>}
+        {!hideLabel && <Typography variant="caption">{label || wakfuStatsLabels[stats].title.fr}</Typography>}
       </StackRow>
       <Typography variant="caption" {...slotProps?.typoValue} sx={{ color: statsColor }}>
         {value}

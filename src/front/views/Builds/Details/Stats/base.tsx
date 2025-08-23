@@ -31,13 +31,6 @@ export const BuildDetailsStatsBase = () => {
           statsColor="#32D4CA"
         />
       </StatsRow>
-      <StatsRow columns={3} className={statsRowClasses.root}>
-        <BuildStats
-          stats={WakfuStats.Armor}
-          value={build.stats[WakfuStats.Armor].toLocaleString("fr-FR")}
-          statsColor="#218246"
-        />
-      </StatsRow>
     </Stack>
   );
 };
