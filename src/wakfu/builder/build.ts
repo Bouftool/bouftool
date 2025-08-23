@@ -1,6 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { isErrnoException } from "src/types/utils";
+import { EnumStatsBonuses, StatsBonuses } from "../constants/statsBonuses";
 import { WakfuData } from "../data";
 import type { WakfuItem } from "../data/item";
 import { type EnumAbilities, isEnumAbilities } from "../types/ability";
@@ -39,6 +40,10 @@ export class WakfuBuild {
   private items: Record<WakfuEquipmentPosition, WakfuItem | WakfuBuildEquippedPositionStatus> =
     setEquipmentPositionRecord(() => WakfuBuildEquippedPositionStatus.Empty);
   private abilities: WakfuAbilities = new WakfuAbilities(this.level);
+  private bonuses = {
+    [EnumStatsBonuses.HavenWorld]: false,
+    [EnumStatsBonuses.Guild]: false,
+  };
   private timeout: NodeJS.Timeout | null = null;
   private savePromise: Promise<void> | null = null;
   private savePromiseResolve: (() => void) | null = null;
@@ -133,6 +138,7 @@ export class WakfuBuild {
           preferences: this.preferences,
           items: setEquipmentPositionRecord(getItemForSave),
           abilities: this.abilities.getAbilities(),
+          bonuses: this.bonuses,
         } satisfies TWakfuBuild;
         const filePath = path.join(WakfuBuild.FolderPath, `${this.id}.json`);
         await fs.mkdir(path.dirname(filePath), { recursive: true });
@@ -172,6 +178,7 @@ export class WakfuBuild {
             this.abilities.addAbilityLevel(key, value);
           }
         }
+        this.bonuses = json.bonuses;
       }
     } catch (error) {
       if (isErrnoException(error) && error.code === "ENOENT") {
@@ -290,6 +297,11 @@ export class WakfuBuild {
     this.saveBuild();
   }
 
+  public setBonuses(bonuses: TWakfuBuild["bonuses"]): void {
+    this.bonuses = bonuses;
+    this.saveBuild();
+  }
+
   public getEquipmentsStats() {
     const stats = initializeStats();
     stats[WakfuStats.PV] = 50 + this.level * 10;
@@ -310,6 +322,11 @@ export class WakfuBuild {
           continue;
         }
         value += item.getStats(stat);
+      }
+      for (const bonus of Object.values(EnumStatsBonuses)) {
+        if (this.bonuses[bonus] && StatsBonuses[bonus][stat] !== undefined) {
+          value += StatsBonuses[bonus][stat];
+        }
       }
       value += abilitiesStats[stat] || 0;
       switch (stat) {
@@ -368,6 +385,7 @@ export class WakfuBuild {
       items: setEquipmentPositionRecord(getItemForDisplay),
       stats: this.getEquipmentsStats(),
       abilities: this.abilities.getAbilities(),
+      bonuses: this.bonuses,
     };
   }
 }

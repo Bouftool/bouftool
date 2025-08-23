@@ -31,19 +31,7 @@ export const AbilitiesCategoryRow = ({ ability, availablePoints }: TAbilitiesCat
   };
 
   return (
-    <Tooltip
-      title={<AbilitiesCategoryTooltip ability={ability} />}
-      placement="left"
-      arrow
-      slotProps={{
-        tooltip: {
-          sx: {
-            bgcolor: "surface.200",
-            border: (theme) => `1px solid ${theme.palette.border.light}`,
-          },
-        },
-      }}
-    >
+    <Tooltip title={<AbilitiesCategoryTooltip ability={ability} />} placement="left" arrow>
       <div className={abilitiesCategoryClasses.row}>
         <div className={abilitiesCategoryClasses.rowLabel}>
           <StatsIcon>{AbilitiesDisplay[ability].icon}</StatsIcon>

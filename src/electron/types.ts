@@ -1,6 +1,6 @@
 import type { IpcRendererEvent } from "electron";
 import type { WakfuBuild } from "src/wakfu/builder/build";
-import type { TWakfuBuildPreferences } from "src/wakfu/builder/types";
+import type { TWakfuBuild, TWakfuBuildPreferences } from "src/wakfu/builder/types";
 import type { WakfuItem } from "src/wakfu/data/item";
 import type { TSearchItemsPayload } from "src/wakfu/search/types";
 import type { EnumAbilities } from "src/wakfu/types/ability";
@@ -24,6 +24,7 @@ export enum ElectronEvents {
   BuildSetPreferences = "build:set-preferences",
   BuildAddAbilityLevel = "build:add-ability-level",
   BuildRemoveAbilityLevel = "build:remove-ability-level",
+  BuildSetBonuses = "build:set-bonuses",
 }
 
 export type ElectronEventsMain = {
@@ -42,6 +43,10 @@ export type ElectronEventsMain = {
   [ElectronEvents.BuildAddAbilityLevel]: { buildId: number; ability: EnumAbilities; level: number };
   [ElectronEvents.BuildRemoveAbilityLevel]: { buildId: number; ability: EnumAbilities; level: number };
   [ElectronEvents.BuildSetInfo]: { buildId: number; breed: WakfuBreed; name: string; level: number };
+  [ElectronEvents.BuildSetBonuses]: {
+    buildId: number;
+    bonuses: TWakfuBuild["bonuses"];
+  };
 };
 
 export type ElectronEventsRenderer = {
@@ -60,6 +65,7 @@ export type ElectronEventsRenderer = {
   [ElectronEvents.BuildAddAbilityLevel]: undefined;
   [ElectronEvents.BuildRemoveAbilityLevel]: undefined;
   [ElectronEvents.BuildSetInfo]: undefined;
+  [ElectronEvents.BuildSetBonuses]: undefined;
 };
 
 export interface ElectronAPI {

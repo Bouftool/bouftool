@@ -6,6 +6,7 @@ import { createTheme } from "@mui/material/styles";
 import { themeButton } from "./components/Button";
 import { themeButtonGroup } from "./components/ButtonGroup";
 import { themeToggleButtonGroup } from "./components/ToggleButtonGroup";
+import { themeTooltip } from "./components/Tooltip";
 import { darkThemePalette, lightThemePalette } from "./palette";
 
 declare module "@mui/material/styles" {
@@ -35,5 +36,6 @@ export const theme = createTheme({
     MuiToggleButtonGroup: themeToggleButtonGroup,
     MuiButtonGroup: themeButtonGroup,
     MuiButton: themeButton,
+    MuiTooltip: themeTooltip,
   },
 });

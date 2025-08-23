@@ -1,4 +1,5 @@
-import { isArrayOf, isNumber, isObject, isString } from "src/types/utils";
+import { isArrayOf, isBoolean, isNumber, isObject, isString } from "src/types/utils";
+import { EnumStatsBonuses } from "../constants/statsBonuses";
 import type { WakfuItem } from "../data/item";
 import type { EnumAbilities } from "../types/ability";
 import { isWakfuStats, type WakfuStats } from "../types/action";
@@ -42,6 +43,10 @@ export type TWakfuBuild = {
   preferences: TWakfuBuildPreferences;
   items: Record<WakfuEquipmentPosition, number | WakfuBuildEquippedPositionStatus>;
   abilities: Partial<Record<EnumAbilities, number>>;
+  bonuses: {
+    [EnumStatsBonuses.HavenWorld]: boolean;
+    [EnumStatsBonuses.Guild]: boolean;
+  };
 };
 
 export const isWakfuBuildPreferences = (json: unknown) => {
@@ -94,6 +99,19 @@ export const isWakfuBuild = (json: unknown): json is TWakfuBuild => {
   }
   if (!("abilities" in json && isWakfuAbilities(json.abilities))) {
     console.warn("Invalid JSON: Abilities is not valid");
+    return false;
+  }
+  if (
+    !(
+      "bonuses" in json &&
+      isObject(json.bonuses) &&
+      EnumStatsBonuses.Guild in json.bonuses &&
+      EnumStatsBonuses.HavenWorld in json.bonuses &&
+      isBoolean(json.bonuses[EnumStatsBonuses.Guild]) &&
+      isBoolean(json.bonuses[EnumStatsBonuses.HavenWorld])
+    )
+  ) {
+    console.warn("Invalid JSON: Optional Stats is not valid");
     return false;
   }
   return true;

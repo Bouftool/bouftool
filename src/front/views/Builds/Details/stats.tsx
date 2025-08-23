@@ -19,7 +19,7 @@ export const BuildStats = ({ stats, value, hideLabel, statsColor, slotProps }: T
     <StackRow sx={{ justifyContent: "space-between", "&&": { gap: 0.5 } }}>
       <StackRow sx={{ "&&": { gap: 0.5 } }}>
         <StatsIcon height={20}>{stats}</StatsIcon>
-        {!hideLabel && <Typography variant="caption">{wakfuStatsLabels[stats].fr}</Typography>}
+        {!hideLabel && <Typography variant="caption">{wakfuStatsLabels[stats].title.fr}</Typography>}
       </StackRow>
       <Typography variant="caption" {...slotProps?.typoValue} sx={{ color: statsColor }}>
         {value}

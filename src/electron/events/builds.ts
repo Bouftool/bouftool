@@ -117,4 +117,14 @@ export const registerElectronBuildsEvents = (manager: ElectronEventManager) => {
     ElectronEventManager.send(ElectronEvents.GetBuild, build.toDisplay());
     reply(undefined);
   });
+
+  manager.register(ElectronEvents.BuildSetBonuses, (reply, { buildId, bonuses }) => {
+    const build = WakfuBuild.getBuildById(buildId);
+    if (!build) {
+      throw new Error(`Build with ID ${buildId} not found`);
+    }
+    build.setBonuses(bonuses);
+    ElectronEventManager.send(ElectronEvents.GetBuild, build.toDisplay());
+    reply(undefined);
+  });
 };

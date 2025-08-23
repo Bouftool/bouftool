@@ -81,7 +81,7 @@ export const StatsFilters = ({ value, onChange }: TStatsFilters) => {
                 }}
               >
                 <StatsIcon>{stat}</StatsIcon>
-                <Typography variant="caption">{wakfuStatsLabels[stat].fr}</Typography>
+                <Typography variant="caption">{wakfuStatsLabels[stat].title.fr}</Typography>
               </ToggleButton>
             ))}
           </ToggleButtonGroup>
