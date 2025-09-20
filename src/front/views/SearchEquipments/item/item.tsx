@@ -1,62 +1,67 @@
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, Stack, Tooltip, Typography } from "@mui/material";
 import { StackGrid } from "src/front/components/Layout/StackGrid";
 import { RarityIcon } from "src/front/components/Wakfu/RarityIcon";
-import type { TWakfuItemDisplay } from "src/wakfu/types/items";
-import { Rarity } from "src/wakfu/types/rarity";
+import { StatsIcon } from "src/front/components/Wakfu/StatsIcon";
+import type { WakfuItem } from "src/wakfu/items";
+import { EnumWakfuRarity } from "src/wakfu/items/rarity";
+import { getWakfuStatEffectLabel } from "src/wakfu/stats/i18n/effects";
+import type { EnumWakfuStat } from "src/wakfu/stats/types";
+import { EnumWakfuLang } from "src/wakfu/utils/types";
 import { ItemTypeIcon } from "../../../components/Wakfu/ItemTypeIcon";
 import { SearchItemsCompare } from "./compare";
-import { EquipmentEffectLabel } from "./effect";
 import { SearchItemsEncyclopedia } from "./encyclopedia";
 import { SearchEquipmentsItemEquip } from "./equip";
 import { SearchItemsRecipes } from "./recipes";
 import { ItemCard, itemCardClasses } from "./styles";
 
 export type SearchEquipmentsItemProps = {
-  item: TWakfuItemDisplay;
+  item: ReturnType<WakfuItem["toObject"]>;
   hideButtons?: boolean;
-  buildId?: number;
+  buildId?: string;
 };
 
 export const SearchEquipmentsItem = ({ item, buildId, hideButtons }: SearchEquipmentsItemProps) => {
   return (
     <ItemCard className={itemCardClasses.root} rarity={item.rarity}>
       <Stack sx={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", pb: 0.5 }}>
-        <Typography variant="subtitle2">{item.title}</Typography>
+        <Typography variant="subtitle2">{item.title.fr}</Typography>
         <Stack sx={{ flexDirection: "row", gap: 0.5 }}>
-          {(item.rarity === Rarity.Epic || item.rarity === Rarity.Relic) && (
+          {(item.rarity === EnumWakfuRarity.Epic || item.rarity === EnumWakfuRarity.Relic) && (
             <RarityIcon height={24}>{item.rarity}</RarityIcon>
           )}
-          <ItemTypeIcon height={24}>{item.itemTypeId}</ItemTypeIcon>
+          <ItemTypeIcon height={24}>{item.itemType.id}</ItemTypeIcon>
         </Stack>
       </Stack>
       <Stack sx={{ flexDirection: "row", gap: 1.5 }}>
         <Stack sx={{ flex: "0 0 64px" }}>
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              width: 64,
-              height: 64,
-              backgroundColor: (theme) => (theme.palette.mode === "light" ? "grey.250" : "grey.800"),
-              boxShadow: (theme) => (theme.palette.mode === "light" ? "inset 0 0 8px grey" : "inset 0 0 8px black"),
-              borderRadius: "8px",
-            }}
-          >
-            <img src={`wakfu/items/${item.gfxId}.png`} alt={item.title ?? "item"} width={58} height={58} />
-          </Box>
+          <Tooltip title={JSON.stringify(item.stats)}>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                width: 64,
+                height: 64,
+                backgroundColor: (theme) => (theme.palette.mode === "light" ? "grey.250" : "grey.800"),
+                boxShadow: (theme) => (theme.palette.mode === "light" ? "inset 0 0 8px grey" : "inset 0 0 8px black"),
+                borderRadius: "8px",
+              }}
+            >
+              <img src={`wakfu/items/${item.gfxId}.png`} alt={item.title.fr ?? "item"} width={58} height={58} />
+            </Box>
+          </Tooltip>
           <Typography variant="caption">Niv. {item.level}</Typography>
           {!hideButtons && (
             <StackGrid columns={2} gap={0.5}>
               <SearchEquipmentsItemEquip buildId={buildId} itemId={item.id} />
               <SearchItemsCompare itemId={item.id} buildId={buildId} />
-              <SearchItemsEncyclopedia itemId={item.id} itemTypeId={item.itemTypeId} />
-              <SearchItemsRecipes item={item} recipes={item.recipes} />
+              <SearchItemsEncyclopedia itemId={item.id} itemTypeId={item.itemType.id} />
+              <SearchItemsRecipes item={item} />
             </StackGrid>
           )}
         </Stack>
         <Stack sx={{ flex: 1 }}>
-          {item.equipEffectsLabels.map((effectLabel, index) => (
+          {Object.entries(item.stats).map(([stat, value], index) => (
             <Box
               // biome-ignore lint/suspicious/noArrayIndexKey: No issue
               key={index}
@@ -95,7 +100,8 @@ export const SearchEquipmentsItem = ({ item, buildId, hideButtons }: SearchEquip
               }}
             >
               <Typography variant="body1" sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
-                <EquipmentEffectLabel effect={effectLabel} />
+                <StatsIcon width={18}>{stat as EnumWakfuStat}</StatsIcon>
+                {getWakfuStatEffectLabel(EnumWakfuLang.French, stat as EnumWakfuStat, value)}
               </Typography>
             </Box>
           ))}

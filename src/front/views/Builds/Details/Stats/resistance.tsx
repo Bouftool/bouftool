@@ -1,7 +1,7 @@
-import { WakfuStats } from "src/wakfu/types/action";
+import { EnumWakfuStat } from "src/wakfu/stats/types";
 import { useBuildDetailsContext } from "../context";
 import { BuildStats } from "../stats";
-import { getResistanceText } from "./logics";
+import { getResistanceText, getStat } from "./logics";
 import { StatsRow, statsRowClasses } from "./styles";
 
 export const BuildDetailsStatResistance = () => {
@@ -10,26 +10,26 @@ export const BuildDetailsStatResistance = () => {
   return (
     <StatsRow columns={4} className={statsRowClasses.root}>
       <BuildStats
-        stats={WakfuStats.ResistanceFire}
-        value={getResistanceText(build.stats[WakfuStats.ResistanceFire])}
+        stats={EnumWakfuStat.FireResistance}
+        value={getResistanceText(getStat(build, EnumWakfuStat.FireResistance))}
         hideLabel
         statsColor="#DD8231"
       />
       <BuildStats
-        stats={WakfuStats.ResistanceWater}
-        value={getResistanceText(build.stats[WakfuStats.ResistanceWater])}
+        stats={EnumWakfuStat.WaterResistance}
+        value={getResistanceText(getStat(build, EnumWakfuStat.WaterResistance))}
         hideLabel
         statsColor="#88DBDA"
       />
       <BuildStats
-        stats={WakfuStats.ResistanceEarth}
-        value={getResistanceText(build.stats[WakfuStats.ResistanceEarth])}
+        stats={EnumWakfuStat.EarthResistance}
+        value={getResistanceText(getStat(build, EnumWakfuStat.EarthResistance))}
         hideLabel
         statsColor="#A9BE1F"
       />
       <BuildStats
-        stats={WakfuStats.ResistanceAir}
-        value={getResistanceText(build.stats[WakfuStats.ResistanceAir])}
+        stats={EnumWakfuStat.AirResistance}
+        value={getResistanceText(getStat(build, EnumWakfuStat.AirResistance))}
         hideLabel
         statsColor="#CE87DD"
       />

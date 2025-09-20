@@ -1,13 +1,12 @@
 import { Button } from "@mui/material";
-import type { TWakfuItemDisplay } from "src/wakfu/types/items";
+import type { WakfuItem } from "src/wakfu/items";
 import { useModalItemRecipeContext } from "../ModalItemRecipe/context";
 
 export type TSearchItemsRecipesProps = {
-  item: TWakfuItemDisplay;
-  recipes: number[];
+  item: ReturnType<WakfuItem["toObject"]>;
 };
 
-export const SearchItemsRecipes = ({ item, recipes }: TSearchItemsRecipesProps) => {
+export const SearchItemsRecipes = ({ item }: TSearchItemsRecipesProps) => {
   const openModalRecipe = useModalItemRecipeContext();
 
   return (
@@ -15,7 +14,7 @@ export const SearchItemsRecipes = ({ item, recipes }: TSearchItemsRecipesProps) 
       variant="push"
       sx={{ minWidth: 0, p: 0, aspectRatio: "1" }}
       onClick={() => openModalRecipe(item)}
-      disabled={recipes.length === 0}
+      disabled={item.recipes.length === 0}
     >
       <img height={18} src={`wakfu/RecipeIcon.png`} alt="Recipe Icon" />
     </Button>

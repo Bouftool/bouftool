@@ -1,10 +1,10 @@
 import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 import { StatsIcon } from "src/front/components/Wakfu/StatsIcon";
-import { type TWakfuStatsElementalMastery, WakfuStats } from "src/wakfu/types/action";
+import { EnumWakfuStat, type TWakfuStatElementalMastery } from "src/wakfu/stats/types";
 
 export type SearchItemsMasteryElementsPreferencesProps = {
-  value: TWakfuStatsElementalMastery[];
-  onChange: (value: TWakfuStatsElementalMastery[]) => void;
+  value: TWakfuStatElementalMastery[];
+  onChange: (value: TWakfuStatElementalMastery[]) => void;
 };
 
 export const SearchItemsMasteryElementsPreferences = ({
@@ -15,19 +15,19 @@ export const SearchItemsMasteryElementsPreferences = ({
     <ToggleButtonGroup
       variant="push"
       value={value}
-      onChange={(_, newValue: TWakfuStatsElementalMastery[]) => onChange(newValue)}
+      onChange={(_, newValue: TWakfuStatElementalMastery[]) => onChange(newValue)}
     >
-      <ToggleButton value={WakfuStats.MasteryFire}>
-        <StatsIcon>{WakfuStats.MasteryFire}</StatsIcon>
+      <ToggleButton value={EnumWakfuStat.FireMastery}>
+        <StatsIcon>{EnumWakfuStat.FireMastery}</StatsIcon>
       </ToggleButton>
-      <ToggleButton value={WakfuStats.MasteryWater}>
-        <StatsIcon>{WakfuStats.MasteryWater}</StatsIcon>
+      <ToggleButton value={EnumWakfuStat.WaterMastery}>
+        <StatsIcon>{EnumWakfuStat.WaterMastery}</StatsIcon>
       </ToggleButton>
-      <ToggleButton value={WakfuStats.MasteryEarth}>
-        <StatsIcon>{WakfuStats.MasteryEarth}</StatsIcon>
+      <ToggleButton value={EnumWakfuStat.EarthMastery}>
+        <StatsIcon>{EnumWakfuStat.EarthMastery}</StatsIcon>
       </ToggleButton>
-      <ToggleButton value={WakfuStats.MasteryAir}>
-        <StatsIcon>{WakfuStats.MasteryAir}</StatsIcon>
+      <ToggleButton value={EnumWakfuStat.AirMastery}>
+        <StatsIcon>{EnumWakfuStat.AirMastery}</StatsIcon>
       </ToggleButton>
     </ToggleButtonGroup>
   );

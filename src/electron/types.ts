@@ -1,15 +1,14 @@
 import type { IpcRendererEvent } from "electron";
-import type { WakfuBuild } from "src/wakfu/builder/build";
-import type { TWakfuBuild, TWakfuBuildPreferences } from "src/wakfu/builder/types";
-import type { WakfuItem } from "src/wakfu/data/item";
-import type { TWakfuRecipeDisplay } from "src/wakfu/data/types";
-import type { TSearchItemsPayload } from "src/wakfu/search/types";
-import type { EnumAbilities } from "src/wakfu/types/ability";
-import type { WakfuStats } from "src/wakfu/types/action";
-import type { WakfuBreed } from "src/wakfu/types/breed";
-import type { TWakfuItemDisplay } from "src/wakfu/types/items";
-import type { WakfuEquipmentPosition } from "src/wakfu/types/itemType";
-import type { WakfuLang } from "src/wakfu/types/utils";
+import type { EnumAbilities } from "src/wakfu/abilities/types";
+import type { EnumWakfuStatsBonuses } from "src/wakfu/builds/bonus";
+import type { TWakfuBuildDisplay, TWakfuCharacterDisplay } from "src/wakfu/builds/types";
+import type { WakfuItem } from "src/wakfu/items";
+import type { EnumWakfuEquipmentPosition } from "src/wakfu/itemTypes/types";
+import type { WakfuRecipe } from "src/wakfu/recipes/recipe";
+import type { WakfuStats } from "src/wakfu/stats";
+import type { TElementalPreferences } from "src/wakfu/stats/types";
+import type { EnumWakfuLang } from "src/wakfu/utils/types";
+import type { TSearchItemsPayload } from "./searchItems/types";
 
 export enum ElectronEvents {
   AppReady = "app:ready",
@@ -20,9 +19,11 @@ export enum ElectronEvents {
   GetItemTypesByEquipmentPosition = "data:get-itemtypes-by-equipment-position",
   GetItemRecipes = "data:get-item-recipes",
   GetAllBuilds = "build:get-all",
-  CreateBuild = "build:create",
+  BuildCreate = "build:create",
   BuildDelete = "build:delete",
   GetBuild = "build:get",
+  BuildCreateCharacter = "build:create-character",
+  BuildEditCharacter = "build:edit-character",
   BuildSetInfo = "build:set-info",
   BuildEquipItem = "build:equip",
   BuildUnequipItem = "build:unequip",
@@ -39,43 +40,47 @@ export type ElectronEventsMain = {
   [ElectronEvents.SearchItems]: TSearchItemsPayload;
   [ElectronEvents.GetItemById]: { id: number };
   [ElectronEvents.GetItemTypeLabels]: undefined;
-  [ElectronEvents.GetItemTypesByEquipmentPosition]: { position: WakfuEquipmentPosition };
+  [ElectronEvents.GetItemTypesByEquipmentPosition]: { position: EnumWakfuEquipmentPosition };
   [ElectronEvents.GetItemRecipes]: { itemId: number };
+  [ElectronEvents.BuildCreateCharacter]: { name: string; breed: number };
+  [ElectronEvents.BuildEditCharacter]: { characterId: string; name: string; breed: number };
   [ElectronEvents.GetAllBuilds]: undefined;
-  [ElectronEvents.CreateBuild]: undefined;
-  [ElectronEvents.BuildDelete]: { buildId: number };
-  [ElectronEvents.GetBuild]: { buildId: number };
-  [ElectronEvents.BuildEquipItem]: { buildId: number; itemId: number; position?: WakfuEquipmentPosition };
-  [ElectronEvents.BuildUnequipItem]: { buildId: number; position: WakfuEquipmentPosition };
-  [ElectronEvents.BuildCompareItem]: { buildId: number; itemId: number };
-  [ElectronEvents.BuildSetPreferences]: { buildId: number; preferences: Partial<TWakfuBuildPreferences> };
-  [ElectronEvents.BuildAddAbilityLevel]: { buildId: number; ability: EnumAbilities; level: number };
-  [ElectronEvents.BuildRemoveAbilityLevel]: { buildId: number; ability: EnumAbilities; level: number };
-  [ElectronEvents.BuildSetInfo]: { buildId: number; breed: WakfuBreed; name: string; level: number };
+  [ElectronEvents.BuildCreate]: { characterId: string };
+  [ElectronEvents.BuildDelete]: { characterId: string; buildId: string };
+  [ElectronEvents.GetBuild]: { buildId: string };
+  [ElectronEvents.BuildEquipItem]: { buildId: string; itemId: number; position?: EnumWakfuEquipmentPosition };
+  [ElectronEvents.BuildUnequipItem]: { buildId: string; position: EnumWakfuEquipmentPosition };
+  [ElectronEvents.BuildCompareItem]: { buildId: string; itemId: number };
+  [ElectronEvents.BuildSetPreferences]: { buildId: string; preferences: TElementalPreferences };
+  [ElectronEvents.BuildAddAbilityLevel]: { buildId: string; ability: EnumAbilities; level: number };
+  [ElectronEvents.BuildRemoveAbilityLevel]: { buildId: string; ability: EnumAbilities; level: number };
+  [ElectronEvents.BuildSetInfo]: { buildId: string; name: string; level: number };
   [ElectronEvents.BuildSetBonuses]: {
-    buildId: number;
-    bonuses: TWakfuBuild["bonuses"];
+    buildId: string;
+    bonuses: Record<EnumWakfuStatsBonuses, boolean>;
   };
 };
 
 export type ElectronEventsRenderer = {
-  [ElectronEvents.AppReady]: { version: string; lang: WakfuLang };
+  [ElectronEvents.AppReady]: { version: string; lang: EnumWakfuLang };
   [ElectronEvents.OpenWebEncyclopedia]: undefined;
-  [ElectronEvents.SearchItems]: ReturnType<WakfuItem["toDisplay"]>[];
-  [ElectronEvents.GetItemById]: ReturnType<WakfuItem["toDisplay"]>;
+  [ElectronEvents.SearchItems]: ReturnType<WakfuItem["toObject"]>[];
+  [ElectronEvents.GetItemById]: ReturnType<WakfuItem["toObject"]>;
   [ElectronEvents.GetItemTypeLabels]: Record<number, string>;
   [ElectronEvents.GetItemTypesByEquipmentPosition]: number[];
-  [ElectronEvents.GetItemRecipes]: TWakfuRecipeDisplay[];
-  [ElectronEvents.GetAllBuilds]: ReturnType<typeof WakfuBuild.getBuilds>;
-  [ElectronEvents.CreateBuild]: { buildId: number };
+  [ElectronEvents.GetItemRecipes]: ReturnType<WakfuRecipe["toObject"]>[];
+  [ElectronEvents.BuildCreateCharacter]: { characterId: string };
+  [ElectronEvents.BuildEditCharacter]: undefined;
+  [ElectronEvents.GetAllBuilds]: TWakfuCharacterDisplay[];
+  [ElectronEvents.BuildCreate]: { buildId: string };
   [ElectronEvents.BuildDelete]: undefined;
-  [ElectronEvents.GetBuild]: ReturnType<WakfuBuild["toDisplay"]>;
-  [ElectronEvents.BuildEquipItem]: undefined | { itemId: number; position: WakfuEquipmentPosition[] };
+  [ElectronEvents.GetBuild]: TWakfuBuildDisplay;
+  [ElectronEvents.BuildEquipItem]: undefined | { itemId: number; position: EnumWakfuEquipmentPosition[] };
   [ElectronEvents.BuildUnequipItem]: undefined;
   [ElectronEvents.BuildCompareItem]: {
-    sourceItems: TWakfuItemDisplay[];
-    targetItem: TWakfuItemDisplay;
-    stats: Record<WakfuStats, number>;
+    sourceItems: ReturnType<WakfuItem["toObject"]>[];
+    targetItem: ReturnType<WakfuItem["toObject"]>;
+    stats: ReturnType<WakfuStats["toObject"]>;
   }[];
   [ElectronEvents.BuildSetPreferences]: undefined;
   [ElectronEvents.BuildAddAbilityLevel]: undefined;
@@ -84,14 +89,19 @@ export type ElectronEventsRenderer = {
   [ElectronEvents.BuildSetBonuses]: undefined;
 };
 
+export type TElectronPackage<Payload> = {
+  id: string | null;
+  payload: Payload;
+};
+
 export interface ElectronAPI {
-  send: <Event extends ElectronEvents>(event: Event, payload: ElectronEventsMain[Event]) => void;
+  send: <Event extends ElectronEvents>(event: Event, payload: TElectronPackage<ElectronEventsMain[Event]>) => void;
   addListener: <Event extends ElectronEvents>(
     event: Event,
-    callback: (payload: ElectronEventsRenderer[Event]) => void,
-  ) => (event: IpcRendererEvent, payload: ElectronEventsRenderer[Event]) => void;
+    callback: (payload: TElectronPackage<ElectronEventsRenderer[Event]>) => void,
+  ) => (event: IpcRendererEvent, payload: TElectronPackage<ElectronEventsRenderer[Event]>) => void;
   removeListener: <Event extends ElectronEvents>(
     event: Event,
-    callback: (event: IpcRendererEvent, payload: ElectronEventsRenderer[Event]) => void,
+    callback: (event: IpcRendererEvent, payload: TElectronPackage<ElectronEventsRenderer[Event]>) => void,
   ) => void;
 }

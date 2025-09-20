@@ -6,7 +6,7 @@ import { useSearchItemsContext } from "./contexts/search";
 import { SearchEquipmentsItem } from "./item/item";
 
 export type TSearchItemsListProps = {
-  buildId?: number;
+  buildId?: string;
 };
 
 export const SearchItemsList = ({ buildId }: TSearchItemsListProps) => {
@@ -24,7 +24,7 @@ export const SearchItemsList = ({ buildId }: TSearchItemsListProps) => {
     for (let i = 0; i < columnCount; i++) {
       const item = items[realIndex + i];
       if (item) {
-        const effectsCount = item.equipEffectsLabels.length;
+        const effectsCount = Object.values(item.stats).length;
         if (effectsCount > highestEffectsCounts) {
           highestEffectsCounts = effectsCount;
         }

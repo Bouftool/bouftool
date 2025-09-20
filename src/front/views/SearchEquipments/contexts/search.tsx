@@ -1,9 +1,9 @@
 import { createContext, type ReactNode, useContext, useLayoutEffect } from "react";
+import type { TSearchItemsFilters, TSearchItemsSort } from "src/electron/searchItems/types";
 import { ElectronEvents } from "src/electron/types";
 import { useElectronEvent } from "src/front/hooks/electron";
-import type { TSearchItemsFilters, TSearchItemsSort } from "src/wakfu/search/types";
-import { isWakfuStats, WakfuStats } from "src/wakfu/types/action";
-import type { TWakfuItemDisplay } from "src/wakfu/types/items";
+import type { WakfuItem } from "src/wakfu/items";
+import { EnumWakfuStat } from "src/wakfu/stats/types";
 import type { TSearchItemsFiltersForm } from "../filters";
 import type { TSearchItemsPreferences } from "../preferences/logics";
 import { useSearchItemsFiltersContext } from "./filters";
@@ -24,12 +24,10 @@ export class SearchItemsBehavior {
 
 const formatFilters = (filters: TSearchItemsFiltersForm): TSearchItemsFilters => {
   const stats: TSearchItemsFilters["stats"] = [];
-  for (const wakfuStats of Object.values(WakfuStats)) {
-    if (isWakfuStats(wakfuStats)) {
-      const values = filters.stats[wakfuStats];
-      if (values) {
-        stats.push({ ...values, stats: wakfuStats });
-      }
+  for (const wakfuStats of Object.values(EnumWakfuStat)) {
+    const values = filters.stats[wakfuStats];
+    if (values) {
+      stats.push({ ...values, stats: wakfuStats });
     }
   }
   return {
@@ -45,12 +43,12 @@ const formatPreferences = (preferences: TSearchItemsPreferences): TSearchItemsSo
   return {
     mastery: {
       elementsPriority: preferences.mastery.elementsPriority,
-      meleeMastery: preferences.mastery.meleeRangeMastery === WakfuStats.MeleeMastery,
-      rangeMastery: preferences.mastery.meleeRangeMastery === WakfuStats.DistanceMastery,
-      criticalMastery: preferences.mastery.subMasteries.includes(WakfuStats.CriticalMastery),
-      backMastery: preferences.mastery.subMasteries.includes(WakfuStats.BackMastery),
-      berserkMastery: preferences.mastery.subMasteries.includes(WakfuStats.BerserkMastery),
-      healingMastery: preferences.mastery.subMasteries.includes(WakfuStats.HealingMastery),
+      meleeMastery: preferences.mastery.rangeMastery === EnumWakfuStat.MeleeMastery,
+      distanceMastery: preferences.mastery.rangeMastery === EnumWakfuStat.DistanceMastery,
+      criticalMastery: preferences.mastery.subMasteries.includes(EnumWakfuStat.CriticalMastery),
+      rearMastery: preferences.mastery.subMasteries.includes(EnumWakfuStat.RearMastery),
+      berserkMastery: preferences.mastery.subMasteries.includes(EnumWakfuStat.BerserkMastery),
+      healingMastery: preferences.mastery.subMasteries.includes(EnumWakfuStat.HealingMastery),
     },
     resistance: {
       elementsPriority: preferences.resistance.elementsPriority,
@@ -58,7 +56,7 @@ const formatPreferences = (preferences: TSearchItemsPreferences): TSearchItemsSo
   };
 };
 
-export type TSearchItemsContext = TWakfuItemDisplay[];
+export type TSearchItemsContext = ReturnType<WakfuItem["toObject"]>[];
 
 const SearchContext = createContext<TSearchItemsContext | undefined>(undefined);
 
@@ -74,7 +72,7 @@ export type TSearchItemsProviderProps = {
   children: ReactNode;
 };
 
-const DefaultValues: TWakfuItemDisplay[] = [];
+const DefaultValues: TSearchItemsContext = [];
 
 export const SearchItemsProvider = ({ children }: TSearchItemsProviderProps) => {
   const { filters } = useSearchItemsFiltersContext();

@@ -1,7 +1,7 @@
 import { shell } from "electron";
-import { DefaultEncyclopediaBaseUrl, EncyclopediaBaseUrlsMap } from "src/wakfu/constants/encyclopedia";
-import { WakfuData } from "src/wakfu/data";
-import { searchItems } from "src/wakfu/search";
+import { WakfuStore } from "src/wakfu/store";
+import { DefaultEncyclopediaBaseUrl, EncyclopediaBaseUrlsMap } from "src/wakfu/utils/encyclopedia";
+import { searchItems } from "../searchItems";
 import { ElectronEvents } from "../types";
 import { registerElectronBuildsEvents } from "./builds";
 import { registerElectronDataEvents } from "./data";
@@ -10,10 +10,10 @@ import { ElectronEventManager } from "./manager";
 const manager = new ElectronEventManager();
 export const registerElectronEvents = () => {
   manager.register(ElectronEvents.AppReady, async (reply) => {
-    const wakfuData = await WakfuData.initialize();
+    const store = await WakfuStore.initialize();
     reply({
-      version: wakfuData.getVersion(),
-      lang: wakfuData.getLang(),
+      version: store.getGamedataVersion(),
+      lang: store.getLang(),
     });
   });
 

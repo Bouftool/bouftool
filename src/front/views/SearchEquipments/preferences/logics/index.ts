@@ -1,37 +1,27 @@
 import { useReducer } from "react";
-import type { WakfuStats } from "src/wakfu/types/action";
+import type { EnumWakfuStat, TWakfuStatElementalMastery, TWakfuStatElementalResistance } from "src/wakfu/stats/types";
 import { searchItemsPreferencesReducer } from "./reducer";
 
 export type TSearchItemsPreferences = {
   mastery: {
-    elementsPriority: (
-      | WakfuStats.MasteryFire
-      | WakfuStats.MasteryEarth
-      | WakfuStats.MasteryWater
-      | WakfuStats.MasteryAir
-    )[];
-    meleeRangeMastery: WakfuStats.MeleeMastery | WakfuStats.DistanceMastery | null;
+    elementsPriority: TWakfuStatElementalMastery[];
+    rangeMastery: EnumWakfuStat.MeleeMastery | EnumWakfuStat.DistanceMastery | null;
     subMasteries: (
-      | WakfuStats.CriticalMastery
-      | WakfuStats.BackMastery
-      | WakfuStats.BerserkMastery
-      | WakfuStats.HealingMastery
+      | EnumWakfuStat.CriticalMastery
+      | EnumWakfuStat.RearMastery
+      | EnumWakfuStat.BerserkMastery
+      | EnumWakfuStat.HealingMastery
     )[];
   };
   resistance: {
-    elementsPriority: (
-      | WakfuStats.ResistanceFire
-      | WakfuStats.ResistanceEarth
-      | WakfuStats.ResistanceWater
-      | WakfuStats.ResistanceAir
-    )[];
+    elementsPriority: TWakfuStatElementalResistance[];
   };
 };
 
 const defaultPreferences: TSearchItemsPreferences = {
   mastery: {
     elementsPriority: [],
-    meleeRangeMastery: null,
+    rangeMastery: null,
     subMasteries: [],
   },
   resistance: {

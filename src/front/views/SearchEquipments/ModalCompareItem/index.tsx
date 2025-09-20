@@ -5,7 +5,7 @@ import { useElectronEvent } from "src/front/hooks/electron";
 import { ModalCompareItemCard } from "./card";
 
 export const ModalCompareItem = () => {
-  const [, results] = useElectronEvent(ElectronEvents.BuildCompareItem);
+  const [, results] = useElectronEvent(ElectronEvents.BuildCompareItem, true);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {

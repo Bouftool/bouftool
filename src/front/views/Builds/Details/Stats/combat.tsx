@@ -1,8 +1,8 @@
 import { Stack } from "@mui/material";
-import { WakfuStats } from "src/wakfu/types/action";
+import { EnumWakfuStat } from "src/wakfu/stats/types";
 import { useBuildDetailsContext } from "../context";
 import { BuildStats } from "../stats";
-import { getStatsColor } from "./logics";
+import { getStat, getStatsColor } from "./logics";
 import { StatsPanel, statsPanelClasses } from "./styles";
 
 export const BuildDetailsStatsCombat = () => {
@@ -12,66 +12,66 @@ export const BuildDetailsStatsCombat = () => {
     <StatsPanel className={statsPanelClasses.root} columns={2}>
       <Stack className={statsPanelClasses.column}>
         <BuildStats
-          stats={WakfuStats.FinalDamage}
-          value={`${build.stats[WakfuStats.FinalDamage]}%`}
-          statsColor={getStatsColor(build.stats[WakfuStats.FinalDamage], true)}
+          stats={EnumWakfuStat.DamageDealt}
+          value={`${getStat(build, EnumWakfuStat.DamageDealt)}%`}
+          statsColor={getStatsColor(getStat(build, EnumWakfuStat.DamageDealt), true)}
         />
         <BuildStats
-          stats={WakfuStats.CriticalRate}
-          value={`${build.stats[WakfuStats.CriticalRate]}%`}
-          statsColor={getStatsColor(build.stats[WakfuStats.CriticalRate], true)}
+          stats={EnumWakfuStat.CriticalHit}
+          value={`${getStat(build, EnumWakfuStat.CriticalHit)}%`}
+          statsColor={getStatsColor(getStat(build, EnumWakfuStat.CriticalHit), true)}
         />
         <BuildStats
-          stats={WakfuStats.Initiative}
-          value={build.stats[WakfuStats.Initiative].toLocaleString("fr-FR")}
-          statsColor={getStatsColor(build.stats[WakfuStats.Initiative])}
+          stats={EnumWakfuStat.Initiative}
+          value={getStat(build, EnumWakfuStat.Initiative).toLocaleString("fr-FR")}
+          statsColor={getStatsColor(getStat(build, EnumWakfuStat.Initiative))}
         />
         <BuildStats
-          stats={WakfuStats.Dodge}
-          value={build.stats[WakfuStats.Dodge].toLocaleString("fr-FR")}
-          statsColor={getStatsColor(build.stats[WakfuStats.Dodge])}
+          stats={EnumWakfuStat.Dodge}
+          value={getStat(build, EnumWakfuStat.Dodge).toLocaleString("fr-FR")}
+          statsColor={getStatsColor(getStat(build, EnumWakfuStat.Dodge))}
         />
         <BuildStats
-          stats={WakfuStats.Wisdom}
-          value={build.stats[WakfuStats.Wisdom].toLocaleString("fr-FR")}
-          statsColor={getStatsColor(build.stats[WakfuStats.Wisdom])}
+          stats={EnumWakfuStat.Wisdom}
+          value={getStat(build, EnumWakfuStat.Wisdom).toLocaleString("fr-FR")}
+          statsColor={getStatsColor(getStat(build, EnumWakfuStat.Wisdom))}
         />
         <BuildStats
-          stats={WakfuStats.Control}
-          value={build.stats[WakfuStats.Control].toLocaleString("fr-FR")}
-          statsColor={getStatsColor(build.stats[WakfuStats.Control])}
+          stats={EnumWakfuStat.Control}
+          value={getStat(build, EnumWakfuStat.Control).toLocaleString("fr-FR")}
+          statsColor={getStatsColor(getStat(build, EnumWakfuStat.Control))}
         />
       </Stack>
       <Stack className={statsPanelClasses.column}>
         <BuildStats
-          stats={WakfuStats.FinalHealing}
-          value={`${build.stats[WakfuStats.FinalHealing]}%`}
-          statsColor={getStatsColor(build.stats[WakfuStats.FinalHealing], true)}
+          stats={EnumWakfuStat.HealingDone}
+          value={`${getStat(build, EnumWakfuStat.HealingDone)}%`}
+          statsColor={getStatsColor(getStat(build, EnumWakfuStat.HealingDone), true)}
         />
         <BuildStats
-          stats={WakfuStats.Block}
-          value={`${build.stats[WakfuStats.Block]}%`}
-          statsColor={getStatsColor(build.stats[WakfuStats.Block], true)}
+          stats={EnumWakfuStat.Block}
+          value={`${getStat(build, EnumWakfuStat.Block)}%`}
+          statsColor={getStatsColor(getStat(build, EnumWakfuStat.Block), true)}
         />
         <BuildStats
-          stats={WakfuStats.Range}
-          value={build.stats[WakfuStats.Range].toLocaleString("fr-FR")}
-          statsColor={getStatsColor(build.stats[WakfuStats.Range])}
+          stats={EnumWakfuStat.Range}
+          value={getStat(build, EnumWakfuStat.Range).toLocaleString("fr-FR")}
+          statsColor={getStatsColor(getStat(build, EnumWakfuStat.Range))}
         />
         <BuildStats
-          stats={WakfuStats.Lock}
-          value={build.stats[WakfuStats.Lock].toLocaleString("fr-FR")}
-          statsColor={getStatsColor(build.stats[WakfuStats.Lock])}
+          stats={EnumWakfuStat.Lock}
+          value={getStat(build, EnumWakfuStat.Lock).toLocaleString("fr-FR")}
+          statsColor={getStatsColor(getStat(build, EnumWakfuStat.Lock))}
         />
         <BuildStats
-          stats={WakfuStats.Prospection}
-          value={build.stats[WakfuStats.Prospection].toLocaleString("fr-FR")}
-          statsColor={getStatsColor(build.stats[WakfuStats.Prospection])}
+          stats={EnumWakfuStat.Prospecting}
+          value={getStat(build, EnumWakfuStat.Prospecting).toLocaleString("fr-FR")}
+          statsColor={getStatsColor(getStat(build, EnumWakfuStat.Prospecting))}
         />
         <BuildStats
-          stats={WakfuStats.Willpower}
-          value={build.stats[WakfuStats.Willpower].toLocaleString("fr-FR")}
-          statsColor={getStatsColor(build.stats[WakfuStats.Willpower])}
+          stats={EnumWakfuStat.Willpower}
+          value={getStat(build, EnumWakfuStat.Willpower).toLocaleString("fr-FR")}
+          statsColor={getStatsColor(getStat(build, EnumWakfuStat.Willpower))}
         />
       </Stack>
     </StatsPanel>

@@ -2,8 +2,9 @@ import { Stack, Tooltip, Typography } from "@mui/material";
 import type { ElectronEvents, ElectronEventsRenderer } from "src/electron/types";
 import { StackRow, stackRowClasses } from "src/front/components/Layout/StackRow";
 import { StatsIcon } from "src/front/components/Wakfu/StatsIcon";
-import { getWakfuStatsEffectLabel } from "src/front/constants/stats";
-import { WakfuStats } from "src/wakfu/types/action";
+import { getWakfuStatEffectLabel } from "src/wakfu/stats/i18n/effects";
+import { EnumWakfuStat } from "src/wakfu/stats/types";
+import { EnumWakfuLang } from "src/wakfu/utils/types";
 import { useBuildDetailsContext } from "../context";
 import { BuildStats } from "../stats";
 import { getStatsColor } from "./logics";
@@ -11,27 +12,27 @@ import { StatsRow, statsRowClasses } from "./styles";
 
 const getElementalMastery = (build: ElectronEventsRenderer[ElectronEvents.GetBuild], value: number) => {
   switch (value) {
-    case build.stats[WakfuStats.MasteryFire]:
-      return WakfuStats.MasteryFire;
-    case build.stats[WakfuStats.MasteryWater]:
-      return WakfuStats.MasteryWater;
-    case build.stats[WakfuStats.MasteryEarth]:
-      return WakfuStats.MasteryEarth;
-    case build.stats[WakfuStats.MasteryAir]:
-      return WakfuStats.MasteryAir;
+    case build.stats[EnumWakfuStat.FireMastery]:
+      return EnumWakfuStat.FireMastery;
+    case build.stats[EnumWakfuStat.WaterMastery]:
+      return EnumWakfuStat.WaterMastery;
+    case build.stats[EnumWakfuStat.EarthMastery]:
+      return EnumWakfuStat.EarthMastery;
+    case build.stats[EnumWakfuStat.AirMastery]:
+      return EnumWakfuStat.AirMastery;
     default:
-      return WakfuStats.MasteryFire;
+      return EnumWakfuStat.FireMastery;
   }
 };
 
 const getRangeMastery = (build: ElectronEventsRenderer[ElectronEvents.GetBuild], value: number) => {
   switch (value) {
-    case build.stats[WakfuStats.DistanceMastery]:
-      return WakfuStats.DistanceMastery;
-    case build.stats[WakfuStats.MeleeMastery]:
-      return WakfuStats.MeleeMastery;
+    case build.stats[EnumWakfuStat.DistanceMastery]:
+      return EnumWakfuStat.DistanceMastery;
+    case build.stats[EnumWakfuStat.MeleeMastery]:
+      return EnumWakfuStat.MeleeMastery;
     default:
-      return WakfuStats.DistanceMastery;
+      return EnumWakfuStat.DistanceMastery;
   }
 };
 
@@ -39,16 +40,19 @@ const MasteryTooltip = () => {
   const build = useBuildDetailsContext();
 
   const elementalMastery = Math.max(
-    build.stats[WakfuStats.MasteryFire],
-    build.stats[WakfuStats.MasteryWater],
-    build.stats[WakfuStats.MasteryEarth],
-    build.stats[WakfuStats.MasteryAir],
+    build.stats[EnumWakfuStat.FireMastery] ?? 0,
+    build.stats[EnumWakfuStat.WaterMastery] ?? 0,
+    build.stats[EnumWakfuStat.EarthMastery] ?? 0,
+    build.stats[EnumWakfuStat.AirMastery] ?? 0,
   );
-  const rangeMastery = Math.max(build.stats[WakfuStats.DistanceMastery], build.stats[WakfuStats.MeleeMastery]);
-  const criticalMastery = build.stats[WakfuStats.CriticalMastery];
-  const backMastery = build.stats[WakfuStats.BackMastery];
-  const berserkMastery = build.stats[WakfuStats.BerserkMastery];
-  const healingMastery = build.stats[WakfuStats.HealingMastery];
+  const rangeMastery = Math.max(
+    build.stats[EnumWakfuStat.DistanceMastery] ?? 0,
+    build.stats[EnumWakfuStat.MeleeMastery] ?? 0,
+  );
+  const criticalMastery = build.stats[EnumWakfuStat.CriticalMastery] ?? 0;
+  const rearMastery = build.stats[EnumWakfuStat.RearMastery] ?? 0;
+  const berserkMastery = build.stats[EnumWakfuStat.BerserkMastery] ?? 0;
+  const healingMastery = build.stats[EnumWakfuStat.HealingMastery] ?? 0;
 
   return (
     <Stack sx={{ [`& > .${stackRowClasses.root}`]: { gap: 0.5 }, "& img": { width: 20, height: 20 } }}>
@@ -60,7 +64,7 @@ const MasteryTooltip = () => {
           <StatsIcon>{getElementalMastery(build, elementalMastery)}</StatsIcon>
           <Typography variant="caption">
             <span style={{ color: getStatsColor(elementalMastery) }}>{elementalMastery.toLocaleString("fr-FR")}</span>
-            {getWakfuStatsEffectLabel(getElementalMastery(build, elementalMastery))}
+            {getWakfuStatEffectLabel(EnumWakfuLang.French, getElementalMastery(build, elementalMastery))}
           </Typography>
         </StackRow>
       )}
@@ -69,43 +73,43 @@ const MasteryTooltip = () => {
           <StatsIcon>{getRangeMastery(build, rangeMastery)}</StatsIcon>
           <Typography variant="caption">
             <span style={{ color: getStatsColor(rangeMastery) }}>{rangeMastery.toLocaleString("fr-FR")}</span>
-            {getWakfuStatsEffectLabel(getRangeMastery(build, rangeMastery))}
+            {getWakfuStatEffectLabel(EnumWakfuLang.French, getRangeMastery(build, rangeMastery))}
           </Typography>
         </StackRow>
       )}
       {criticalMastery > 0 && (
         <StackRow>
-          <StatsIcon>{WakfuStats.CriticalMastery}</StatsIcon>
+          <StatsIcon>{EnumWakfuStat.CriticalMastery}</StatsIcon>
           <Typography variant="caption">
             <span style={{ color: getStatsColor(criticalMastery) }}>{criticalMastery.toLocaleString("fr-FR")}</span>
-            {getWakfuStatsEffectLabel(WakfuStats.CriticalMastery)}
+            {getWakfuStatEffectLabel(EnumWakfuLang.French, EnumWakfuStat.CriticalMastery, criticalMastery)}
           </Typography>
         </StackRow>
       )}
-      {backMastery > 0 && (
+      {rearMastery > 0 && (
         <StackRow>
-          <StatsIcon>{WakfuStats.BackMastery}</StatsIcon>
+          <StatsIcon>{EnumWakfuStat.RearMastery}</StatsIcon>
           <Typography variant="caption">
-            <span style={{ color: getStatsColor(backMastery) }}>{backMastery.toLocaleString("fr-FR")}</span>
-            {getWakfuStatsEffectLabel(WakfuStats.BackMastery)}
+            <span style={{ color: getStatsColor(rearMastery) }}>{rearMastery.toLocaleString("fr-FR")}</span>
+            {getWakfuStatEffectLabel(EnumWakfuLang.French, EnumWakfuStat.RearMastery, rearMastery)}
           </Typography>
         </StackRow>
       )}
       {berserkMastery > 0 && (
         <StackRow>
-          <StatsIcon>{WakfuStats.BerserkMastery}</StatsIcon>
+          <StatsIcon>{EnumWakfuStat.BerserkMastery}</StatsIcon>
           <Typography variant="caption">
             <span style={{ color: getStatsColor(berserkMastery) }}>{berserkMastery.toLocaleString("fr-FR")}</span>
-            {getWakfuStatsEffectLabel(WakfuStats.BerserkMastery)}
+            {getWakfuStatEffectLabel(EnumWakfuLang.French, EnumWakfuStat.BerserkMastery, berserkMastery)}
           </Typography>
         </StackRow>
       )}
       {healingMastery > 0 && (
         <StackRow>
-          <StatsIcon>{WakfuStats.HealingMastery}</StatsIcon>
+          <StatsIcon>{EnumWakfuStat.HealingMastery}</StatsIcon>
           <Typography variant="caption">
             <span style={{ color: getStatsColor(healingMastery) }}>{healingMastery.toLocaleString("fr-FR")}</span>
-            {getWakfuStatsEffectLabel(WakfuStats.HealingMastery)}
+            {getWakfuStatEffectLabel(EnumWakfuLang.French, EnumWakfuStat.HealingMastery, healingMastery)}
           </Typography>
         </StackRow>
       )}
@@ -117,27 +121,27 @@ export const BuildDetailsAdditionalStats = () => {
   const build = useBuildDetailsContext();
   const cumulatedMastery =
     Math.max(
-      build.stats[WakfuStats.MasteryFire],
-      build.stats[WakfuStats.MasteryWater],
-      build.stats[WakfuStats.MasteryEarth],
-      build.stats[WakfuStats.MasteryAir],
+      build.stats[EnumWakfuStat.FireMastery] ?? 0,
+      build.stats[EnumWakfuStat.WaterMastery] ?? 0,
+      build.stats[EnumWakfuStat.EarthMastery] ?? 0,
+      build.stats[EnumWakfuStat.AirMastery] ?? 0,
     ) +
-    Math.max(build.stats[WakfuStats.MeleeMastery], build.stats[WakfuStats.DistanceMastery]) +
-    (build.stats[WakfuStats.CriticalMastery] || 0) +
-    (build.stats[WakfuStats.BackMastery] || 0) +
-    (build.stats[WakfuStats.BerserkMastery] || 0) +
-    (build.stats[WakfuStats.HealingMastery] || 0);
+    Math.max(build.stats[EnumWakfuStat.MeleeMastery] ?? 0, build.stats[EnumWakfuStat.DistanceMastery] ?? 0) +
+    (build.stats[EnumWakfuStat.CriticalMastery] ?? 0) +
+    (build.stats[EnumWakfuStat.RearMastery] ?? 0) +
+    (build.stats[EnumWakfuStat.BerserkMastery] ?? 0) +
+    (build.stats[EnumWakfuStat.HealingMastery] ?? 0);
 
   return (
     <StatsRow columns={2} className={statsRowClasses.root}>
       <BuildStats
-        stats={WakfuStats.Armor}
-        value={build.stats[WakfuStats.Armor].toLocaleString("fr-FR")}
+        stats={EnumWakfuStat.Armor}
+        value={(build.stats[EnumWakfuStat.Armor] ?? 0).toLocaleString("fr-FR")}
         statsColor="#218246"
       />
       <Tooltip title={<MasteryTooltip />} placement="top" arrow disableInteractive>
         <BuildStats
-          stats={WakfuStats.Mastery}
+          stats={EnumWakfuStat.ElementalMastery}
           label="Maîtrise cumulée"
           value={cumulatedMastery.toLocaleString("fr-FR")}
           statsColor={getStatsColor(cumulatedMastery)}

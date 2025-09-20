@@ -1,6 +1,7 @@
-import { WakfuStats } from "src/wakfu/types/action";
+import { EnumWakfuStat } from "src/wakfu/stats/types";
 import { useBuildDetailsContext } from "../context";
 import { BuildStats } from "../stats";
+import { getStat } from "./logics";
 import { StatsRow, statsRowClasses } from "./styles";
 
 export const BuildDetailsStatsMastery = () => {
@@ -8,26 +9,26 @@ export const BuildDetailsStatsMastery = () => {
   return (
     <StatsRow columns={4} className={statsRowClasses.root}>
       <BuildStats
-        stats={WakfuStats.MasteryFire}
-        value={build.stats[WakfuStats.MasteryFire].toLocaleString("fr-FR")}
+        stats={EnumWakfuStat.FireMastery}
+        value={getStat(build, EnumWakfuStat.FireMastery).toLocaleString("fr-FR")}
         hideLabel
         statsColor="#DD8231"
       />
       <BuildStats
-        stats={WakfuStats.MasteryWater}
-        value={build.stats[WakfuStats.MasteryWater].toLocaleString("fr-FR")}
+        stats={EnumWakfuStat.WaterMastery}
+        value={getStat(build, EnumWakfuStat.WaterMastery).toLocaleString("fr-FR")}
         hideLabel
         statsColor="#88DBDA"
       />
       <BuildStats
-        stats={WakfuStats.MasteryEarth}
-        value={build.stats[WakfuStats.MasteryEarth].toLocaleString("fr-FR")}
+        stats={EnumWakfuStat.EarthMastery}
+        value={getStat(build, EnumWakfuStat.EarthMastery).toLocaleString("fr-FR")}
         hideLabel
         statsColor="#A9BE1F"
       />
       <BuildStats
-        stats={WakfuStats.MasteryAir}
-        value={build.stats[WakfuStats.MasteryAir].toLocaleString("fr-FR")}
+        stats={EnumWakfuStat.AirMastery}
+        value={getStat(build, EnumWakfuStat.AirMastery).toLocaleString("fr-FR")}
         hideLabel
         statsColor="#CE87DD"
       />

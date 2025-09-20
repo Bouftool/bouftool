@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
+import type { TSearchItemsFilters, TSearchItemsSort } from "src/electron/searchItems/types";
 import { ElectronEvents } from "src/electron/types";
 import { useElectronEvent } from "src/front/hooks/electron";
-import type { TSearchItemsFilters, TSearchItemsSort } from "src/wakfu/search/types";
 
 export const useWakfuSearchItems = () => {
   const [send, items] = useElectronEvent(ElectronEvents.SearchItems);
@@ -16,9 +16,9 @@ export const useWakfuSearchItems = () => {
     mastery: {
       elementsPriority: [],
       meleeMastery: false,
-      rangeMastery: false,
+      distanceMastery: false,
       criticalMastery: false,
-      backMastery: false,
+      rearMastery: false,
       berserkMastery: false,
       healingMastery: false,
     },

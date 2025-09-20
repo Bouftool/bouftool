@@ -1,8 +1,8 @@
 import { Stack } from "@mui/material";
-import { WakfuStats } from "src/wakfu/types/action";
+import { EnumWakfuStat } from "src/wakfu/stats/types";
 import { useBuildDetailsContext } from "../context";
 import { BuildStats } from "../stats";
-import { getStatsColor } from "./logics";
+import { getStat, getStatsColor } from "./logics";
 import { StatsPanel, statsPanelClasses } from "./styles";
 
 export const BuildDetailsStatsSecondary = () => {
@@ -12,66 +12,66 @@ export const BuildDetailsStatsSecondary = () => {
     <StatsPanel className={statsPanelClasses.root} columns={2}>
       <Stack className={statsPanelClasses.column}>
         <BuildStats
-          stats={WakfuStats.CriticalMastery}
-          value={build.stats[WakfuStats.CriticalMastery].toLocaleString("fr-FR")}
-          statsColor={getStatsColor(build.stats[WakfuStats.CriticalMastery])}
+          stats={EnumWakfuStat.CriticalMastery}
+          value={getStat(build, EnumWakfuStat.CriticalMastery).toLocaleString("fr-FR")}
+          statsColor={getStatsColor(getStat(build, EnumWakfuStat.CriticalMastery))}
         />
         <BuildStats
-          stats={WakfuStats.BackMastery}
-          value={build.stats[WakfuStats.BackMastery].toLocaleString("fr-FR")}
-          statsColor={getStatsColor(build.stats[WakfuStats.BackMastery])}
+          stats={EnumWakfuStat.RearMastery}
+          value={getStat(build, EnumWakfuStat.RearMastery).toLocaleString("fr-FR")}
+          statsColor={getStatsColor(getStat(build, EnumWakfuStat.RearMastery))}
         />
         <BuildStats
-          stats={WakfuStats.MeleeMastery}
-          value={build.stats[WakfuStats.MeleeMastery].toLocaleString("fr-FR")}
-          statsColor={getStatsColor(build.stats[WakfuStats.MeleeMastery])}
+          stats={EnumWakfuStat.MeleeMastery}
+          value={getStat(build, EnumWakfuStat.MeleeMastery).toLocaleString("fr-FR")}
+          statsColor={getStatsColor(getStat(build, EnumWakfuStat.MeleeMastery))}
         />
         <BuildStats
-          stats={WakfuStats.DistanceMastery}
-          value={build.stats[WakfuStats.DistanceMastery].toLocaleString("fr-FR")}
-          statsColor={getStatsColor(build.stats[WakfuStats.DistanceMastery])}
+          stats={EnumWakfuStat.DistanceMastery}
+          value={getStat(build, EnumWakfuStat.DistanceMastery).toLocaleString("fr-FR")}
+          statsColor={getStatsColor(getStat(build, EnumWakfuStat.DistanceMastery))}
         />
         <BuildStats
-          stats={WakfuStats.HealingMastery}
-          value={build.stats[WakfuStats.HealingMastery].toLocaleString("fr-FR")}
-          statsColor={getStatsColor(build.stats[WakfuStats.HealingMastery])}
+          stats={EnumWakfuStat.HealingMastery}
+          value={getStat(build, EnumWakfuStat.HealingMastery).toLocaleString("fr-FR")}
+          statsColor={getStatsColor(getStat(build, EnumWakfuStat.HealingMastery))}
         />
         <BuildStats
-          stats={WakfuStats.BerserkMastery}
-          value={build.stats[WakfuStats.BerserkMastery].toLocaleString("fr-FR")}
-          statsColor={getStatsColor(build.stats[WakfuStats.BerserkMastery])}
+          stats={EnumWakfuStat.BerserkMastery}
+          value={getStat(build, EnumWakfuStat.BerserkMastery).toLocaleString("fr-FR")}
+          statsColor={getStatsColor(getStat(build, EnumWakfuStat.BerserkMastery))}
         />
       </Stack>
       <Stack className={statsPanelClasses.column}>
         <BuildStats
-          stats={WakfuStats.CriticalResistance}
-          value={build.stats[WakfuStats.CriticalResistance].toLocaleString("fr-FR")}
-          statsColor={getStatsColor(build.stats[WakfuStats.CriticalResistance])}
+          stats={EnumWakfuStat.CriticalResistance}
+          value={getStat(build, EnumWakfuStat.CriticalResistance).toLocaleString("fr-FR")}
+          statsColor={getStatsColor(getStat(build, EnumWakfuStat.CriticalResistance))}
         />
         <BuildStats
-          stats={WakfuStats.BackResistance}
-          value={build.stats[WakfuStats.BackResistance].toLocaleString("fr-FR")}
-          statsColor={getStatsColor(build.stats[WakfuStats.BackResistance])}
+          stats={EnumWakfuStat.RearResistance}
+          value={getStat(build, EnumWakfuStat.RearResistance).toLocaleString("fr-FR")}
+          statsColor={getStatsColor(getStat(build, EnumWakfuStat.RearResistance))}
         />
         <BuildStats
-          stats={WakfuStats.ArmorGiven}
-          value={`${build.stats[WakfuStats.ArmorGiven]}%`}
-          statsColor={getStatsColor(build.stats[WakfuStats.ArmorGiven], true)}
+          stats={EnumWakfuStat.ArmorGiven}
+          value={`${getStat(build, EnumWakfuStat.ArmorGiven)}%`}
+          statsColor={getStatsColor(getStat(build, EnumWakfuStat.ArmorGiven), true)}
         />
         <BuildStats
-          stats={WakfuStats.ArmorReceived}
-          value={`${build.stats[WakfuStats.ArmorReceived]}%`}
-          statsColor={getStatsColor(build.stats[WakfuStats.ArmorReceived], true)}
+          stats={EnumWakfuStat.ArmorReceived}
+          value={`${getStat(build, EnumWakfuStat.ArmorReceived)}%`}
+          statsColor={getStatsColor(getStat(build, EnumWakfuStat.ArmorReceived), true)}
         />
         <BuildStats
-          stats={WakfuStats.HealingReceived}
-          value={`${build.stats[WakfuStats.HealingReceived]}%`}
-          statsColor={getStatsColor(build.stats[WakfuStats.HealingReceived], true)}
+          stats={EnumWakfuStat.HealingReceived}
+          value={`${getStat(build, EnumWakfuStat.HealingReceived)}%`}
+          statsColor={getStatsColor(getStat(build, EnumWakfuStat.HealingReceived), true)}
         />
         <BuildStats
-          stats={WakfuStats.IndirectDamages}
-          value={`${build.stats[WakfuStats.IndirectDamages]}%`}
-          statsColor={getStatsColor(build.stats[WakfuStats.IndirectDamages], true)}
+          stats={EnumWakfuStat.IndirectDamages}
+          value={`${getStat(build, EnumWakfuStat.IndirectDamages)}%`}
+          statsColor={getStatsColor(getStat(build, EnumWakfuStat.IndirectDamages), true)}
         />
       </Stack>
     </StatsPanel>

@@ -1,19 +1,18 @@
 import { type BoxProps, Tooltip } from "@mui/material";
 import clsx from "clsx";
 import { SearchEquipmentsItem } from "src/front/views/SearchEquipments/item/item";
-import { isWakfuBuildEquippedPositionStatus, WakfuBuildEquippedPositionStatus } from "src/wakfu/builder/types";
-import type { TWakfuItemDisplay } from "src/wakfu/types/items";
-import type { WakfuEquipmentPosition } from "src/wakfu/types/itemType";
+import type { TWakfuBuildStuffDisplay } from "src/wakfu/builds/types";
+import type { EnumWakfuEquipmentPosition } from "src/wakfu/itemTypes/types";
 import { ItemIcon } from "../ItemIcon";
 import { ItemSlotBox, itemSlotClasses } from "./styles";
 
 export type TItemSlotProps = {
-  position?: WakfuEquipmentPosition;
-  item: TWakfuItemDisplay | WakfuBuildEquippedPositionStatus;
+  position?: EnumWakfuEquipmentPosition;
+  item: TWakfuBuildStuffDisplay[EnumWakfuEquipmentPosition];
   size: number;
   disableTooltip?: boolean;
-  onClick?: (position?: WakfuEquipmentPosition) => void;
-  onRightClick?: (position?: WakfuEquipmentPosition) => void;
+  onClick?: (position?: EnumWakfuEquipmentPosition) => void;
+  onRightClick?: (position?: EnumWakfuEquipmentPosition) => void;
   slotProps?: {
     box?: Partial<BoxProps>;
   };
@@ -31,10 +30,10 @@ export const ItemSlot = ({
   return (
     <Tooltip
       title={
-        isWakfuBuildEquippedPositionStatus(item) || disableTooltip ? (
+        disableTooltip || item.disabled || item.item === null ? (
           ""
         ) : (
-          <SearchEquipmentsItem item={item} hideButtons />
+          <SearchEquipmentsItem item={item.item} hideButtons />
         )
       }
       slotProps={{ tooltip: { sx: { bgcolor: "transparent", maxWidth: "unset", width: 376, p: 0 } } }}
@@ -44,14 +43,18 @@ export const ItemSlot = ({
       <ItemSlotBox
         {...slotProps?.box}
         size={size}
-        rarity={isWakfuBuildEquippedPositionStatus(item) ? 1 : item.rarity}
-        equippedItem={!isWakfuBuildEquippedPositionStatus(item)}
-        disabled={item === WakfuBuildEquippedPositionStatus.Disabled}
+        rarity={item.item ? item.item.rarity : 1}
+        equippedItem={Boolean(item.item)}
+        disabled={item.disabled}
         className={clsx(itemSlotClasses.root, slotProps?.box?.className)}
         onClick={onClick ? () => onClick(position) : undefined}
         onContextMenu={onRightClick ? () => onRightClick(position) : undefined}
       >
-        {isWakfuBuildEquippedPositionStatus(item) ? (
+        {item.item ? (
+          <ItemIcon width={size} height={size} className={clsx(itemSlotClasses.icon, itemSlotClasses.itemIcon)}>
+            {item.item.gfxId}
+          </ItemIcon>
+        ) : (
           <img
             width={size - 24}
             height={size - 24}
@@ -59,10 +62,6 @@ export const ItemSlot = ({
             src={`wakfu/slots/item/${position}.png`}
             alt={`Slots ${position}`}
           />
-        ) : (
-          <ItemIcon width={size} height={size} className={clsx(itemSlotClasses.icon, itemSlotClasses.itemIcon)}>
-            {item.gfxId}
-          </ItemIcon>
         )}
       </ItemSlotBox>
     </Tooltip>

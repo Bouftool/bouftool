@@ -1,11 +1,11 @@
 import { Badge, badgeClasses, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
 import { useState } from "react";
-import { Rarity } from "src/wakfu/types/rarity";
+import { EnumWakfuRarity } from "src/wakfu/items/rarity";
 import { SidePopover } from "../../../../components/Navigation/SidePopover";
 import { RarityIcon } from "../../../../components/Wakfu/RarityIcon";
 import { RarityLabels } from "./constants";
 
-const Rarities = Object.values(Rarity).filter((value): value is Rarity => typeof value === "number");
+const Rarities = Object.values(EnumWakfuRarity).filter((value): value is EnumWakfuRarity => typeof value === "number");
 
 export type TRarityFiltersProps = {
   value: number[];
@@ -23,7 +23,7 @@ export const RarityFilters = ({ value, onChange }: TRarityFiltersProps) => {
       sx={{ [`& .${badgeClasses.badge}`]: { top: 5, right: 3 } }}
     >
       <SidePopover
-        label={<RarityIcon height={24}>{Rarity.Relic}</RarityIcon>}
+        label={<RarityIcon height={24}>{EnumWakfuRarity.Relic}</RarityIcon>}
         onToggle={setBadgeHidden}
         slotProps={{ button: { sx: { height: "41px" } } }}
       >

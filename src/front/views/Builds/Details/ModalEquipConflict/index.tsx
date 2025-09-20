@@ -3,18 +3,18 @@ import { ElectronEvents } from "src/electron/types";
 import { StackRow } from "src/front/components/Layout/StackRow";
 import { ItemSlot } from "src/front/components/Wakfu/ItemSlot";
 import { sendElectronEvent } from "src/front/hooks/electron";
-import type { WakfuEquipmentPosition } from "src/wakfu/types/itemType";
+import type { EnumWakfuEquipmentPosition } from "src/wakfu/itemTypes/types";
 import { useBuildDetailsContext } from "../context";
 
 export type TModalEquipConflictProps = {
-  conflictPositions: { itemId: number; position: WakfuEquipmentPosition[] } | null;
+  conflictPositions: { itemId: number; position: EnumWakfuEquipmentPosition[] } | null;
   onClose: () => void;
 };
 
 export const ModalEquipConflict = ({ conflictPositions, onClose }: TModalEquipConflictProps) => {
   const build = useBuildDetailsContext();
 
-  const handleClick = (position: WakfuEquipmentPosition) => {
+  const handleClick = (position: EnumWakfuEquipmentPosition) => {
     if (!conflictPositions) {
       return;
     }
@@ -35,7 +35,7 @@ export const ModalEquipConflict = ({ conflictPositions, onClose }: TModalEquipCo
             <ItemSlot
               key={position}
               position={position}
-              item={build.items[position]}
+              item={build.stuff[position]}
               size={48}
               onClick={() => handleClick(position)}
             />

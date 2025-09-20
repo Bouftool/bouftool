@@ -1,50 +1,50 @@
-import type { TWakfuDescription } from "src/wakfu/types/description";
-import { Rarity } from "src/wakfu/types/rarity";
+import { EnumWakfuRarity } from "src/wakfu/items/rarity";
+import type { TWakfuI18n } from "src/wakfu/utils/types";
 
-export const RarityLabels: Record<Rarity, TWakfuDescription> = {
-  [Rarity.Old]: {
+export const RarityLabels: Record<EnumWakfuRarity, TWakfuI18n> = {
+  [EnumWakfuRarity.Old]: {
     fr: "Qualité commune",
     en: "Common",
     es: "Común",
     pt: "Comum",
   },
-  [Rarity.Uncommon]: {
+  [EnumWakfuRarity.Uncommon]: {
     fr: "Inhabituel",
     en: "Unusual",
     es: "Inusual",
     pt: "Incomum",
   },
-  [Rarity.Rare]: {
+  [EnumWakfuRarity.Rare]: {
     fr: "Rare",
     en: "Rare",
     es: "Raro",
     pt: "Raro",
   },
-  [Rarity.Mythic]: {
+  [EnumWakfuRarity.Mythic]: {
     fr: "Mythique",
     en: "Mythical",
     es: "Mítico",
     pt: "Mítico",
   },
-  [Rarity.Legendary]: {
+  [EnumWakfuRarity.Legendary]: {
     fr: "Légendaire",
     en: "Legendary",
     es: "Legendario",
     pt: "Legendário",
   },
-  [Rarity.Relic]: {
+  [EnumWakfuRarity.Relic]: {
     fr: "Relique",
     en: "Relic",
     es: "Reliquia",
     pt: "Relíquia",
   },
-  [Rarity.Memory]: {
+  [EnumWakfuRarity.Memory]: {
     fr: "Souvenir",
     en: "Memory",
     es: "Recuerdo",
     pt: "Lembrança",
   },
-  [Rarity.Epic]: {
+  [EnumWakfuRarity.Epic]: {
     fr: "Épique",
     en: "Epic",
     es: "Épico",

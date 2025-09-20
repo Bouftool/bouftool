@@ -3,7 +3,7 @@ import { ElectronEvents } from "src/electron/types";
 import { StackRow } from "src/front/components/Layout/StackRow";
 import { StatsIcon } from "src/front/components/Wakfu/StatsIcon";
 import { sendElectronEvent } from "src/front/hooks/electron";
-import { WakfuStats } from "src/wakfu/types/action";
+import { EnumWakfuStat } from "src/wakfu/stats/types";
 import { useBuildDetailsContext } from "../context";
 import { BuildDetailsPreferencesSortable } from "./sortable";
 
@@ -13,18 +13,18 @@ export const BuildDetailsPreferences = () => {
   return (
     <Stack sx={{ gap: 1, overflow: "hidden" }}>
       <StackRow>
-        <StatsIcon>{WakfuStats.Mastery}</StatsIcon>
+        <StatsIcon>{EnumWakfuStat.ElementalMastery}</StatsIcon>
         <BuildDetailsPreferencesSortable
-          value={build.preferences.mastery}
+          value={build.elementalPreferences}
           onChange={(values) =>
             sendElectronEvent(ElectronEvents.BuildSetPreferences, {
               buildId: build.id,
-              preferences: { mastery: values },
+              preferences: values,
             })
           }
         />
       </StackRow>
-      <StackRow>
+      {/* <StackRow>
         <StatsIcon>{WakfuStats.Resistance}</StatsIcon>
         <BuildDetailsPreferencesSortable
           value={build.preferences.resistance}
@@ -35,7 +35,7 @@ export const BuildDetailsPreferences = () => {
             })
           }
         />
-      </StackRow>
+      </StackRow> */}
     </Stack>
   );
 };

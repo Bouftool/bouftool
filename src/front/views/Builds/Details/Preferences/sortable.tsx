@@ -1,15 +1,15 @@
 import { closestCenter, DndContext, type DragEndEvent, PointerSensor, useSensor, useSensors } from "@dnd-kit/core";
 import { horizontalListSortingStrategy, SortableContext } from "@dnd-kit/sortable";
 import { useLayoutEffect, useState } from "react";
-import type { WakfuStats } from "src/wakfu/types/action";
+import type { EnumWakfuStat } from "src/wakfu/stats/types";
 import { BuildDetailsPreferencesSortableItem } from "./sortableItem";
 
-export type TBuildDetailsMasteryPreferencesProps<T extends WakfuStats> = {
+export type TBuildDetailsMasteryPreferencesProps<T extends EnumWakfuStat> = {
   value: [T, T, T, T];
   onChange: (value: [T, T, T, T]) => void;
 };
 
-export const BuildDetailsPreferencesSortable = <T extends WakfuStats>({
+export const BuildDetailsPreferencesSortable = <T extends EnumWakfuStat>({
   value,
   onChange,
 }: TBuildDetailsMasteryPreferencesProps<T>) => {
@@ -23,8 +23,8 @@ export const BuildDetailsPreferencesSortable = <T extends WakfuStats>({
 
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
-    const activeId = Number(active.id) as T;
-    const overId = over !== null ? (Number(over.id) as T) : null;
+    const activeId = active.id as T;
+    const overId = over !== null ? (over.id as T) : null;
     if (overId !== null && activeId !== overId) {
       const oldIndex = value.indexOf(activeId);
       const newIndex = value.indexOf(overId);

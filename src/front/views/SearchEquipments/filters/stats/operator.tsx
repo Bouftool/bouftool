@@ -1,10 +1,10 @@
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { Button, InputAdornment, ToggleButton, ToggleButtonGroup } from "@mui/material";
 import { useRef, useState } from "react";
+import { SearchItemsFilterStatsOperator } from "src/electron/searchItems/types";
 import { Popover } from "src/front/components/Navigation/Popover";
 import { StatsIcon } from "src/front/components/Wakfu/StatsIcon";
-import { SearchItemsFilterStatsOperator } from "src/wakfu/search/types";
-import type { WakfuStats } from "src/wakfu/types/action";
+import type { EnumWakfuStat } from "src/wakfu/stats/types";
 
 const OperatorLabels = {
   [SearchItemsFilterStatsOperator.GreaterThanOrEqual]: "≥",
@@ -13,7 +13,7 @@ const OperatorLabels = {
 };
 
 export type TStatsFiltersCardsOperatorProps = {
-  stat: WakfuStats;
+  stat: EnumWakfuStat;
   operator: SearchItemsFilterStatsOperator;
   onChange: (operator: SearchItemsFilterStatsOperator) => void;
 };

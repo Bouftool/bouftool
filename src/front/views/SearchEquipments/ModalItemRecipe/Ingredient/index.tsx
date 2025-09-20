@@ -2,17 +2,16 @@ import { Typography } from "@mui/material";
 import { StackRow } from "src/front/components/Layout/StackRow";
 import { ItemIcon } from "src/front/components/Wakfu/ItemIcon";
 import { RarityIcon } from "src/front/components/Wakfu/RarityIcon";
-import type { TWakfuRecipeDisplay } from "src/wakfu/data/types";
+import type { WakfuRecipe } from "src/wakfu/recipes/recipe";
 import { RecipeIngredientEncyclopedia } from "./encyclopedia";
 
 export type TRecipeIngredientProps = {
-  ingredient: TWakfuRecipeDisplay["ingredients"][number];
+  ingredient: ReturnType<WakfuRecipe["toObject"]>["ingredients"][number];
 };
 
 export const RecipeIngredient = ({ ingredient }: TRecipeIngredientProps) => {
   return (
     <StackRow
-      key={ingredient.itemId}
       sx={{
         border: (theme) => `1px solid ${theme.palette.border.main}`,
         borderTopWidth: "0px",
@@ -35,14 +34,14 @@ export const RecipeIngredient = ({ ingredient }: TRecipeIngredientProps) => {
       }}
     >
       <StackRow>
-        <ItemIcon width={24}>{ingredient.itemGfxId}</ItemIcon>
-        <RarityIcon width={10}>{ingredient.itemRarity}</RarityIcon>
+        <ItemIcon width={24}>{ingredient.item.gfxId}</ItemIcon>
+        <RarityIcon width={10}>{ingredient.item.rarity}</RarityIcon>
         <Typography variant="body2">
-          x{ingredient.quantity} {ingredient.itemLabel}
+          x{ingredient.quantity} {ingredient.item.title.fr}
         </Typography>
       </StackRow>
       <StackRow>
-        <RecipeIngredientEncyclopedia itemId={ingredient.itemId} itemTypeId={ingredient.itemTypeId} />
+        <RecipeIngredientEncyclopedia itemId={ingredient.item.id} itemTypeId={ingredient.item.itemType.id} />
       </StackRow>
     </StackRow>
   );

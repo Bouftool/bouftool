@@ -3,7 +3,7 @@ import { createContext, type ReactNode, useContext, useEffect } from "react";
 import { ElectronEvents, type ElectronEventsRenderer } from "src/electron/types";
 import { Loading } from "src/front/components/Loading";
 import { useElectronEvent } from "src/front/hooks/electron";
-import { WakfuLevelsRange } from "src/wakfu/types/utils";
+import { WakfuLevelsRange } from "src/wakfu/utils/constants";
 import { SearchItemsFiltersProvider } from "../../SearchEquipments/contexts/filters";
 import { SearchItemsPreferencesProvider } from "../../SearchEquipments/contexts/preferences";
 
@@ -18,7 +18,7 @@ export const useBuildDetailsContext = () => {
 };
 
 export type TBuildDetailsProviderProps = {
-  buildId: number;
+  buildId: string;
   children: ReactNode;
 };
 

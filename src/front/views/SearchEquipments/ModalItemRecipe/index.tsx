@@ -5,12 +5,12 @@ import { StackRow } from "src/front/components/Layout/StackRow";
 import { ItemIcon } from "src/front/components/Wakfu/ItemIcon";
 import { RarityIcon } from "src/front/components/Wakfu/RarityIcon";
 import { useElectronEvent } from "src/front/hooks/electron";
-import type { TWakfuItemDisplay } from "src/wakfu/types/items";
+import type { WakfuItem } from "src/wakfu/items";
 import { RecipeIngredient } from "./Ingredient";
 
 export type TModalItemRecipeProps = {
   open: boolean;
-  item: TWakfuItemDisplay | null;
+  item: ReturnType<WakfuItem["toObject"]> | null;
   onClose: () => void;
 };
 
@@ -33,7 +33,7 @@ export const ModalItemRecipe = ({ open, item, onClose }: TModalItemRecipeProps) 
         <StackRow sx={{ bgcolor: "surface.100", px: 1, borderRadius: "8px", py: 0.5 }}>
           <ItemIcon width={40}>{item.gfxId}</ItemIcon>
           <RarityIcon width={12}>{item.rarity}</RarityIcon>
-          {item.title}
+          {item.title.fr}
         </StackRow>
       </DialogTitle>
       <DialogContent>
@@ -41,12 +41,12 @@ export const ModalItemRecipe = ({ open, item, onClose }: TModalItemRecipeProps) 
           {recipes.map((recipe) => (
             <Stack key={recipe.id} sx={{ bgcolor: "surface.100", p: 1.5, borderRadius: "8px", gap: 1 }}>
               <StackRow sx={{ justifyContent: "space-between" }}>
-                <Typography variant="subtitle2">{recipe.recipeCategoryLabel}</Typography>
+                <Typography variant="subtitle2">{recipe.recipeCategory.title.fr}</Typography>
                 <Typography variant="subtitle2">Niv. {recipe.level}</Typography>
               </StackRow>
               <Stack>
                 {recipe.ingredients.map((ingredient) => (
-                  <RecipeIngredient key={ingredient.itemId} ingredient={ingredient} />
+                  <RecipeIngredient key={ingredient.item.id} ingredient={ingredient} />
                 ))}
               </Stack>
             </Stack>

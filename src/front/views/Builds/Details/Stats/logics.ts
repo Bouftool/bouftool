@@ -1,3 +1,5 @@
+import type { EnumWakfuStat, TWakfuStats } from "src/wakfu/stats/types";
+
 export const getResistancePercentage = (value: number) => {
   return Math.floor((1 - 0.8 ** (value / 100)) * 100);
 };
@@ -14,4 +16,8 @@ export const getStatsColor = (value: number, percentage?: boolean) => {
   } else {
     return "#9A9B9D";
   }
+};
+
+export const getStat = (build: { stats: TWakfuStats }, stat: EnumWakfuStat) => {
+  return build.stats[stat] ?? 0;
 };

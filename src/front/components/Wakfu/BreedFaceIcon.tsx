@@ -1,8 +1,8 @@
 import type { HTMLProps } from "react";
-import type { WakfuBreed } from "src/wakfu/types/breed";
+import type { EnumWakfuBreed } from "src/wakfu/breed/types";
 
 export type TBreedFaceIconProps = HTMLProps<HTMLImageElement> & {
-  children: WakfuBreed;
+  children: EnumWakfuBreed;
 };
 
 export const BreedFaceIcon = ({ children, ...props }: TBreedFaceIconProps) => {

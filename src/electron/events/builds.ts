@@ -1,46 +1,69 @@
-import { WakfuBuild } from "src/wakfu/builder/build";
-import { initializeStats } from "src/wakfu/builder/utils";
-import { WakfuData } from "src/wakfu/data";
-import type { WakfuItem } from "src/wakfu/data/item";
-import { isWakfuStats, WakfuStats } from "src/wakfu/types/action";
-import type { TWakfuItemDisplay } from "src/wakfu/types/items";
+import { WakfuBuild } from "src/wakfu/builds/build";
+import { WakfuCharacter } from "src/wakfu/builds/character";
+import type { WakfuItem } from "src/wakfu/items";
+import type { WakfuStats } from "src/wakfu/stats";
+import { WakfuStore } from "src/wakfu/store";
 import { ElectronEvents } from "../types";
 import { ElectronEventManager } from "./manager";
 
 export const registerElectronBuildsEvents = (manager: ElectronEventManager) => {
-  manager.register(ElectronEvents.GetAllBuilds, async (reply) => {
-    await WakfuBuild.loadBuilds();
-    const builds = WakfuBuild.getBuilds();
-    reply(builds);
+  manager.register(ElectronEvents.BuildCreateCharacter, async (reply, { name, breed }) => {
+    const character = await WakfuCharacter.create(name, breed);
+    ElectronEventManager.send(ElectronEvents.GetAllBuilds, WakfuCharacter.getCharactersToDisplay());
+    reply({ characterId: character.getId() });
   });
 
-  manager.register(ElectronEvents.CreateBuild, async (reply) => {
-    const newBuild = await WakfuBuild.createBuild();
+  manager.register(ElectronEvents.BuildEditCharacter, (reply, { characterId, name, breed }) => {
+    const character = WakfuCharacter.getById(characterId);
+    if (character === null) {
+      throw new Error(`Character with ID ${characterId} not found`);
+    }
+    character.setName(name);
+    character.setBreed(breed);
+    ElectronEventManager.send(ElectronEvents.GetAllBuilds, WakfuCharacter.getCharactersToDisplay());
+    reply(undefined);
+  });
+
+  manager.register(ElectronEvents.GetAllBuilds, async (reply) => {
+    await WakfuCharacter.loadCharacters();
+    const characters = WakfuCharacter.getCharactersToDisplay();
+    reply(characters);
+  });
+
+  manager.register(ElectronEvents.BuildCreate, async (reply, { characterId }) => {
+    const character = WakfuCharacter.getById(characterId);
+    if (character === null) {
+      throw new Error(`Character with ID ${characterId} not found`);
+    }
+    const newBuild = await WakfuBuild.create(character, "", 245);
     reply({
       buildId: newBuild.getId(),
     });
   });
 
-  manager.register(ElectronEvents.BuildDelete, async (reply, { buildId }) => {
-    await WakfuBuild.deleteBuild(buildId);
-    ElectronEventManager.send(ElectronEvents.GetAllBuilds, WakfuBuild.getBuilds());
+  manager.register(ElectronEvents.BuildDelete, (reply, { characterId, buildId }) => {
+    const character = WakfuCharacter.getById(characterId);
+    if (character === null) {
+      throw new Error(`Character with ID ${characterId} not found`);
+    }
+    character.deleteBuild(buildId);
+    ElectronEventManager.send(ElectronEvents.GetAllBuilds, WakfuCharacter.getCharactersToDisplay());
     reply(undefined);
   });
 
   manager.register(ElectronEvents.GetBuild, (reply, { buildId }) => {
-    const build = WakfuBuild.getBuildById(buildId);
+    const build = WakfuBuild.getById(buildId);
     if (!build) {
       throw new Error(`Build with ID ${buildId} not found`);
     }
     reply(build.toDisplay());
   });
 
-  manager.register(ElectronEvents.BuildSetInfo, (reply, { buildId, breed, name, level }) => {
-    const build = WakfuBuild.getBuildById(buildId);
+  manager.register(ElectronEvents.BuildSetInfo, (reply, { buildId, name, level }) => {
+    const build = WakfuBuild.getById(buildId);
     if (!build) {
       throw new Error(`Build with ID ${buildId} not found`);
     }
-    build.setBreed(breed);
     build.setName(name);
     build.setLevel(level);
     ElectronEventManager.send(ElectronEvents.GetBuild, build.toDisplay());
@@ -48,37 +71,42 @@ export const registerElectronBuildsEvents = (manager: ElectronEventManager) => {
   });
 
   manager.register(ElectronEvents.BuildEquipItem, (reply, { buildId, itemId, position: forcedPosition }) => {
-    const build = WakfuBuild.getBuildById(buildId);
+    const build = WakfuBuild.getById(buildId);
     if (!build) {
       throw new Error(`Build with ID ${buildId} not found`);
     }
-    const item = WakfuData.getInstance().getItemById(itemId);
+    const item = WakfuStore.getInstance().getItemById(itemId);
     if (!item) {
       throw new Error(`Item with ID ${itemId} not found`);
     }
     if (forcedPosition) {
-      build.equipItem(item, forcedPosition);
+      build.equipItem(forcedPosition, item);
     } else {
+      console.log(1);
       const itemType = item.getItemType();
       if (!itemType) {
         throw new Error(`Item with ID ${itemId} has no type`);
       }
-      let position = itemType.equipmentPositions[0];
-      if (itemType.equipmentPositions.length > 1 && build.isEquipped(position)) {
-        position = itemType.equipmentPositions[1];
+      console.log(2);
+      let position = itemType.getEquipmentPositions()[0];
+      if (itemType.getEquipmentPositions().length > 1 && build.isEquipped(position)) {
+        console.log(3);
+        position = itemType.getEquipmentPositions()[1];
         if (build.isEquipped(position)) {
-          reply({ itemId: itemId, position: itemType.equipmentPositions });
+          console.log(4);
+          reply({ itemId: itemId, position: itemType.getEquipmentPositions() });
           return;
         }
       }
-      build.equipItem(item, position);
+      console.log(5);
+      build.equipItem(position, item);
     }
     ElectronEventManager.send(ElectronEvents.GetBuild, build.toDisplay());
     reply(undefined);
   });
 
   manager.register(ElectronEvents.BuildUnequipItem, (reply, { buildId, position }) => {
-    const build = WakfuBuild.getBuildById(buildId);
+    const build = WakfuBuild.getById(buildId);
     if (!build) {
       throw new Error(`Build with ID ${buildId} not found`);
     }
@@ -88,91 +116,79 @@ export const registerElectronBuildsEvents = (manager: ElectronEventManager) => {
   });
 
   manager.register(ElectronEvents.BuildCompareItem, (reply, { buildId, itemId }) => {
-    const build = WakfuBuild.getBuildById(buildId);
+    const build = WakfuBuild.getById(buildId);
     if (!build) {
       throw new Error(`Build with ID ${buildId} not found`);
     }
-    const targetItem = WakfuData.getInstance().getItemById(itemId);
+    const elementalPreferences = build.getElementalPreferences();
+    const targetItem = WakfuStore.getInstance().getItemById(itemId);
     if (!targetItem) {
       throw new Error(`Item with ID ${itemId} not found`);
     }
     const itemType = targetItem.getItemType();
-    if (!itemType) {
-      throw new Error(`Item with ID ${itemId} has no type`);
-    }
     const results: {
-      sourceItems: TWakfuItemDisplay[];
-      targetItem: TWakfuItemDisplay;
-      stats: Record<WakfuStats, number>;
+      sourceItems: ReturnType<WakfuItem["toObject"]>[];
+      targetItem: ReturnType<WakfuItem["toObject"]>;
+      stats: ReturnType<WakfuStats["toObject"]>;
     }[] = [];
-    for (const position of itemType.equipmentPositions) {
-      const sourceItem = build.getEquippedItem(position);
-      if (!sourceItem) {
+    for (const position of itemType.getEquipmentPositions()) {
+      const equippedItem = build.getEquippedItem(position);
+      if (equippedItem === null) {
         continue;
       }
-      const sourceItems: WakfuItem[] = [sourceItem];
-      for (const disabledPosition of itemType.equipmentDisabledPositions) {
+      const sourceItems: WakfuItem[] = [equippedItem];
+      for (const disabledPosition of itemType.getEquipmentDisabledPositions()) {
         const disabledItem = build.getEquippedItem(disabledPosition);
         if (disabledItem) {
           sourceItems.push(disabledItem);
         }
       }
-      const stats = initializeStats();
-      const targetItemStats = build.getItemStats(targetItem);
-      const sourceItemsStats = sourceItems.map((item) => build.getItemStats(item));
-      for (const stat of Object.values(WakfuStats)) {
-        if (!isWakfuStats(stat)) {
-          continue;
-        }
-        stats[stat] = targetItemStats[stat];
-        stats[stat] = Math.floor(stats[stat] - sourceItemsStats.reduce((acc, itemStats) => acc + itemStats[stat], 0));
-      }
+      const targetItemStats = targetItem.getStats().toApplyEffects().applyElementalPreferences(elementalPreferences);
+      const sourceItemsStats = sourceItems.map((item) =>
+        item.getStats().toApplyEffects().applyElementalPreferences(elementalPreferences),
+      );
+      const delta = targetItemStats.compare(sourceItemsStats);
       results.push({
-        sourceItems: sourceItems.map((item) => item.toDisplay()),
-        targetItem: targetItem.toDisplay(),
-        stats,
+        sourceItems: sourceItems.map((item) => item.toObject()),
+        targetItem: targetItem.toObject(),
+        stats: delta.toObject(),
       });
     }
     reply(results);
   });
 
   manager.register(ElectronEvents.BuildSetPreferences, (reply, { buildId, preferences }) => {
-    const build = WakfuBuild.getBuildById(buildId);
+    const build = WakfuBuild.getById(buildId);
     if (!build) {
       throw new Error(`Build with ID ${buildId} not found`);
     }
-    if (preferences.mastery) {
-      build.setMasteryPreferences(preferences.mastery);
-    }
-    if (preferences.resistance) {
-      build.setResistancePreferences(preferences.resistance);
-    }
+    build.setElementalPreferences(preferences);
     ElectronEventManager.send(ElectronEvents.GetBuild, build.toDisplay());
     reply(undefined);
   });
 
   manager.register(ElectronEvents.BuildAddAbilityLevel, (reply, { buildId, ability, level }) => {
-    const build = WakfuBuild.getBuildById(buildId);
+    const build = WakfuBuild.getById(buildId);
     if (!build) {
       throw new Error(`Build with ID ${buildId} not found`);
     }
-    build.addAbilityLevel(ability, level);
+    build.getAbilities().addAbilityLevel(ability, level);
     ElectronEventManager.send(ElectronEvents.GetBuild, build.toDisplay());
     reply(undefined);
   });
 
   manager.register(ElectronEvents.BuildRemoveAbilityLevel, (reply, { buildId, ability, level }) => {
-    const build = WakfuBuild.getBuildById(buildId);
+    const build = WakfuBuild.getById(buildId);
     if (!build) {
       throw new Error(`Build with ID ${buildId} not found`);
     }
-    build.removeAbilityLevel(ability, level);
+    build.getAbilities().removeAbilityLevel(ability, level);
     ElectronEventManager.send(ElectronEvents.GetBuild, build.toDisplay());
     reply(undefined);
   });
 
   manager.register(ElectronEvents.BuildSetBonuses, (reply, { buildId, bonuses }) => {
-    const build = WakfuBuild.getBuildById(buildId);
+    const build = WakfuBuild.getById(buildId);
     if (!build) {
       throw new Error(`Build with ID ${buildId} not found`);
     }

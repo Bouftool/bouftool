@@ -1,8 +1,8 @@
 import FilterIcon from "@mui/icons-material/FilterAlt";
 import ReplayIcon from "@mui/icons-material/Replay";
 import { Button, Stack, TextField } from "@mui/material";
-import type { TSearchItemsFilters } from "src/wakfu/search/types";
-import type { WakfuStats } from "src/wakfu/types/action";
+import type { TSearchItemsFilters } from "src/electron/searchItems/types";
+import type { EnumWakfuStat } from "src/wakfu/stats/types";
 import { RangeFields } from "../../../components/Input/RangeFields";
 import { useSearchItemsFiltersContext } from "../contexts/filters";
 import { ItemTypeFilters } from "./itemTypes";
@@ -14,7 +14,7 @@ export type TSearchItemsFiltersForm = {
   rarities: number[];
   itemTypes: number[];
   levels: { min: number; max: number };
-  stats: Partial<Record<WakfuStats, Omit<TSearchItemsFilters["stats"][number], "stats">>>;
+  stats: Partial<Record<EnumWakfuStat, Omit<TSearchItemsFilters["stats"][number], "stats">>>;
 };
 
 export const SearchItemsFilters = () => {

@@ -8,7 +8,7 @@ export enum NavigationView {
 
 export type TNavigationParams = {
   [NavigationView.Builds]: undefined;
-  [NavigationView.BuildDetails]: { buildId: number };
+  [NavigationView.BuildDetails]: { buildId: string };
   [NavigationView.EncyclopediaEquipment]: undefined;
 };
 

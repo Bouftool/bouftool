@@ -1,11 +1,12 @@
 import { Stack, Typography } from "@mui/material";
 import { StatsBonusesLabels } from "src/front/constants/bonuses";
-import { getWakfuStatsEffectLabel } from "src/front/constants/stats";
-import { type EnumStatsBonuses, StatsBonuses } from "src/wakfu/constants/statsBonuses";
-import { isWakfuStats } from "src/wakfu/types/action";
+import { type EnumWakfuStatsBonuses, StatsBonuses } from "src/wakfu/builds/bonus";
+import { getWakfuStatEffectLabel } from "src/wakfu/stats/i18n/effects";
+import { isWakfuStat } from "src/wakfu/stats/types";
+import { EnumWakfuLang } from "src/wakfu/utils/types";
 
 export type TBonusTooltipProps = {
-  bonus: EnumStatsBonuses;
+  bonus: EnumWakfuStatsBonuses;
 };
 
 export const BonusTooltip = ({ bonus }: TBonusTooltipProps) => {
@@ -15,12 +16,10 @@ export const BonusTooltip = ({ bonus }: TBonusTooltipProps) => {
     <Stack>
       <Typography variant="subtitle2">{StatsBonusesLabels[bonus].fr}</Typography>
       {Object.entries(stats).map(([key, value]) => {
-        const stat = Number(key);
-        if (isWakfuStats(stat)) {
+        if (isWakfuStat(key)) {
           return (
-            <Typography key={stat} variant="caption">
-              {value}
-              {getWakfuStatsEffectLabel(stat)}
+            <Typography key={key} variant="caption">
+              {getWakfuStatEffectLabel(EnumWakfuLang.French, key, value)}
             </Typography>
           );
         }

@@ -10,7 +10,7 @@ import { SearchItemsPreferences } from "./preferences";
 
 export type TSearchEquipmentsProps = {
   controlled?: boolean;
-  buildId?: number;
+  buildId?: string;
 };
 
 export const SearchEquipments = ({ controlled, buildId }: TSearchEquipmentsProps) => {

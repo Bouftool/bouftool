@@ -1,7 +1,8 @@
 import { Stack } from "@mui/material";
-import { WakfuStats } from "src/wakfu/types/action";
+import { EnumWakfuStat } from "src/wakfu/stats/types";
 import { useBuildDetailsContext } from "../context";
 import { BuildStats } from "../stats";
+import { getStat } from "./logics";
 import { StatsRow, statsRowClasses } from "./styles";
 
 export const BuildDetailsStatsBase = () => {
@@ -11,23 +12,23 @@ export const BuildDetailsStatsBase = () => {
     <Stack sx={{ gap: 1 }}>
       <StatsRow columns={4} className={statsRowClasses.root}>
         <BuildStats
-          stats={WakfuStats.PV}
-          value={build.stats[WakfuStats.PV].toLocaleString("fr-FR")}
+          stats={EnumWakfuStat.HealthPoint}
+          value={getStat(build, EnumWakfuStat.HealthPoint).toLocaleString("fr-FR")}
           statsColor="#E34A53"
         />
         <BuildStats
-          stats={WakfuStats.PA}
-          value={build.stats[WakfuStats.PA].toLocaleString("fr-FR")}
+          stats={EnumWakfuStat.ActionPoint}
+          value={getStat(build, EnumWakfuStat.ActionPoint).toLocaleString("fr-FR")}
           statsColor="#19ADD5"
         />
         <BuildStats
-          stats={WakfuStats.PM}
-          value={build.stats[WakfuStats.PM].toLocaleString("fr-FR")}
+          stats={EnumWakfuStat.MovementPoint}
+          value={getStat(build, EnumWakfuStat.MovementPoint).toLocaleString("fr-FR")}
           statsColor="#96B443"
         />
         <BuildStats
-          stats={WakfuStats.PW}
-          value={build.stats[WakfuStats.PW].toLocaleString("fr-FR")}
+          stats={EnumWakfuStat.WakfuPoint}
+          value={getStat(build, EnumWakfuStat.WakfuPoint).toLocaleString("fr-FR")}
           statsColor="#32D4CA"
         />
       </StatsRow>

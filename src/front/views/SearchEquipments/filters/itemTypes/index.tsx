@@ -1,30 +1,30 @@
 import { Badge, badgeClasses, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
 import { useState } from "react";
-import { WakfuItemTypeId } from "src/wakfu/types/itemType";
+import { ItemTypeLabels } from "src/wakfu/itemTypes/i18n/labels";
+import { EnumWakfuItemType } from "src/wakfu/itemTypes/types";
 import { SidePopover } from "../../../../components/Navigation/SidePopover";
 import { ItemTypeIcon } from "../../../../components/Wakfu/ItemTypeIcon";
-import { ItemTypeLabels } from "./constants";
 
 const ItemTypes = [
-  WakfuItemTypeId.Amulet,
-  WakfuItemTypeId.Ring,
-  WakfuItemTypeId.Boots,
-  WakfuItemTypeId.Cloak,
-  WakfuItemTypeId.Helmet,
-  WakfuItemTypeId.Belt,
-  WakfuItemTypeId.Shoulders,
-  WakfuItemTypeId.Breastplate,
-  WakfuItemTypeId.OneHandedWeapon,
-  WakfuItemTypeId.TwoHandedWeapon,
-  WakfuItemTypeId.SecondHand,
-  WakfuItemTypeId.Emblem,
-  WakfuItemTypeId.Pet,
-  WakfuItemTypeId.Mount,
+  EnumWakfuItemType.Amulet,
+  EnumWakfuItemType.Ring,
+  EnumWakfuItemType.Boots,
+  EnumWakfuItemType.Cloak,
+  EnumWakfuItemType.Helmet,
+  EnumWakfuItemType.Belt,
+  EnumWakfuItemType.Shoulders,
+  EnumWakfuItemType.Breastplate,
+  EnumWakfuItemType.OneHandedWeapon,
+  EnumWakfuItemType.TwoHandedWeapon,
+  EnumWakfuItemType.SecondHand,
+  EnumWakfuItemType.Emblem,
+  EnumWakfuItemType.Pet,
+  EnumWakfuItemType.Mount,
 ];
 
 export type TItemTypeFiltersProps = {
-  value: WakfuItemTypeId[];
-  onChange: (value: WakfuItemTypeId[]) => void;
+  value: EnumWakfuItemType[];
+  onChange: (value: EnumWakfuItemType[]) => void;
 };
 
 export const ItemTypeFilters = ({ value, onChange }: TItemTypeFiltersProps) => {
@@ -38,7 +38,7 @@ export const ItemTypeFilters = ({ value, onChange }: TItemTypeFiltersProps) => {
       sx={{ [`& .${badgeClasses.badge}`]: { top: 5, right: 3 } }}
     >
       <SidePopover
-        label={<ItemTypeIcon width={24}>{WakfuItemTypeId.Helmet}</ItemTypeIcon>}
+        label={<ItemTypeIcon width={24}>{EnumWakfuItemType.Helmet}</ItemTypeIcon>}
         onToggle={setBadgeHidden}
         slotProps={{ button: { sx: { height: "41px" } } }}
       >

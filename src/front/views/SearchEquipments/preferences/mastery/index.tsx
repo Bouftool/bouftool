@@ -1,7 +1,7 @@
 import type { Dispatch } from "react";
 import { StackRow } from "src/front/components/Layout/StackRow";
 import { StatsIcon } from "src/front/components/Wakfu/StatsIcon";
-import { WakfuStats } from "src/wakfu/types/action";
+import { EnumWakfuStat } from "src/wakfu/stats/types";
 import type { TSearchItemsPreferences } from "../logics";
 import type { TSearchItemsPreferencesAction } from "../logics/reducer";
 import { SearchItemsMasteryElementsPreferences } from "./elements";
@@ -16,7 +16,7 @@ export type TSearchItemsMasteryPreferencesProps = {
 export const SearchItemsMasteryPreferences = ({ value, dispatchPreferences }: TSearchItemsMasteryPreferencesProps) => {
   return (
     <StackRow>
-      <StatsIcon>{WakfuStats.Mastery}</StatsIcon>
+      <StatsIcon>{EnumWakfuStat.ElementalMastery}</StatsIcon>
       <SearchItemsMasteryElementsPreferences
         value={value.elementsPriority}
         onChange={(elementsPriority) =>
@@ -24,9 +24,9 @@ export const SearchItemsMasteryPreferences = ({ value, dispatchPreferences }: TS
         }
       />
       <SearchItemsMeleeRangeMasteryPreferences
-        value={value.meleeRangeMastery}
+        value={value.rangeMastery}
         onChange={(value) => {
-          dispatchPreferences({ type: "set:mastery:meleeRangeMastery", payload: value });
+          dispatchPreferences({ type: "set:mastery:rangeMastery", payload: value });
         }}
       />
       <SearchItemsSubMasteriesPreferences

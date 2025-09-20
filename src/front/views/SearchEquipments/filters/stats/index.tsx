@@ -1,52 +1,53 @@
 import CloseIcon from "@mui/icons-material/Close";
 import { Button, InputAdornment, Stack, TextField, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
 import type { ReactNode } from "react";
-import { wakfuStatsLabels } from "src/front/constants/stats";
-import { SearchItemsFilterStatsOperator } from "src/wakfu/search/types";
-import { WakfuStats } from "src/wakfu/types/action";
+import { SearchItemsFilterStatsOperator } from "src/electron/searchItems/types";
+import { getWakfuStatLabel } from "src/wakfu/stats/i18n/label";
+import { EnumWakfuStat } from "src/wakfu/stats/types";
+import { EnumWakfuLang } from "src/wakfu/utils/types";
 import { SidePopover } from "../../../../components/Navigation/SidePopover";
 import { StatsIcon } from "../../../../components/Wakfu/StatsIcon";
 import type { TSearchItemsFiltersForm } from "../index";
 import { StatsFiltersCardsOperator } from "./operator";
 
-const Stats: Record<string, WakfuStats[]> = {
+const Stats: Record<string, EnumWakfuStat[]> = {
   Main: [
-    WakfuStats.PV,
-    WakfuStats.PW,
-    WakfuStats.PA,
-    WakfuStats.PM,
-    WakfuStats.Range,
-    WakfuStats.Control,
-    WakfuStats.Initiative,
-    WakfuStats.Dodge,
-    WakfuStats.Lock,
-    WakfuStats.Willpower,
+    EnumWakfuStat.HealthPoint,
+    EnumWakfuStat.WakfuPoint,
+    EnumWakfuStat.ActionPoint,
+    EnumWakfuStat.MovementPoint,
+    EnumWakfuStat.Range,
+    EnumWakfuStat.Control,
+    EnumWakfuStat.Initiative,
+    EnumWakfuStat.Dodge,
+    EnumWakfuStat.Lock,
+    EnumWakfuStat.Willpower,
   ],
   Mastery: [
-    WakfuStats.Mastery,
-    WakfuStats.MasteryFire,
-    WakfuStats.MasteryEarth,
-    WakfuStats.MasteryWater,
-    WakfuStats.MasteryAir,
-    WakfuStats.CriticalMastery,
-    WakfuStats.BackMastery,
-    WakfuStats.MeleeMastery,
-    WakfuStats.DistanceMastery,
-    WakfuStats.BerserkMastery,
-    WakfuStats.CriticalRate,
+    EnumWakfuStat.ElementalMastery,
+    EnumWakfuStat.FireMastery,
+    EnumWakfuStat.WaterMastery,
+    EnumWakfuStat.EarthMastery,
+    EnumWakfuStat.AirMastery,
+    EnumWakfuStat.CriticalMastery,
+    EnumWakfuStat.RearMastery,
+    EnumWakfuStat.MeleeMastery,
+    EnumWakfuStat.DistanceMastery,
+    EnumWakfuStat.BerserkMastery,
+    EnumWakfuStat.CriticalHit,
   ],
   Resistance: [
-    WakfuStats.Resistance,
-    WakfuStats.ResistanceFire,
-    WakfuStats.ResistanceWater,
-    WakfuStats.ResistanceEarth,
-    WakfuStats.ResistanceAir,
-    WakfuStats.CriticalResistance,
-    WakfuStats.BackResistance,
-    WakfuStats.ArmorGiven,
-    WakfuStats.ArmorReceived,
-    WakfuStats.HealingMastery,
-    WakfuStats.Block,
+    EnumWakfuStat.ElementalResistance,
+    EnumWakfuStat.FireResistance,
+    EnumWakfuStat.WaterResistance,
+    EnumWakfuStat.EarthResistance,
+    EnumWakfuStat.AirResistance,
+    EnumWakfuStat.CriticalResistance,
+    EnumWakfuStat.RearResistance,
+    EnumWakfuStat.ArmorGiven,
+    EnumWakfuStat.ArmorReceived,
+    EnumWakfuStat.HealingMastery,
+    EnumWakfuStat.Block,
   ],
 };
 
@@ -57,7 +58,10 @@ export type TStatsFilters = {
 
 export const StatsFilters = ({ value, onChange }: TStatsFilters) => {
   return (
-    <SidePopover label={<StatsIcon>{WakfuStats.PV}</StatsIcon>} slotProps={{ button: { sx: { height: "41px" } } }}>
+    <SidePopover
+      label={<StatsIcon>{EnumWakfuStat.HealthPoint}</StatsIcon>}
+      slotProps={{ button: { sx: { height: "41px" } } }}
+    >
       <Stack sx={{ flexDirection: "row" }}>
         {Object.keys(Stats).map((key) => (
           <ToggleButtonGroup key={key} orientation="vertical" variant="push">
@@ -81,7 +85,7 @@ export const StatsFilters = ({ value, onChange }: TStatsFilters) => {
                 }}
               >
                 <StatsIcon>{stat}</StatsIcon>
-                <Typography variant="caption">{wakfuStatsLabels[stat].title.fr}</Typography>
+                <Typography variant="caption">{getWakfuStatLabel(stat, EnumWakfuLang.French)}</Typography>
               </ToggleButton>
             ))}
           </ToggleButtonGroup>

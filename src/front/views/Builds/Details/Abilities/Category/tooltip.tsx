@@ -1,7 +1,9 @@
 import { Stack, Typography } from "@mui/material";
 import { StackRow } from "src/front/components/Layout/StackRow";
-import { getWakfuStatsEffectLabel } from "src/front/constants/stats";
-import { AbilitiesDefinitions, type EnumAbilities } from "src/wakfu/types/ability";
+import { AbilitiesDefinitions } from "src/wakfu/abilities/abilities";
+import type { EnumAbilities } from "src/wakfu/abilities/types";
+import { getWakfuStatEffectLabel } from "src/wakfu/stats/i18n/effects";
+import { EnumWakfuLang } from "src/wakfu/utils/types";
 import { useBuildDetailsContext } from "../../context";
 import { AbilitiesDisplay } from "../constants";
 
@@ -32,9 +34,8 @@ export const AbilitiesCategoryTooltip = ({ ability }: TAbilitiesCategoryTooltipP
         Niveau actuel
       </Typography>
       {AbilitiesDefinitions[ability].effects.map((effect) => (
-        <Typography key={effect.stats} variant="caption">
-          {effect.scaling * (build.abilities[ability] ?? 0)}
-          {getWakfuStatsEffectLabel(effect.stats)}
+        <Typography key={effect.stat} variant="caption">
+          {getWakfuStatEffectLabel(EnumWakfuLang.French, effect.stat, effect.scaling * (build.abilities[ability] ?? 0))}
         </Typography>
       ))}
       {(level < maxLevel || maxLevel === 0) && (
@@ -43,9 +44,12 @@ export const AbilitiesCategoryTooltip = ({ ability }: TAbilitiesCategoryTooltipP
             Niveau suivant
           </Typography>
           {AbilitiesDefinitions[ability].effects.map((effect) => (
-            <Typography key={effect.stats} variant="caption">
-              {effect.scaling * ((build.abilities[ability] ?? 0) + 1)}
-              {getWakfuStatsEffectLabel(effect.stats)}
+            <Typography key={effect.stat} variant="caption">
+              {getWakfuStatEffectLabel(
+                EnumWakfuLang.French,
+                effect.stat,
+                effect.scaling * ((build.abilities[ability] ?? 0) + 1),
+              )}
             </Typography>
           ))}
         </>

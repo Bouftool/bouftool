@@ -14,7 +14,7 @@ export const BuildDetailsInfo = () => {
     <Stack sx={{ flex: 1, gap: 1, overflow: "hidden" }}>
       <BuildDetailsInfoRoot className={buildDetailsInfoClasses.root} onClick={() => setOpen(true)}>
         <BreedFaceIcon className={buildDetailsInfoClasses.breed} width={44}>
-          {build.breed}
+          {build.characterBreed}
         </BreedFaceIcon>
         <Stack sx={{ flex: 1, alignItems: "start", overflow: "hidden" }}>
           <Typography variant="subtitle2" sx={{ maxWidth: "100%" }} noWrap>

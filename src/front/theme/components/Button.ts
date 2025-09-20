@@ -27,6 +27,7 @@ export const themeButton = {
         color: theme.palette.mode === "light" ? "black" : theme.palette.text.primary,
         transition: "none",
         padding: "8px",
+        minWidth: 0,
         "&:hover": {
           backgroundColor: theme.palette.mode === "light" ? "rgba(0, 0, 0, 0.08)" : "rgba(255, 255, 255, 0.08)",
         },

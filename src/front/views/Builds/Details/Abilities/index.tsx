@@ -1,6 +1,6 @@
 import { Stack } from "@mui/material";
 import { StackGrid } from "src/front/components/Layout/StackGrid";
-import { EnumAbilitiesCategories } from "src/wakfu/types/ability";
+import { EnumAbilitiesCategories } from "src/wakfu/abilities/abilities";
 import { useBuildDetailsContext } from "../context";
 import { AbilitiesCategory } from "./Category";
 

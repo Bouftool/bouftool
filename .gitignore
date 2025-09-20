@@ -96,4 +96,5 @@ CLAUDE.md
 .yarn/
 
 # Bouftool
-builds/*.json
+characters/
+gamedata/

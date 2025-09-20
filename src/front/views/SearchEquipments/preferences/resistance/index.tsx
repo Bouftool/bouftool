@@ -1,7 +1,7 @@
 import type { Dispatch } from "react";
 import { StackRow } from "src/front/components/Layout/StackRow";
 import { StatsIcon } from "src/front/components/Wakfu/StatsIcon";
-import { WakfuStats } from "src/wakfu/types/action";
+import { EnumWakfuStat } from "src/wakfu/stats/types";
 import type { TSearchItemsPreferences } from "../logics";
 import type { TSearchItemsPreferencesAction } from "../logics/reducer";
 import { SearchItemsResistanceElementsPreferences } from "./elements";
@@ -17,7 +17,7 @@ export const SearchItemsResistancePreferences = ({
 }: TSearchItemsMasteryPreferencesProps) => {
   return (
     <StackRow>
-      <StatsIcon>{WakfuStats.Resistance}</StatsIcon>
+      <StatsIcon>{EnumWakfuStat.ElementalResistance}</StatsIcon>
       <SearchItemsResistanceElementsPreferences
         value={value.elementsPriority}
         onChange={(newValue) => dispatchPreferences({ type: "set:resistance:elementsPriority", payload: newValue })}

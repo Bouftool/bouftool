@@ -1,6 +1,6 @@
 import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 import { StatsIcon } from "src/front/components/Wakfu/StatsIcon";
-import { WakfuStats } from "src/wakfu/types/action";
+import { EnumWakfuStat } from "src/wakfu/stats/types";
 import type { TSearchItemsPreferences } from "../logics";
 
 export type TSearchItemsSubMasteriesPreferencesProps = {
@@ -15,17 +15,17 @@ export const SearchItemsSubMasteriesPreferences = ({ value, onChange }: TSearchI
       value={value}
       onChange={(_, newValue: TSearchItemsPreferences["mastery"]["subMasteries"]) => onChange(newValue)}
     >
-      <ToggleButton value={WakfuStats.CriticalMastery}>
-        <StatsIcon>{WakfuStats.CriticalMastery}</StatsIcon>
+      <ToggleButton value={EnumWakfuStat.CriticalMastery}>
+        <StatsIcon>{EnumWakfuStat.CriticalMastery}</StatsIcon>
       </ToggleButton>
-      <ToggleButton value={WakfuStats.BackMastery}>
-        <StatsIcon>{WakfuStats.BackMastery}</StatsIcon>
+      <ToggleButton value={EnumWakfuStat.RearMastery}>
+        <StatsIcon>{EnumWakfuStat.RearMastery}</StatsIcon>
       </ToggleButton>
-      <ToggleButton value={WakfuStats.BerserkMastery}>
-        <StatsIcon>{WakfuStats.BerserkMastery}</StatsIcon>
+      <ToggleButton value={EnumWakfuStat.BerserkMastery}>
+        <StatsIcon>{EnumWakfuStat.BerserkMastery}</StatsIcon>
       </ToggleButton>
-      <ToggleButton value={WakfuStats.HealingMastery}>
-        <StatsIcon>{WakfuStats.HealingMastery}</StatsIcon>
+      <ToggleButton value={EnumWakfuStat.HealingMastery}>
+        <StatsIcon>{EnumWakfuStat.HealingMastery}</StatsIcon>
       </ToggleButton>
     </ToggleButtonGroup>
   );

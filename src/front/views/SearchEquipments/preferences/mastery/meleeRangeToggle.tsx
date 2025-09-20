@@ -1,10 +1,10 @@
 import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 import { StatsIcon } from "src/front/components/Wakfu/StatsIcon";
-import { WakfuStats } from "src/wakfu/types/action";
+import { EnumWakfuStat } from "src/wakfu/stats/types";
 
 export type TSearchItemsMeleeRangeMasteryPreferencesProps = {
-  value: WakfuStats.MeleeMastery | WakfuStats.DistanceMastery | null;
-  onChange: (value: WakfuStats.MeleeMastery | WakfuStats.DistanceMastery | null) => void;
+  value: EnumWakfuStat.MeleeMastery | EnumWakfuStat.DistanceMastery | null;
+  onChange: (value: EnumWakfuStat.MeleeMastery | EnumWakfuStat.DistanceMastery | null) => void;
 };
 
 export const SearchItemsMeleeRangeMasteryPreferences = ({
@@ -13,11 +13,11 @@ export const SearchItemsMeleeRangeMasteryPreferences = ({
 }: TSearchItemsMeleeRangeMasteryPreferencesProps) => {
   return (
     <ToggleButtonGroup variant="push" value={value} exclusive onChange={(_event, newValue) => onChange(newValue)}>
-      <ToggleButton value={WakfuStats.MeleeMastery}>
-        <StatsIcon>{WakfuStats.MeleeMastery}</StatsIcon>
+      <ToggleButton value={EnumWakfuStat.MeleeMastery}>
+        <StatsIcon>{EnumWakfuStat.MeleeMastery}</StatsIcon>
       </ToggleButton>
-      <ToggleButton value={WakfuStats.DistanceMastery}>
-        <StatsIcon>{WakfuStats.DistanceMastery}</StatsIcon>
+      <ToggleButton value={EnumWakfuStat.DistanceMastery}>
+        <StatsIcon>{EnumWakfuStat.DistanceMastery}</StatsIcon>
       </ToggleButton>
     </ToggleButtonGroup>
   );

@@ -1,7 +1,8 @@
 import type { HTMLProps } from "react";
+import type { EnumWakfuRarity } from "src/wakfu/items/rarity";
 
 export type TRarityIconProps = Omit<HTMLProps<HTMLImageElement>, "src" | "alt"> & {
-  children: number;
+  children: EnumWakfuRarity;
 };
 
 export const RarityIcon = ({ children, ...props }: TRarityIconProps) => {

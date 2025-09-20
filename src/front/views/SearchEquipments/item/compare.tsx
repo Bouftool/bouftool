@@ -4,7 +4,7 @@ import { ElectronEvents } from "src/electron/types";
 import { sendElectronEvent } from "src/front/hooks/electron";
 
 export type TSearchItemsCompareProps = {
-  buildId?: number;
+  buildId?: string;
   itemId: number;
 };
 

@@ -1,13 +1,36 @@
 import type { HTMLProps } from "react";
+import { EnumWakfuItemType } from "src/wakfu/itemTypes/types";
 
 const Exceptions = [
-  { originTypes: [108, 110, 112, 113, 115, 254], replacedBy: 518 },
-  { originTypes: [101, 111, 114, 117, 223, 253], replacedBy: 519 },
-  { originTypes: [189], replacedBy: 520 },
+  {
+    originTypes: [
+      EnumWakfuItemType.WandOneHanded,
+      EnumWakfuItemType.SwordOneHanded,
+      EnumWakfuItemType.StaffOneHanded,
+      EnumWakfuItemType.NeedleOneHanded,
+      EnumWakfuItemType.CardOneHanded,
+    ],
+    replacedBy: EnumWakfuItemType.OneHandedWeapon,
+  },
+  {
+    originTypes: [
+      EnumWakfuItemType.AxeTwoHanded,
+      EnumWakfuItemType.ShovelTwoHanded,
+      EnumWakfuItemType.HammerTwoHanded,
+      EnumWakfuItemType.BowTwoHanded,
+      EnumWakfuItemType.SwordTwoHanded,
+      EnumWakfuItemType.StaffTwoHanded,
+    ],
+    replacedBy: EnumWakfuItemType.TwoHandedWeapon,
+  },
+  {
+    originTypes: [EnumWakfuItemType.DaggerSecondHand, EnumWakfuItemType.ShieldSecondHand],
+    replacedBy: EnumWakfuItemType.SecondHand,
+  },
 ];
 
 export interface ItemTypeIconProps extends Omit<HTMLProps<HTMLImageElement>, "children" | "src" | "alt"> {
-  children: number;
+  children: EnumWakfuItemType;
 }
 
 export const ItemTypeIcon = ({ children, ...props }: ItemTypeIconProps) => {

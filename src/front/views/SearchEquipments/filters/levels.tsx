@@ -1,5 +1,5 @@
 import { Slider, Stack, Typography } from "@mui/material";
-import type { TSearchItemsFilters } from "src/wakfu/search/types";
+import type { TSearchItemsFilters } from "src/electron/searchItems/types";
 
 export type TLevelsFilterProps = {
   value: TSearchItemsFilters["levels"];

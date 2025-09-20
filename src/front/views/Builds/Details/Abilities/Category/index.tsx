@@ -1,6 +1,6 @@
 import { Stack, Typography } from "@mui/material";
-import { AbilitiesCategories, type EnumAbilitiesCategories } from "src/wakfu/types/ability";
-import { getCurrentAbilitiesCategoryPoints } from "src/wakfu/utils/abilities";
+import { AbilitiesCategories, type EnumAbilitiesCategories } from "src/wakfu/abilities/abilities";
+import { getCurrentAbilitiesCategoryPoints } from "src/wakfu/abilities/utils";
 import { useBuildDetailsContext } from "../../context";
 import { AbilitiesCategoryRow } from "./row";
 import { AbilitiesCategoryRoot, abilitiesCategoryClasses } from "./styles";

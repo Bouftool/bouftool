@@ -1,0 +1,337 @@
+import type { EnumWakfuLang, TWakfuI18n } from "../../utils/types";
+import { EnumWakfuStat } from "../types";
+
+export const WakfuStatI18nEffects: Record<EnumWakfuStat, TWakfuI18n> = {
+  [EnumWakfuStat.HealthPoint]: {
+    fr: "%d PV",
+    en: "%d HP",
+    es: "%d PdV",
+    pt: "%d PV",
+  },
+  [EnumWakfuStat.HealingMastery]: {
+    fr: "%d Maîtrise Soin",
+    en: "%d Healing Mastery",
+    es: "%d Dominio cura",
+    pt: "%d Domínio de cura",
+  },
+  [EnumWakfuStat.ActionPoint]: {
+    fr: "%d PA",
+    en: "%d AP",
+    es: "%d PA",
+    pt: "%d PA",
+  },
+  [EnumWakfuStat.MovementPoint]: {
+    fr: "%d PM",
+    en: "%d MP",
+    es: "%d PM",
+    pt: "%d PM",
+  },
+  [EnumWakfuStat.ElementalResistance]: {
+    fr: "%d Résistance Élémentaire",
+    en: "%d Elemental Resistance",
+    es: "%d Resistencia elemental",
+    pt: "%d Resistência elementar",
+  },
+  [EnumWakfuStat.FireResistance]: {
+    fr: "%d Résistance Feu",
+    en: "%d Fire Resistance",
+    es: "%d Resistencia al fuego",
+    pt: "%d Resistência ao fogo",
+  },
+  [EnumWakfuStat.WaterResistance]: {
+    fr: "%d Résistance Eau",
+    en: "%d Water Resistance",
+    es: "%d Resistencia al agua",
+    pt: "%d Resistência à água",
+  },
+  [EnumWakfuStat.EarthResistance]: {
+    fr: "%d Résistance Terre",
+    en: "%d Earth Resistance",
+    es: "%d Resistencia a la tierra",
+    pt: "%d Resistência à terra",
+  },
+  [EnumWakfuStat.AirResistance]: {
+    fr: "%d Résistance Air",
+    en: "%d Air Resistance",
+    es: "%d Resistencia al aire",
+    pt: "%d Resistência ao ar",
+  },
+  [EnumWakfuStat.RearResistance]: {
+    fr: "%d Résistance Dos",
+    en: "%d Rear Resistance",
+    es: "%d Resistencia por la espalda",
+    pt: "%d Resistência de costas",
+  },
+  [EnumWakfuStat.ElementalMastery]: {
+    fr: "%d Maîtrise Élémentaire",
+    en: "%d Elemental Mastery",
+    es: "%d Dominio elemental",
+    pt: "%d Domínio elemental",
+  },
+  [EnumWakfuStat.FireMastery]: {
+    fr: "%d Maîtrise Feu",
+    en: "%d Fire Mastery",
+    es: "%d Dominio de fuego",
+    pt: "%d Domínio de fogo",
+  },
+  [EnumWakfuStat.EarthMastery]: {
+    fr: "%d Maîtrise Terre",
+    en: "%d Earth Mastery",
+    es: "%d Dominio de tierra",
+    pt: "%d Domínio de terra",
+  },
+  [EnumWakfuStat.WaterMastery]: {
+    fr: "%d Maîtrise Eau",
+    en: "%d Water Mastery",
+    es: "%d Dominio de agua",
+    pt: "%d Domínio de água",
+  },
+  [EnumWakfuStat.AirMastery]: {
+    fr: "%d Maîtrise Air",
+    en: "%d Air Mastery",
+    es: "%d Dominio de aire",
+    pt: "%d Domínio de ar",
+  },
+  [EnumWakfuStat.CriticalMastery]: {
+    fr: "%d Maîtrise Critique",
+    en: "%d Critical Mastery",
+    es: "%d Dominio crítico",
+    pt: "%d Domínio de crítico",
+  },
+  [EnumWakfuStat.CriticalHit]: {
+    fr: "%d%% Coup Critique",
+    en: "%d%% Critical Hit",
+    es: "%d%% Golpe Crítico",
+    pt: "%d%% Golpe Crítico",
+  },
+  [EnumWakfuStat.Range]: {
+    fr: "%d Portée",
+    en: "%d Range",
+    es: "%d Alcance",
+    pt: "%d Alcance",
+  },
+  [EnumWakfuStat.Prospecting]: {
+    fr: "%d Prospection",
+    en: "%d Prospecting",
+    es: "%d Prospección",
+    pt: "%d Prospecção",
+  },
+  [EnumWakfuStat.Wisdom]: {
+    fr: "%d Sagesse",
+    en: "%d Wisdom",
+    es: "%d Sabiduría",
+    pt: "%d Sabedoria",
+  },
+  [EnumWakfuStat.Initiative]: {
+    fr: "%d Initiative",
+    en: "%d Initiative",
+    es: "%d Iniciativa",
+    pt: "%d Iniciativa",
+  },
+  [EnumWakfuStat.Lock]: {
+    fr: "%d Tacle",
+    en: "%d Lock",
+    es: "%d Placaje",
+    pt: "%d Bloqueio",
+  },
+  [EnumWakfuStat.Dodge]: {
+    fr: "%d Esquive",
+    en: "%d Dodge",
+    es: "%d Esquiva",
+    pt: "%d Esquiva",
+  },
+  [EnumWakfuStat.Willpower]: {
+    fr: "%d Volonté",
+    en: "%d Force of Will",
+    es: "%d Voluntad",
+    pt: "%d Vontade",
+  },
+  [EnumWakfuStat.RearMastery]: {
+    fr: "%d Maîtrise Arrière",
+    en: "%d Rear Mastery",
+    es: "%d Dominio espalda",
+    pt: "%d Domínio de costas",
+  },
+  [EnumWakfuStat.Control]: {
+    fr: "%d Contrôle",
+    en: "%d Control",
+    es: "%d Control",
+    pt: "%d Controle",
+  },
+  [EnumWakfuStat.WakfuPoint]: {
+    fr: "%d PW",
+    en: "%d WP",
+    es: "%d PW",
+    pt: "%d PW",
+  },
+  [EnumWakfuStat.Block]: {
+    fr: "%d%% Parade",
+    en: "%d%% Block",
+    es: "%d%% de anticipación",
+    pt: "%d%% de Parada",
+  },
+  [EnumWakfuStat.CriticalResistance]: {
+    fr: "%d Résistance Critique",
+    en: "%d Critical Resistance",
+    es: "%d Resistencia Crítica",
+    pt: "%d Resistência Crítica",
+  },
+  [EnumWakfuStat.MeleeMastery]: {
+    fr: "%d Maîtrise Mêlée",
+    en: "%d Melee Mastery",
+    es: "%d Dominio de melé",
+    pt: "%d Domínio de curta distância",
+  },
+  [EnumWakfuStat.DistanceMastery]: {
+    fr: "%d Maîtrise Distance",
+    en: "%d Distance Mastery",
+    es: "%d Dominio distancia",
+    pt: "%d Domínio de distância",
+  },
+  [EnumWakfuStat.BerserkMastery]: {
+    fr: "%d Maîtrise Berserk",
+    en: "%d Berserk Mastery",
+    es: "%d Dominio berserk",
+    pt: "%d Domínio de berserk",
+  },
+  [EnumWakfuStat.MasteryOneElement]: {
+    fr: "%d Maîtrise sur 1 élément",
+    en: "%d Mastery with 1 element",
+    es: "%d Dominio en 1 elemento",
+    pt: "%d Domínio sobre 1 elemento",
+  },
+  [EnumWakfuStat.MasteryTwoElements]: {
+    fr: "%d Maîtrise sur 2 éléments",
+    en: "%d Mastery with 2 elements",
+    es: "%d Dominio en 2 elementos",
+    pt: "%d Domínio sobre 2 elementos",
+  },
+  [EnumWakfuStat.MasteryThreeElements]: {
+    fr: "%d Maîtrise sur 3 éléments",
+    en: "%d Mastery with 3 elements",
+    es: "%d Dominio en 3 elementos",
+    pt: "%d Domínio sobre 3 elementos",
+  },
+  [EnumWakfuStat.ResistanceOneElement]: {
+    fr: "%d Résistance sur 1 élément",
+    en: "%d Resistance to 1 element",
+    es: "%d Resistencia en 1 elemento",
+    pt: "%d Resistência a 1 elemento",
+  },
+  [EnumWakfuStat.ResistanceTwoElements]: {
+    fr: "%d Résistance sur 2 éléments",
+    en: "%d Resistance to 2 elements",
+    es: "%d Resistencia en 2 elementos",
+    pt: "%d Resistência a 2 elementos",
+  },
+  [EnumWakfuStat.ResistanceThreeElements]: {
+    fr: "%d Résistance sur 3 éléments",
+    en: "%d Resistance to 3 elements",
+    es: "%d Resistencia en 3 elementos",
+    pt: "%d Resistência a 3 elementos",
+  },
+  [EnumWakfuStat.HarvestBonusFarmer]: {
+    fr: "%d%% Quantité Récolté en Paysan",
+    en: "%d%% Harvesting Quantity in Farmer",
+    es: "%d%% de cantidad recolectada en Campesino",
+    pt: "%d%% de quantidade de coleta em Fazendeiro",
+  },
+  [EnumWakfuStat.HarvestBonusFisherman]: {
+    fr: "%d%% Quantité Récolté en Pêcheur",
+    en: "%d%% Harvesting Quantity in Fisherman",
+    es: "%d%% de cantidad recolectada en Pescador",
+    pt: "%d%% de quantidade de coleta em Pescador",
+  },
+  [EnumWakfuStat.HarvestBonusHerbalist]: {
+    fr: "%d%% Quantité Récolté en Herboriste",
+    en: "%d%% Harvesting Quantity in Herbalist",
+    es: "%d%% de cantidad recolectada en Herbolario",
+    pt: "%d%% de quantidade de coleta em Herborista",
+  },
+  [EnumWakfuStat.HarvestBonusLumberjack]: {
+    fr: "%d%% Quantité Récolté en Forestier",
+    en: "%d%% Harvesting Quantity in Lumberjack",
+    es: "%d%% de cantidad recolectada en Leñador",
+    pt: "%d%% de quantidade de coleta em Lenhador",
+  },
+  [EnumWakfuStat.HarvestBonusMiner]: {
+    fr: "%d%% Quantité Récolté en Mineur",
+    en: "%d%% Harvesting Quantity in Miner",
+    es: "%d%% de cantidad recolectada en Minero",
+    pt: "%d%% de quantidade de coleta em Mineiro",
+  },
+  [EnumWakfuStat.HarvestBonusTrapper]: {
+    fr: "%d%% Quantité Récolté en Trappeur",
+    en: "%d%% Harvesting Quantity in Trapper",
+    es: "%d%% de cantidad recolectada en Peletero",
+    pt: "%d%% de quantidade de coleta em Caçador",
+  },
+  [EnumWakfuStat.PercentHealthPoint]: {
+    fr: "%d%% Points de Vie",
+    en: "%d%% Health Points",
+    es: "%d%% Puntos de Vida",
+    pt: "%d%% Pontos de Vida",
+  },
+  [EnumWakfuStat.Barrier]: {
+    fr: "Réduit les dégâts reçus de 50% de votre niveau (%d fois par tour)",
+    en: "Reduces damage taken by 50% of your level (%d times per turn)",
+    es: "Reduce el daño recibido en un 50% de tu nivel (%d veces por turno)",
+    pt: "Reduz o dano recebido em 50% do seu nível (%d vezes por turno)",
+  },
+  [EnumWakfuStat.HealingReceived]: {
+    fr: "%d%% Soins reçus",
+    en: "%d%% Healing received",
+    es: "%d%% Sanación recibida",
+    pt: "%d%% Cura recebida",
+  },
+  [EnumWakfuStat.PercentHealthPointToArmor]: {
+    fr: "%d%% de la Vie en Armure",
+    en: "%d%% Health Points to Armor",
+    es: "%d%% Puntos de Vida a Armadura",
+    pt: "%d%% Pontos de Vida em Armadura",
+  },
+  [EnumWakfuStat.DamageDealt]: {
+    fr: "%d%% Dommages infligés",
+    en: "%d%% Damage Dealt",
+    es: "%d%% Daño infligido",
+    pt: "%d%% Dano infligido",
+  },
+  [EnumWakfuStat.HealingDone]: {
+    fr: "%d%% Soins réalisés",
+    en: "%d%% Healing Done",
+    es: "%d%% Sanación realizada",
+    pt: "%d%% Cura realizada",
+  },
+  [EnumWakfuStat.Armor]: {
+    fr: "Armure",
+    en: "Armor",
+    es: "Armadura",
+    pt: "Armadura",
+  },
+  [EnumWakfuStat.IndirectDamages]: {
+    fr: "%d%% Dommages indirects",
+    en: "%d%% Indirect Damages",
+    es: "%d%% Daños indirectos",
+    pt: "%d%% Danos indiretos",
+  },
+  [EnumWakfuStat.ArmorGiven]: {
+    fr: "%d%% Armure donnée",
+    en: "%d%% Armor Given",
+    es: "%d%% Armadura dada",
+    pt: "%d%% Armadura dada",
+  },
+  [EnumWakfuStat.ArmorReceived]: {
+    fr: "%d%% Armure reçue",
+    en: "%d%% Armor Received",
+    es: "%d%% Armadura recibida",
+    pt: "%d%% Armadura recebida",
+  },
+};
+
+export const getWakfuStatEffectLabel = (lang: EnumWakfuLang, stat: EnumWakfuStat, value?: number) => {
+  const i18n = WakfuStatI18nEffects[stat];
+  if (value === undefined) {
+    return i18n ? i18n[lang].replace("%d", "").replace("%%", "") : "";
+  }
+  return i18n ? i18n[lang].replace("%d", String(value)).replace("%%", "%") : "";
+};

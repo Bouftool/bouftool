@@ -2,10 +2,10 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { Box, Button } from "@mui/material";
 import { StatsIcon } from "src/front/components/Wakfu/StatsIcon";
-import type { WakfuStats } from "src/wakfu/types/action";
+import type { EnumWakfuStat } from "src/wakfu/stats/types";
 
 export type TBuildDetailsPreferencesSortableItemProps = {
-  id: WakfuStats;
+  id: EnumWakfuStat;
 };
 
 export const BuildDetailsPreferencesSortableItem = ({ id }: TBuildDetailsPreferencesSortableItemProps) => {
