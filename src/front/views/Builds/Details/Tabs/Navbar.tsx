@@ -39,6 +39,16 @@ export const BuildDetailsNavbar = ({ selectedTab, onTabChange }: TBuildDetailsNa
               Aptitudes
             </Typography>
           </Button>
+          <Button
+            variant="text"
+            color="inherit"
+            className={selectedTab === EnumBuildDetailsTabs.Optimizer ? "Mui-selected" : undefined}
+            onClick={() => onTabChange(EnumBuildDetailsTabs.Optimizer)}
+          >
+            <Typography variant="subtitle2" sx={{ textTransform: "none" }}>
+              Optimiseur
+            </Typography>
+          </Button>
         </StackRow>
       </StackRow>
     </StackRow>

@@ -1,12 +1,14 @@
 import { Stack } from "@mui/material";
 import { useState } from "react";
 import { BuildAbilities } from "../Abilities";
+import { BuildOptimizer } from "../Optimizer";
 import { BuildDetailsNavbar } from "./Navbar";
 import { BuildSearchItems } from "./SearchItems";
 
 export enum EnumBuildDetailsTabs {
   Equipments = "equipments",
   Abilities = "abilities",
+  Optimizer = "optimizer",
 }
 
 export type TBuildDetailsTabsSwitchProps = {
@@ -19,6 +21,8 @@ const BuildDetailsTabsSwitch = ({ selectedTab }: TBuildDetailsTabsSwitchProps) =
       return <BuildSearchItems />;
     case EnumBuildDetailsTabs.Abilities:
       return <BuildAbilities />;
+    case EnumBuildDetailsTabs.Optimizer:
+      return <BuildOptimizer />;
     default:
       return null;
   }

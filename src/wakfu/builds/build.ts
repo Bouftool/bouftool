@@ -229,8 +229,33 @@ export class WakfuBuild {
     return stats;
   }
 
+  public getStatsWithoutEquipment() {
+    const stats = new WakfuStats({
+      [EnumWakfuStat.HealthPoint]: 50 + this.level * 10,
+      [EnumWakfuStat.ActionPoint]: 6,
+      [EnumWakfuStat.MovementPoint]: 3,
+      [EnumWakfuStat.WakfuPoint]: 6,
+      [EnumWakfuStat.CriticalHit]: 3,
+      [EnumWakfuStat.Control]: 1,
+    });
+    stats.merge(this.abilities.getStats());
+    for (const bonus of Object.values(EnumWakfuStatsBonuses)) {
+      if (this.bonuses[bonus]) {
+        stats.merge(StatsBonuses[bonus]);
+      }
+    }
+
+    stats.applyElementalPreferences(this.elementalPreferences);
+    stats.applyEffects();
+    return stats;
+  }
+
   public getId(): string {
     return this.id;
+  }
+
+  public getLevel(): number {
+    return this.level;
   }
 
   public getAbilities(): WakfuAbilities {

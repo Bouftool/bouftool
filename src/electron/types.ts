@@ -8,6 +8,7 @@ import type { WakfuRecipe } from "src/wakfu/recipes/recipe";
 import type { WakfuStats } from "src/wakfu/stats";
 import type { TElementalPreferences } from "src/wakfu/stats/types";
 import type { EnumWakfuLang } from "src/wakfu/utils/types";
+import type { EnumStatConstraintType } from "../wakfu/optimization/types";
 import type { TSearchItemsPayload } from "./searchItems/types";
 
 export enum ElectronEvents {
@@ -32,6 +33,9 @@ export enum ElectronEvents {
   BuildAddAbilityLevel = "build:add-ability-level",
   BuildRemoveAbilityLevel = "build:remove-ability-level",
   BuildSetBonuses = "build:set-bonuses",
+  BuildOptimize = "build:optimize",
+  BuildOptimizeProgress = "build:optimize-progress",
+  BuildOptimizeResult = "build:optimize-result",
 }
 
 export type ElectronEventsMain = {
@@ -59,6 +63,33 @@ export type ElectronEventsMain = {
     buildId: string;
     bonuses: Record<EnumWakfuStatsBonuses, boolean>;
   };
+  [ElectronEvents.BuildOptimize]: {
+    buildId: string;
+    config: {
+      statConstraints: Array<{
+        stat: string;
+        value: number;
+        type: EnumStatConstraintType;
+        penalty?: number;
+      }>;
+      statWeights: Array<{
+        stat: string;
+        weight: number;
+      }>;
+      levelConstraints: {
+        minLevel: number;
+        maxLevel: number;
+      };
+      excludeItemTypes: number[];
+      excludeRarities: number[];
+      preserveEquipment: {
+        keepAll: boolean;
+        keepSlots: string[];
+      };
+    };
+  };
+  [ElectronEvents.BuildOptimizeProgress]: undefined;
+  [ElectronEvents.BuildOptimizeResult]: undefined;
 };
 
 export type ElectronEventsRenderer = {
@@ -87,6 +118,19 @@ export type ElectronEventsRenderer = {
   [ElectronEvents.BuildRemoveAbilityLevel]: undefined;
   [ElectronEvents.BuildSetInfo]: undefined;
   [ElectronEvents.BuildSetBonuses]: undefined;
+  [ElectronEvents.BuildOptimize]: undefined;
+  [ElectronEvents.BuildOptimizeProgress]: {
+    currentIteration: number;
+    totalIterations: number;
+    bestScore: number;
+  };
+  [ElectronEvents.BuildOptimizeResult]: Array<{
+    equipment: Record<string, ReturnType<WakfuItem["toObject"]> | null>;
+    score: number;
+    valid: boolean;
+    meetsObjectives: boolean;
+    violations: string[];
+  }>;
 };
 
 export type TElectronPackage<Payload> = {
