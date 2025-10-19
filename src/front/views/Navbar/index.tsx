@@ -28,7 +28,7 @@ export const Navbar = () => {
           <Button
             variant="text"
             color="inherit"
-            className={Math.floor(currentView / NavigationView.Builds) === 1 ? "Mui-selected" : ""}
+            className={Math.floor(currentView / 100) === 1 ? "Mui-selected" : ""}
             onClick={() => setCurrentView(NavigationView.Builds, undefined)}
           >
             <Typography variant="subtitle2" sx={{ textTransform: "none" }}>
@@ -38,12 +38,22 @@ export const Navbar = () => {
           <Button
             variant="text"
             color="inherit"
-            className={Math.floor(currentView / NavigationView.EncyclopediaEquipment) === 1 ? "Mui-selected" : ""}
+            className={Math.floor(currentView / 100) === 2 ? "Mui-selected" : ""}
             onClick={() => setCurrentView(NavigationView.EncyclopediaEquipment, undefined)}
             endIcon={<DropDownIcon />}
           >
             <Typography variant="subtitle2" sx={{ textTransform: "none" }}>
               Encyclopédie
+            </Typography>
+          </Button>
+          <Button
+            variant="text"
+            color="inherit"
+            className={Math.floor(currentView / 100) === 3 ? "Mui-selected" : ""}
+            onClick={() => setCurrentView(NavigationView.CraftManager, undefined)}
+          >
+            <Typography variant="subtitle2" sx={{ textTransform: "none" }}>
+              Crafts
             </Typography>
           </Button>
         </StackRow>

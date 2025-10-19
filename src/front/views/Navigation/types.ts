@@ -4,12 +4,14 @@ export enum NavigationView {
   Builds = 100,
   BuildDetails = 101,
   EncyclopediaEquipment = 200,
+  CraftManager = 300,
 }
 
 export type TNavigationParams = {
   [NavigationView.Builds]: undefined;
   [NavigationView.BuildDetails]: { buildId: string };
   [NavigationView.EncyclopediaEquipment]: undefined;
+  [NavigationView.CraftManager]: undefined;
 };
 
 export type TNavigationContext = {

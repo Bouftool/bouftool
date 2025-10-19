@@ -293,7 +293,6 @@ export class WakfuStore {
     sort: ((a: WakfuItemType, b: WakfuItemType) => number) | null = null,
     transform: ((itemType: WakfuItemType) => T) | null = null,
   ): T[] {
-    console.log("ItemTypes", this.itemTypes);
     return this.getFilterSortTransform(this.itemTypes.values(), filter, sort, transform);
   }
 

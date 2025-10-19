@@ -2,6 +2,7 @@ import { createContext, useContext, useState } from "react";
 import { BuildsDashboard } from "../Builds/Dashboard";
 import { BuildDetails } from "../Builds/Details";
 import { BuildDetailsProvider } from "../Builds/Details/context";
+import { CraftManager } from "../CraftManager";
 import { SearchEquipments } from "../SearchEquipments";
 import {
   isNavigationContextView,
@@ -59,6 +60,8 @@ export const Navigation = () => {
       );
     case NavigationView.EncyclopediaEquipment:
       return <SearchEquipments />;
+    case NavigationView.CraftManager:
+      return <CraftManager />;
     default:
       return null;
   }

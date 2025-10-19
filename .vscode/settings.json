@@ -4,5 +4,6 @@
     "source.removeUnusedImports": "always",
     "source.fixAll.biome": "explicit"
   },
-  "git.ignoreLimitWarning": true
+  "git.ignoreLimitWarning": true,
+  "editor.tabSize": 2
 }

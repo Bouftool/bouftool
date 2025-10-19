@@ -15,6 +15,15 @@ export class FileHandler<T> {
     return fs.writeFile(this.path, JSON.stringify(data), "utf-8");
   }
 
+  public async exists(): Promise<boolean> {
+    try {
+      await fs.access(this.path);
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
   public async read(): Promise<T> {
     const result = await fs.readFile(this.path, "utf-8");
     return JSON.parse(result) as T;

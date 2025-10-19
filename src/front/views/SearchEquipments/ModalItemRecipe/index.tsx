@@ -1,5 +1,5 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Stack, Typography } from "@mui/material";
-import { useLayoutEffect } from "react";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Stack, Tooltip, Typography } from "@mui/material";
+import { useCallback, useLayoutEffect } from "react";
 import { ElectronEvents } from "src/electron/types";
 import { StackRow } from "src/front/components/Layout/StackRow";
 import { ItemIcon } from "src/front/components/Wakfu/ItemIcon";
@@ -16,6 +16,7 @@ export type TModalItemRecipeProps = {
 
 export const ModalItemRecipe = ({ open, item, onClose }: TModalItemRecipeProps) => {
   const [send, recipes] = useElectronEvent(ElectronEvents.GetItemRecipes);
+  const [addToCraft] = useElectronEvent(ElectronEvents.CraftManagerAddItem);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: Never deps on send
   useLayoutEffect(() => {
@@ -24,16 +25,39 @@ export const ModalItemRecipe = ({ open, item, onClose }: TModalItemRecipeProps) 
     }
   }, [item]);
 
+  const onAddToCraft = useCallback(() => {
+    if (item) {
+      addToCraft({ itemId: item.id });
+      onClose();
+    }
+  }, [item, addToCraft, onClose]);
+
   if (!item || !recipes) {
     return null;
   }
   return (
     <Dialog open={open} onClose={onClose} slotProps={{ paper: { sx: { minWidth: 450 } } }}>
       <DialogTitle variant="subtitle2">
-        <StackRow sx={{ bgcolor: "surface.100", px: 1, borderRadius: "8px", py: 0.5 }}>
-          <ItemIcon width={40}>{item.gfxId}</ItemIcon>
-          <RarityIcon width={12}>{item.rarity}</RarityIcon>
-          {item.title.fr}
+        <StackRow sx={{ bgcolor: "surface.100", px: 1, borderRadius: "8px", py: 0.5, justifyContent: "space-between" }}>
+          <StackRow>
+            <ItemIcon width={40}>{item.gfxId}</ItemIcon>
+            <RarityIcon width={12}>{item.rarity}</RarityIcon>
+            {item.title.fr}
+          </StackRow>
+          <Tooltip title="Ajouter au planificateur de craft" placement="top">
+            <Button
+              sx={{
+                minWidth: 0,
+                p: 1,
+                aspectRatio: "1",
+                bgcolor: "surface.150",
+                "&:hover": { bgcolor: "surface.250" },
+              }}
+              onClick={onAddToCraft}
+            >
+              <img height={22} src={`wakfu/RecipeIcon.png`} alt="Recipe Icon" />
+            </Button>
+          </Tooltip>
         </StackRow>
       </DialogTitle>
       <DialogContent>

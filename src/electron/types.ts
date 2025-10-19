@@ -2,6 +2,7 @@ import type { IpcRendererEvent } from "electron";
 import type { EnumAbilities } from "src/wakfu/abilities/types";
 import type { EnumWakfuStatsBonuses } from "src/wakfu/builds/bonus";
 import type { TWakfuBuildDisplay, TWakfuCharacterDisplay } from "src/wakfu/builds/types";
+import type { TCraftItem } from "src/wakfu/craftManager/types";
 import type { WakfuItem } from "src/wakfu/items";
 import type { EnumWakfuEquipmentPosition } from "src/wakfu/itemTypes/types";
 import type { WakfuRecipe } from "src/wakfu/recipes/recipe";
@@ -36,6 +37,8 @@ export enum ElectronEvents {
   BuildOptimize = "build:optimize",
   BuildOptimizeProgress = "build:optimize-progress",
   BuildOptimizeResult = "build:optimize-result",
+  CraftManagerAddItem = "craftmanager:add-item",
+  CraftManagerGetItems = "craftmanager:get-items",
 }
 
 export type ElectronEventsMain = {
@@ -66,6 +69,8 @@ export type ElectronEventsMain = {
   [ElectronEvents.BuildOptimize]: { buildId: string; config: OptimizationConfig };
   [ElectronEvents.BuildOptimizeProgress]: undefined;
   [ElectronEvents.BuildOptimizeResult]: undefined;
+  [ElectronEvents.CraftManagerAddItem]: { itemId: number };
+  [ElectronEvents.CraftManagerGetItems]: undefined;
 };
 
 export type ElectronEventsRenderer = {
@@ -107,6 +112,8 @@ export type ElectronEventsRenderer = {
     meetsObjectives: boolean;
     violations: string[];
   }>;
+  [ElectronEvents.CraftManagerAddItem]: undefined;
+  [ElectronEvents.CraftManagerGetItems]: TCraftItem[];
 };
 
 export type TElectronPackage<Payload> = {
