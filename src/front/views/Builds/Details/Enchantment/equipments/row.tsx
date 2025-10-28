@@ -53,7 +53,13 @@ export const EquipmentsEnchantmentsRow = ({ enchantments, position }: TBuildEnch
         [equipmentsEnchantmentsClasses.rowGreenSelected]: isHighlighted(EnumWakfuEnchantmentColor.Green),
       })}
     >
-      <div className={equipmentsEnchantmentsClasses.rowEnchantments}>
+      <div
+        className={clsx(equipmentsEnchantmentsClasses.rowEnchantments, {
+          [equipmentsEnchantmentsClasses.rowEnchantmentsRedSelected]: isHighlighted(EnumWakfuEnchantmentColor.Red),
+          [equipmentsEnchantmentsClasses.rowEnchantmentsBlueSelected]: isHighlighted(EnumWakfuEnchantmentColor.Blue),
+          [equipmentsEnchantmentsClasses.rowEnchantmentsGreenSelected]: isHighlighted(EnumWakfuEnchantmentColor.Green),
+        })}
+      >
         <ItemTypeIcon height={26}>{position}</ItemTypeIcon>
         {buildEnchantments[position].enchantments.map((e, index) => (
           <EnchantmentSlot

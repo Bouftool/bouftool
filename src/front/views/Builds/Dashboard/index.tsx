@@ -7,6 +7,7 @@ import { useElectronEvent } from "src/front/hooks/electron";
 import { ButtonCreateCharacter } from "./buttonCreateCharacter";
 import { Character } from "./Character";
 import { ModalEditCharacterProvider } from "./ModalEditCharacter/context";
+import { ModalImportBuildProvider } from "./ModalImportBuild/context";
 
 export const BuildsDashboard = () => {
   const [getAllBuilds, allBuildsResponse, allBuildsLoading] = useElectronEvent(ElectronEvents.GetAllBuilds);
@@ -18,18 +19,20 @@ export const BuildsDashboard = () => {
 
   return (
     <ModalEditCharacterProvider>
-      <Stack sx={{ flex: 1, p: 2, gap: 2, overflow: "hidden" }}>
-        <StackRow sx={{ justifyContent: "end" }}>
-          <ButtonCreateCharacter />
-        </StackRow>
-        <Stack sx={{ flex: 1, gap: 1, overflow: "auto" }}>
-          {!allBuildsResponse || allBuildsLoading ? (
-            <Loading>Chargement des builds...</Loading>
-          ) : (
-            allBuildsResponse.flatMap((character) => <Character key={character.id} character={character} />)
-          )}
+      <ModalImportBuildProvider>
+        <Stack sx={{ flex: 1, p: 2, gap: 2, overflow: "hidden" }}>
+          <StackRow sx={{ justifyContent: "end" }}>
+            <ButtonCreateCharacter />
+          </StackRow>
+          <Stack sx={{ flex: 1, gap: 1, overflow: "auto" }}>
+            {!allBuildsResponse || allBuildsLoading ? (
+              <Loading>Chargement des builds...</Loading>
+            ) : (
+              allBuildsResponse.flatMap((character) => <Character key={character.id} character={character} />)
+            )}
+          </Stack>
         </Stack>
-      </Stack>
+      </ModalImportBuildProvider>
     </ModalEditCharacterProvider>
   );
 };

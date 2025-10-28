@@ -10,6 +10,9 @@ export const equipmentsEnchantmentsClasses = {
   rowBlueSelected: `${Prefix}-rowBlueSelected`,
   rowGreenSelected: `${Prefix}-rowGreenSelected`,
   rowEnchantments: `${Prefix}-rowEnchantments`,
+  rowEnchantmentsRedSelected: `${Prefix}-rowEnchantmentsRedSelected`,
+  rowEnchantmentsBlueSelected: `${Prefix}-rowEnchantmentsBlueSelected`,
+  rowEnchantmentsGreenSelected: `${Prefix}-rowEnchantmentsGreenSelected`,
   rowSublimation: `${Prefix}-rowSublimation`,
   sublimationIconDisabled: `${Prefix}-sublimationIconDisabled`,
   slotHover: `${Prefix}-slotHover`,
@@ -60,12 +63,15 @@ export const EquipmentsEnchantmentsRoot = styled("div")(({ theme }) => ({
     },
     [`&.${equipmentsEnchantmentsClasses.rowRedSelected}`]: {
       boxShadow: `0 0 4px rgba(255, 0, 0, 1)`,
+      transform: "scale(1.01)",
     },
     [`&.${equipmentsEnchantmentsClasses.rowBlueSelected}`]: {
       boxShadow: `0 0 4px rgba(0, 150, 255, 1)`,
+      transform: "scale(1.01)",
     },
     [`&.${equipmentsEnchantmentsClasses.rowGreenSelected}`]: {
       boxShadow: `0 0 4px rgba(0, 255, 0, 1)`,
+      transform: "scale(1.01)",
     },
     [`& .${equipmentsEnchantmentsClasses.rowEnchantments}`]: {
       backgroundColor: theme.palette.surface[150],
@@ -75,6 +81,15 @@ export const EquipmentsEnchantmentsRoot = styled("div")(({ theme }) => ({
       alignItems: "center",
       justifyContent: "start",
       gap: theme.spacing(1),
+      [`&.${equipmentsEnchantmentsClasses.rowEnchantmentsRedSelected}`]: {
+        background: "linear-gradient(90deg, rgba(255, 0, 0, 0.3) 0%, rgba(255, 0, 0, 0) 80%)",
+      },
+      [`&.${equipmentsEnchantmentsClasses.rowEnchantmentsBlueSelected}`]: {
+        background: "linear-gradient(90deg, rgba(0, 150, 255, 0.3) 0%, rgba(255, 0, 0, 0) 80%)",
+      },
+      [`&.${equipmentsEnchantmentsClasses.rowEnchantmentsGreenSelected}`]: {
+        background: "linear-gradient(90deg, rgba(0, 255, 0, 0.3) 0%, rgba(255, 0, 0, 0) 80%)",
+      },
     },
     [`& .${equipmentsEnchantmentsClasses.rowSublimation}`]: {
       flex: 1,

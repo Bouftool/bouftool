@@ -182,7 +182,9 @@ export class WakfuBuild {
 
   private fromRaw(buildData: TWakfuBuildRaw, skipId: boolean = false) {
     const store = WakfuStore.getInstance();
-    this.id = skipId ? randomUUID() : buildData.id;
+    if (!skipId) {
+      this.id = buildData.id;
+    }
     this.name = buildData.name;
     this.level = buildData.level;
     this.abilities = new WakfuAbilities(buildData.level, buildData.abilities);
@@ -489,7 +491,7 @@ export class WakfuBuild {
   public static async deserializeFromBase64(character: WakfuCharacter, base64String: string): Promise<WakfuBuild> {
     const jsonString = Buffer.from(base64String, "base64").toString("utf-8");
     const buildData: TWakfuBuildRaw = JSON.parse(jsonString);
-    const build = new WakfuBuild(character, buildData.id, buildData.name, buildData.level);
+    const build = await WakfuBuild.create(character, buildData.name, buildData.level);
     build.fromRaw(buildData, true);
     await build.save(true);
     return build;

@@ -1,10 +1,11 @@
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Stack, Typography } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Stack, Typography } from "@mui/material";
 import { useMemo, useState } from "react";
 import { StackRow } from "src/front/components/Layout/StackRow";
 import { TreeItem, type TreeNode } from "src/front/components/TreeView";
 import { ItemIcon } from "src/front/components/Wakfu/ItemIcon";
 import { RarityIcon } from "src/front/components/Wakfu/RarityIcon";
 import type { TCraftItem } from "src/wakfu/craftManager/types";
+import { SelectableRecipe, selectableRecipeClasses } from "./styles";
 
 export type RecipeSelectionModalProps = {
   craftItem: TCraftItem | null;
@@ -97,22 +98,10 @@ export const RecipeSelectionModal = ({
             const isCurrent = index === currentRecipeIndex;
 
             return (
-              <Box
+              <SelectableRecipe
                 key={node.id}
-                sx={{
-                  py: 1,
-                  px: 2,
-                  border: "2px solid",
-                  borderColor: isSelected ? "primary.main" : "divider",
-                  borderRadius: "8px",
-                  bgcolor: isSelected ? "action.selected" : "background.paper",
-                  cursor: "pointer",
-                  transition: "all 0.2s",
-                  "&:hover": {
-                    borderColor: "primary.light",
-                    bgcolor: "action.hover",
-                  },
-                }}
+                className={selectableRecipeClasses.root}
+                isSelected={isSelected}
                 onClick={(e) => {
                   e.stopPropagation();
                   setSelectedIndex(index);
@@ -130,7 +119,7 @@ export const RecipeSelectionModal = ({
                 </StackRow>
 
                 <TreeItem node={node} depth={0} isLast={true} disableCollapse />
-              </Box>
+              </SelectableRecipe>
             );
           })}
         </Stack>

@@ -78,7 +78,7 @@ export const ShoppingCart = () => {
       {shoppingCartItems.map((shoppingItem) => (
         <StackRow
           key={shoppingItem.item.id}
-          sx={{ justifyContent: "space-between", bgcolor: "surface.150", p: 0.5, borderRadius: 1 }}
+          sx={{ justifyContent: "space-between", bgcolor: "surface.150", p: 0.5, borderRadius: "8px" }}
         >
           <StackRow sx={{ pr: 1 }}>
             <ItemIcon width={30}>{shoppingItem.item.gfxId}</ItemIcon>

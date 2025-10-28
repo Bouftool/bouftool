@@ -9,6 +9,7 @@ import { useNavigationContext } from "src/front/views/Navigation";
 import { NavigationView } from "src/front/views/Navigation/types";
 import type { TWakfuCharacterDisplay } from "src/wakfu/builds/types";
 import { useModalEditCharacterContext } from "../ModalEditCharacter/context";
+import { useModalImportBuildContext } from "../ModalImportBuild/context";
 import { CardCharacterBuild } from "./build";
 import { CardCharacterRoot, cardCharacterClasses } from "./styles";
 
@@ -19,8 +20,8 @@ export type TCharacterProps = {
 export const Character = ({ character }: TCharacterProps) => {
   const { setCurrentView } = useNavigationContext();
   const openModalEditCharacter = useModalEditCharacterContext();
+  const openModalImportBuild = useModalImportBuildContext();
   const [createBuild, _, loading] = useElectronEvent(ElectronEvents.BuildCreate);
-  const [deserializeBuild] = useElectronEvent(ElectronEvents.BuildDeserialize);
 
   const handleClickCreateBuild = async () => {
     const build = await createBuild({ characterId: character.id });
@@ -38,10 +39,19 @@ export const Character = ({ character }: TCharacterProps) => {
     });
   };
 
-  const handleClickPasteBuild = async () => {
-    const clipboardText = await navigator.clipboard.readText();
-    const result = await deserializeBuild({ characterId: character.id, serializedBuild: clipboardText });
-    setCurrentView(NavigationView.BuildDetails, { buildId: result.buildId });
+  const handleClickPasteBuild = () => {
+    openModalImportBuild({
+      open: true,
+      character: { name: character.name, breed: character.breed },
+      title: `Importer un build pour ${character.name}`,
+      onSubmit: async (serializedBuild: string) => {
+        const result = await sendElectronEvent(ElectronEvents.BuildDeserialize, {
+          characterId: character.id,
+          serializedBuild,
+        });
+        setCurrentView(NavigationView.BuildDetails, { buildId: result.buildId });
+      },
+    });
   };
 
   return (
