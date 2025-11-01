@@ -23,12 +23,16 @@ export class WakfuCharacter {
   }
 
   public static async loadCharacters() {
-    const files = await fs.readdir(WakfuCharacter.CharactersDir, { withFileTypes: true });
-    for (const file of files) {
-      if (file.isDirectory()) {
-        const character = new WakfuCharacter(file.name, "", EnumWakfuBreed.Feca);
-        await character.load();
+    try {
+      const files = await fs.readdir(WakfuCharacter.CharactersDir, { withFileTypes: true });
+      for (const file of files) {
+        if (file.isDirectory()) {
+          const character = new WakfuCharacter(file.name, "", EnumWakfuBreed.Feca);
+          await character.load();
+        }
       }
+    } catch (_error) {
+      console.warn(`No characters found to load in ${WakfuCharacter.CharactersDir}`);
     }
   }
 
