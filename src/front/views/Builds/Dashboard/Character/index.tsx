@@ -1,6 +1,9 @@
 import AddIcon from "@mui/icons-material/Add";
+import ChevronRight from "@mui/icons-material/ChevronRight";
 import EditIcon from "@mui/icons-material/Edit";
-import { Button, Stack, Typography } from "@mui/material";
+import ExpandMore from "@mui/icons-material/ExpandMore";
+import { Button, Collapse, Stack, Typography } from "@mui/material";
+import { useState } from "react";
 import { ElectronEvents } from "src/electron/types";
 import { StackRow } from "src/front/components/Layout/StackRow";
 import { BreedFaceIcon } from "src/front/components/Wakfu/BreedFaceIcon";
@@ -22,6 +25,7 @@ export const Character = ({ character }: TCharacterProps) => {
   const openModalEditCharacter = useModalEditCharacterContext();
   const openModalImportBuild = useModalImportBuildContext();
   const [createBuild, _, loading] = useElectronEvent(ElectronEvents.BuildCreate);
+  const [open, SetOpen] = useState(true);
 
   const handleClickCreateBuild = async () => {
     const build = await createBuild({ characterId: character.id });
@@ -54,8 +58,12 @@ export const Character = ({ character }: TCharacterProps) => {
     });
   };
 
+  const handleOpenCollapse = () => {
+    SetOpen(!open);
+  };
+
   return (
-    <CardCharacterRoot className={cardCharacterClasses.root}>
+    <CardCharacterRoot className={cardCharacterClasses.root} open={open}>
       <StackRow className={cardCharacterClasses.character}>
         <StackRow>
           <BreedFaceIcon className={cardCharacterClasses.breed}>{character.breed}</BreedFaceIcon>
@@ -77,13 +85,18 @@ export const Character = ({ character }: TCharacterProps) => {
           <Button variant="push" onClick={handleClickEditCharacter}>
             <EditIcon />
           </Button>
+          <Button variant="push" onClick={handleOpenCollapse}>
+            {open ? <ExpandMore /> : <ChevronRight />}
+          </Button>
         </StackRow>
       </StackRow>
-      <Stack>
-        {character.builds.map((build) => (
-          <CardCharacterBuild key={build.id} characterId={character.id} build={build} />
-        ))}
-      </Stack>
+      <Collapse in={open}>
+        <Stack>
+          {character.builds.map((build) => (
+            <CardCharacterBuild key={build.id} characterId={character.id} build={build} />
+          ))}
+        </Stack>
+      </Collapse>
     </CardCharacterRoot>
   );
 };

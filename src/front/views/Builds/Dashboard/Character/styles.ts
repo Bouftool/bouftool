@@ -9,15 +9,19 @@ export const cardCharacterClasses = {
   build: `${Prefix}-build`,
 };
 
-export const CardCharacterRoot = styled("div")(({ theme }) => ({
+export const CardCharacterRoot = styled("div")<{ open: boolean }>(({ theme, open }) => ({
   [`&.${cardCharacterClasses.root}`]: {
     [`& .${cardCharacterClasses.character}`]: {
       backgroundColor: theme.palette.surface[100],
       border: `1px solid ${theme.palette.border.main}`,
       borderRadius: "8px",
-      borderBottomRightRadius: 0,
       justifyContent: "space-between",
       padding: theme.spacing(1),
+      transition: "border-bottom-right-radius 0.1s 0.2s",
+      ...(open && {
+        borderBottomRightRadius: 0,
+        transition: "none",
+      }),
     },
     [`& .${cardCharacterClasses.breed}`]: {
       border: `1px solid ${theme.palette.border.light}`,

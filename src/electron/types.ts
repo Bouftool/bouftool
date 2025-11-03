@@ -48,6 +48,7 @@ export enum ElectronEvents {
   BuildOptimizeProgress = "build:optimize-progress",
   BuildOptimizeResult = "build:optimize-result",
   CraftManagerAddItem = "craftmanager:add-item",
+  CraftManagerAddBuildItems = "craftmanager:add-build-items",
   CraftManagerRemoveItem = "craftmanager:remove-item",
   CraftManagerSetItemQuantity = "craftmanager:set-item-quantity",
   CraftManagerGetItems = "craftmanager:get-items",
@@ -110,6 +111,7 @@ export type ElectronEventsMain = {
   [ElectronEvents.BuildOptimizeProgress]: undefined;
   [ElectronEvents.BuildOptimizeResult]: undefined;
   [ElectronEvents.CraftManagerAddItem]: { itemId: number };
+  [ElectronEvents.CraftManagerAddBuildItems]: { buildId: string };
   [ElectronEvents.CraftManagerRemoveItem]: { itemId: number };
   [ElectronEvents.CraftManagerSetItemQuantity]: { itemId: number; quantity: number };
   [ElectronEvents.CraftManagerGetItems]: undefined;
@@ -187,6 +189,7 @@ export type ElectronEventsRenderer = {
     violations: string[];
   }>;
   [ElectronEvents.CraftManagerAddItem]: undefined;
+  [ElectronEvents.CraftManagerAddBuildItems]: undefined;
   [ElectronEvents.CraftManagerRemoveItem]: undefined;
   [ElectronEvents.CraftManagerSetItemQuantity]: undefined;
   [ElectronEvents.CraftManagerGetItems]: TCraftItem[];

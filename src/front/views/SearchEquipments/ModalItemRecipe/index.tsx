@@ -44,13 +44,14 @@ export const ModalItemRecipe = ({ open, item, onClose }: TModalItemRecipeProps) 
             <RarityIcon width={12}>{item.rarity}</RarityIcon>
             {item.title.fr}
           </StackRow>
-          <Tooltip title="Ajouter au planificateur de craft" placement="top">
+          <Tooltip title="Ajouter au planificateur de craft" placement="top" arrow>
             <Button
+              variant="push"
               sx={{
                 minWidth: 0,
                 p: 1,
-                bgcolor: "surface.150",
-                "&:hover": { bgcolor: "surface.250" },
+                // bgcolor: "surface.150",
+                // "&:hover": { bgcolor: "surface.250" },
               }}
               onClick={onAddToCraft}
             >

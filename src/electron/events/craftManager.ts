@@ -8,6 +8,11 @@ export const registerElectronCraftManagerEvents = (manager: ElectronEventManager
     reply(undefined);
   });
 
+  manager.register(ElectronEvents.CraftManagerAddBuildItems, (reply, { buildId }) => {
+    WakfuCraftManager.getInstance().addBuildItemsToCraft(buildId);
+    reply(undefined);
+  });
+
   manager.register(ElectronEvents.CraftManagerRemoveItem, (reply, { itemId }) => {
     WakfuCraftManager.getInstance().removeItemToCraft(itemId);
     reply(undefined);

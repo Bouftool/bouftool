@@ -1,4 +1,4 @@
-import { Stack } from "@mui/material";
+import { Button, Stack } from "@mui/material";
 import { ElectronEvents } from "src/electron/types";
 import { StackRow } from "src/front/components/Layout/StackRow";
 import { StatsIcon } from "src/front/components/Wakfu/StatsIcon";
@@ -11,7 +11,7 @@ export const BuildDetailsPreferences = () => {
   const build = useBuildDetailsContext();
 
   return (
-    <Stack sx={{ gap: 1, overflow: "hidden" }}>
+    <Stack sx={{ gap: 1, overflow: "hidden", height: "100%", justifyContent: "space-between" }}>
       <StackRow>
         <StatsIcon>{EnumWakfuStat.ElementalMastery}</StatsIcon>
         <BuildDetailsPreferencesSortable
@@ -36,6 +36,15 @@ export const BuildDetailsPreferences = () => {
           }
         />
       </StackRow> */}
+      <StackRow sx={{ justifyContent: "end" }}>
+        <Button
+          variant="push"
+          onClick={() => sendElectronEvent(ElectronEvents.CraftManagerAddBuildItems, { buildId: build.id })}
+        >
+          Tout crafter
+          <img height={22} style={{ paddingLeft: 4 }} src={`wakfu/RecipeIcon.png`} alt="Recipe Icon" />
+        </Button>
+      </StackRow>
     </Stack>
   );
 };

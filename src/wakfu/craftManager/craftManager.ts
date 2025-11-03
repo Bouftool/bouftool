@@ -1,3 +1,4 @@
+import { WakfuBuild } from "../builds/build";
 import type { WakfuBaseItem } from "../items/base";
 import { WakfuStore } from "../store";
 import { FileHandler } from "../utils/FileHandler";
@@ -152,6 +153,33 @@ export class WakfuCraftManager {
     } else {
       this.itemsToCraft.push({ item, quantity: 1, craftedIngredients: new Map() });
     }
+    this.save();
+  }
+
+  public addBuildItemsToCraft(buildId: string) {
+    const build = WakfuBuild.getById(buildId);
+    if (!build) {
+      throw new Error(`Build with ID ${buildId} not found`);
+    }
+
+    const buildDisplay = build.toDisplay();
+
+    for (const position in buildDisplay.stuff) {
+      const equipment = buildDisplay.stuff[position as keyof typeof buildDisplay.stuff];
+      if (equipment.item) {
+        const itemId = equipment.item.id;
+        const itemToCraft = this.itemsToCraft.find((i) => i.item.getId() === itemId);
+        if (itemToCraft) {
+          itemToCraft.quantity += 1;
+        } else {
+          const item = WakfuStore.getInstance().getItemById(itemId);
+          if (item && item.getRecipes().length > 0) {
+            this.itemsToCraft.push({ item, quantity: 1, craftedIngredients: new Map() });
+          }
+        }
+      }
+    }
+
     this.save();
   }
 

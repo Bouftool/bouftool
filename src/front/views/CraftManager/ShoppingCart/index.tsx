@@ -61,6 +61,10 @@ export const ShoppingCart = () => {
     sendElectronEvent(ElectronEvents.OpenWebEncyclopedia, { itemTypeId: item.itemType.id, itemId: item.id });
   };
 
+  if (items.length === 0) {
+    return null;
+  }
+
   return (
     <Stack
       sx={{

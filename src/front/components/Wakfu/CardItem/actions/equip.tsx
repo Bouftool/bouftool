@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Button, Tooltip } from "@mui/material";
 import { ElectronEvents } from "src/electron/types";
 import { ItemTypeIcon } from "src/front/components/Wakfu/ItemTypeIcon";
 import { sendElectronEvent } from "src/front/hooks/electron";
@@ -14,12 +14,14 @@ export const SearchEquipmentsItemEquip = ({ itemId, buildId }: TSearchEquipments
     return null;
   }
   return (
-    <Button
-      variant="push"
-      sx={{ minWidth: 0, p: 0, aspectRatio: "1" }}
-      onClick={() => sendElectronEvent(ElectronEvents.BuildEquipItem, { itemId, buildId })}
-    >
-      <ItemTypeIcon height={18}>{EnumWakfuItemType.Helmet}</ItemTypeIcon>
-    </Button>
+    <Tooltip title="Equiper l'objet" placement="top" arrow>
+      <Button
+        variant="push"
+        sx={{ minWidth: 0, p: 0, aspectRatio: "1" }}
+        onClick={() => sendElectronEvent(ElectronEvents.BuildEquipItem, { itemId, buildId })}
+      >
+        <ItemTypeIcon height={18}>{EnumWakfuItemType.Helmet}</ItemTypeIcon>
+      </Button>
+    </Tooltip>
   );
 };

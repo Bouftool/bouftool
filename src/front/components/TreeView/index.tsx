@@ -56,7 +56,7 @@ export const TreeItem: React.FC<TreeItemProps> = ({ node, isLast, depth, disable
     <TreeItemStyled className={treeItemClasses.root} hasChildren={hasChildren} indicatorColor={node.indicatorColor}>
       {!isRoot && (
         <>
-          <TreeItemBackLine className={treeItemBackLineClasses.root} isLast={isLast} />
+          <TreeItemBackLine className={treeItemBackLineClasses.root} isLast={isLast} hasChildren={hasChildren} />
           <TreeItemDashLine className={treeItemDashLineClasses.root} isLast={isLast} hasChildren={hasChildren} />
         </>
       )}

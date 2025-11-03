@@ -70,16 +70,18 @@ export const treeItemBackLineClasses = {
   root: `${TreeItemBackLinePrefix}-root`,
 };
 
-export const TreeItemBackLine = styled("div")<{ isLast: boolean }>(({ theme, isLast }) => ({
-  [`&.${treeItemBackLineClasses.root}`]: {
-    position: "absolute",
-    left: -15,
-    top: -8,
-    width: 2,
-    height: isLast ? 30 : "calc(100% + 8px)",
-    backgroundColor: theme.palette.surface[250],
-  },
-}));
+export const TreeItemBackLine = styled("div")<{ isLast: boolean; hasChildren: boolean }>(
+  ({ theme, isLast, hasChildren }) => ({
+    [`&.${treeItemBackLineClasses.root}`]: {
+      position: "absolute",
+      left: -15,
+      top: -8,
+      width: 2,
+      height: isLast ? (hasChildren ? 34 : 30) : "calc(100% + 8px)",
+      backgroundColor: theme.palette.surface[250],
+    },
+  }),
+);
 
 const TreeItemDashLinePrefix = "TreeItemDashLine";
 
