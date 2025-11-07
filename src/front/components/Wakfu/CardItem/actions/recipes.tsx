@@ -1,4 +1,4 @@
-import { Button, Tooltip } from "@mui/material";
+import { Button, Stack, Tooltip } from "@mui/material";
 import { useModalItemRecipeContext } from "src/front/views/SearchEquipments/ModalItemRecipe/context";
 import type { WakfuItem } from "src/wakfu/items";
 
@@ -10,15 +10,17 @@ export const SearchItemsRecipes = ({ item }: TSearchItemsRecipesProps) => {
   const openModalRecipe = useModalItemRecipeContext();
 
   return (
-    <Tooltip title="Voir la recette" arrow>
-      <Button
-        variant="push"
-        sx={{ minWidth: 0, p: 0, aspectRatio: "1" }}
-        onClick={() => openModalRecipe(item)}
-        disabled={item.recipes.length === 0}
-      >
-        <img height={18} src={`wakfu/RecipeIcon.png`} alt="Recipe Icon" />
-      </Button>
+    <Tooltip title={item.recipes.length > 0 ? "Voir la recette" : "Aucune recette"} arrow>
+      <Stack>
+        <Button
+          variant="push"
+          sx={{ minWidth: 0, p: 0, aspectRatio: "1" }}
+          onClick={() => openModalRecipe(item)}
+          disabled={item.recipes.length === 0}
+        >
+          <img height={18} src={`wakfu/RecipeIcon.png`} alt="Recipe Icon" />
+        </Button>
+      </Stack>
     </Tooltip>
   );
 };

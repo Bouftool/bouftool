@@ -65,17 +65,21 @@ export const EquipmentsEnchantmentsRow = ({
         })}
       >
         <ItemTypeIcon height={26}>{position}</ItemTypeIcon>
-        {buildEnchantments[position].enchantments.map((e, index) => (
-          <EnchantmentSlot
-            // biome-ignore lint/suspicious/noArrayIndexKey: No better key available
-            key={index}
-            position={position}
-            slot={index}
-            effect={getCurrentEnchantmentEffect(position, selectedEnchantment, e, enchantments)}
-            shardLevelRequirement={shardLevelRequirement}
-            enchantment={e}
-          />
-        ))}
+        {buildEnchantments[position].enchantments.map((e, index) => {
+          const currentEnchantment = (e && enchantments.find((enchant) => enchant.id === e.id)) ?? null;
+          return (
+            <EnchantmentSlot
+              // biome-ignore lint/suspicious/noArrayIndexKey: No better key available
+              key={index}
+              position={position}
+              slot={index}
+              effect={getCurrentEnchantmentEffect(position, selectedEnchantment, e, enchantments)}
+              shardLevelRequirement={shardLevelRequirement}
+              enchantment={e}
+              currentEnchantment={currentEnchantment}
+            />
+          );
+        })}
       </div>
       <EquipmentsEnchantmentsRowSublimation position={position} />
     </div>

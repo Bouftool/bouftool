@@ -22,6 +22,8 @@ export const equipmentsEnchantmentsClasses = {
   rowSublimationRelic: `${Prefix}-rowSublimationRelic`,
   rowSublimationRelicHover: `${Prefix}-rowSublimationRelicHover`,
   sublimationIconDisabled: `${Prefix}-sublimationIconDisabled`,
+  slot: `${Prefix}-slot`,
+  slotBonus: `${Prefix}-slotBonus`,
   slotHover: `${Prefix}-slotHover`,
 };
 
@@ -155,6 +157,22 @@ export const EquipmentsEnchantmentsRoot = styled("div")(({ theme }) => ({
   },
   [`& .${equipmentsEnchantmentsClasses.sublimationIconDisabled}`]: {
     filter: "grayscale(100%) opacity(50%)",
+  },
+  [`& .${equipmentsEnchantmentsClasses.slot}`]: {
+    position: "relative",
+  },
+  [`& .${equipmentsEnchantmentsClasses.slotBonus}:after`]: {
+    content: '""',
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundImage: `url(wakfu/enchantments/DoubleBonus.png)`,
+    backgroundSize: "contain",
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "center",
+    pointerEvents: "none",
   },
   [`& .${equipmentsEnchantmentsClasses.slotHover}`]: {
     "&:hover": {

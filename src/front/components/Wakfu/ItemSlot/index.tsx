@@ -31,7 +31,13 @@ export const ItemSlot = ({
 }: TItemSlotProps) => {
   return (
     <Tooltip
-      title={disableTooltip || item.disabled || item.item === null ? "" : <CardItem item={item.item} />}
+      title={
+        disableTooltip || item.disabled || item.item === null ? (
+          ""
+        ) : (
+          <CardItem item={item.item} constraints={item.constraints} />
+        )
+      }
       slotProps={{ tooltip: { sx: { bgcolor: "transparent", maxWidth: "unset", width: 376, p: 0 } } }}
       disableInteractive
       placement="right"
@@ -42,6 +48,7 @@ export const ItemSlot = ({
         rarity={item.item ? item.item.rarity : 1}
         equippedItem={Boolean(item.item)}
         disabled={item.disabled}
+        error={item.constraints !== undefined && item.constraints.length > 0}
         className={clsx(itemSlotClasses.root, slotProps?.box?.className)}
         onClick={onClick ? () => onClick(position) : undefined}
         onContextMenu={onRightClick ? () => onRightClick(position) : undefined}

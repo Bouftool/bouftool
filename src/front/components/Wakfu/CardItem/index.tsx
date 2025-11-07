@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material";
+import { List, ListItem, Typography } from "@mui/material";
 import type { WakfuItem } from "src/wakfu/items";
 import { StackGrid } from "../../Layout/StackGrid";
 import { ItemTypeIcon } from "../ItemTypeIcon";
@@ -15,9 +15,10 @@ export type TCardItemProps = {
   item: ReturnType<WakfuItem["toObject"]>;
   buildId?: string;
   displayActions?: boolean;
+  constraints?: string[];
 };
 
-export const CardItem = ({ item, buildId, displayActions }: TCardItemProps) => {
+export const CardItem = ({ item, buildId, displayActions, constraints }: TCardItemProps) => {
   return (
     <CardItemRoot className={cardItemClasses.root} rarity={item.rarity}>
       <div className={cardItemClasses.header}>
@@ -44,6 +45,18 @@ export const CardItem = ({ item, buildId, displayActions }: TCardItemProps) => {
         </div>
         <CardItemStats stats={item.stats} />
       </div>
+      {constraints && constraints.length > 0 && (
+        <List sx={{ listStyleType: "disc", pt: 2, pl: 2 }} disablePadding>
+          {constraints.map((constraint, index) => (
+            // biome-ignore lint/suspicious/noArrayIndexKey: No other valid keys available
+            <ListItem key={index} sx={{ display: "list-item", "&::marker": { color: "error.main" } }} disablePadding>
+              <Typography variant="caption" color="error">
+                {constraint}
+              </Typography>
+            </ListItem>
+          ))}
+        </List>
+      )}
     </CardItemRoot>
   );
 };

@@ -1,4 +1,4 @@
-import { Tooltip } from "@mui/material";
+import { Stack, Tooltip } from "@mui/material";
 import clsx from "clsx";
 import { ElectronEvents } from "src/electron/types";
 import { EnchantmentIcon } from "src/front/components/Wakfu/EnchantmentIcon";
@@ -9,6 +9,7 @@ import { EnumWakfuEnchantmentColor } from "src/wakfu/enchantment/types";
 import type { EnumWakfuEquipmentPosition } from "src/wakfu/itemTypes/types";
 import { useBuildDetailsContext } from "../../context";
 import { useEnchantmentContext } from "../context";
+import type { TWakfuEnchantment } from "../types";
 import { equipmentsEnchantmentsClasses } from "./styles";
 
 const isEnchantmentLevelValid = (
@@ -29,6 +30,7 @@ export type TEnchantmentSlotProps = {
   slot: number;
   effect: string | null;
   enchantment: TWakfuBuildDisplay["enchantments"][(typeof EnchantableEquipmentPositions)[number]]["enchantments"][number];
+  currentEnchantment?: TWakfuEnchantment | null;
   shardLevelRequirement: number[];
 };
 
@@ -37,6 +39,7 @@ export const EnchantmentSlot = ({
   slot,
   effect,
   enchantment,
+  currentEnchantment,
   shardLevelRequirement,
 }: TEnchantmentSlotProps) => {
   const { id: buildId, level, stuff } = useBuildDetailsContext();
@@ -78,20 +81,30 @@ export const EnchantmentSlot = ({
     }
   };
 
+  console.log(currentEnchantment?.doubleBonusPositions.includes(position));
+
   return (
     <Tooltip title={effect} placement="top" disableInteractive arrow>
-      <EnchantmentIcon
-        height={32}
-        color={enchantment ? (enchantment.anyColor ? EnumWakfuEnchantmentColor.Yellow : enchantment.color) : undefined}
-        isFull={enchantmentLevelValid}
-        data-global-click="enchantmentSlot"
-        onClick={handleClick}
-        onContextMenu={handleRightClick}
-        className={clsx({
-          [equipmentsEnchantmentsClasses.slotHover]:
-            !selectedSublimation && (Boolean(selectedEnchantment) || Boolean(enchantment)),
+      <Stack
+        className={clsx(equipmentsEnchantmentsClasses.slot, {
+          [equipmentsEnchantmentsClasses.slotBonus]: currentEnchantment?.doubleBonusPositions.includes(position),
         })}
-      />
+      >
+        <EnchantmentIcon
+          height={32}
+          color={
+            enchantment ? (enchantment.anyColor ? EnumWakfuEnchantmentColor.Yellow : enchantment.color) : undefined
+          }
+          isFull={enchantmentLevelValid}
+          data-global-click="enchantmentSlot"
+          onClick={handleClick}
+          onContextMenu={handleRightClick}
+          className={clsx({
+            [equipmentsEnchantmentsClasses.slotHover]:
+              !selectedSublimation && (Boolean(selectedEnchantment) || Boolean(enchantment)),
+          })}
+        />
+      </Stack>
     </Tooltip>
   );
 };

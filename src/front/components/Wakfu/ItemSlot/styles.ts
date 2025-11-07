@@ -15,11 +15,13 @@ export type TItemSlotBoxProps = BoxProps & {
   rarity: number;
   equippedItem: boolean;
   disabled: boolean;
+  error: boolean;
 };
 
 export const ItemSlotBox = styled(Box, {
-  shouldForwardProp: (prop) => prop !== "size" && prop !== "equippedItem" && prop !== "rarity" && prop !== "disabled",
-})<TItemSlotBoxProps>(({ size, equippedItem, rarity, onClick, disabled }) => ({
+  shouldForwardProp: (prop) =>
+    prop !== "size" && prop !== "equippedItem" && prop !== "rarity" && prop !== "disabled" && prop !== "error",
+})<TItemSlotBoxProps>(({ size, equippedItem, rarity, onClick, disabled, error }) => ({
   [`&.${itemSlotClasses.root}`]: {
     width: size + 8,
     height: size + 8,
@@ -37,6 +39,15 @@ export const ItemSlotBox = styled(Box, {
         backgroundImage: `url(wakfu/slots/border/${rarity}2.png)`,
       },
     }),
+    "&:after": {
+      content: '""',
+      position: "absolute",
+      top: 4,
+      left: 4,
+      right: 4,
+      bottom: 4,
+      backgroundColor: error ? "rgba(255, 0, 0, 0.3)" : "transparent",
+    },
   },
   [`& .${itemSlotClasses.icon}`]: {
     position: "absolute",
