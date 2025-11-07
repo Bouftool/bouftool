@@ -53,16 +53,16 @@ export const CardCharacterBuild = ({ characterId, build }: TCardCharacterBuildPr
         {Object.values(EnumWakfuEquipmentPosition).map((position) => (
           <ItemSlot key={position} position={position} item={build.stuff[position]} size={40} disableTooltip />
         ))}
-        <Button variant="push" onClick={handleClickExportBuild}>
-          <Tooltip title="Exporter le build dans le presse-papier" placement="top">
+        <Tooltip title="Exporter le build dans le presse-papier" placement="top" disableInteractive>
+          <Button variant="push" onClick={handleClickExportBuild}>
             <ContentCopyIcon />
-          </Tooltip>
-        </Button>
-        <Button variant="push" onClick={handleClickDeleteBuild} disabled={loading} loading={loading}>
-          <Tooltip title="Supprimer le build" placement="top">
+          </Button>
+        </Tooltip>
+        <Tooltip title="Supprimer le build" placement="top" disableInteractive>
+          <Button variant="push" onClick={handleClickDeleteBuild} disabled={loading} loading={loading}>
             <DeleteIcon color="error" />
-          </Tooltip>
-        </Button>
+          </Button>
+        </Tooltip>
       </StackRow>
     </StackRow>
   );

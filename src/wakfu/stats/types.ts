@@ -55,6 +55,7 @@ export enum EnumWakfuStat {
   ResistanceOneElement = "ResistanceOneElement",
   ResistanceTwoElements = "ResistanceTwoElements",
   ResistanceThreeElements = "ResistanceThreeElements",
+  EliotropeRangeToMovement = "EliotropeRangeToMovement",
 }
 
 export type TWakfuStatElementalMastery =

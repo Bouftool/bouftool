@@ -189,6 +189,7 @@ export const WakfuStatMapping: Record<
   [EnumWakfuStat.HealingDone]: {},
   [EnumWakfuStat.Armor]: {},
   [EnumWakfuStat.IndirectDamages]: {},
+  [EnumWakfuStat.EliotropeRangeToMovement]: {},
 };
 
 export const getWakfuStatForMapping = (actionId: number, params: number[]) => {

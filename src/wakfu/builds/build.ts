@@ -3,6 +3,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { WakfuAbilities } from "../abilities";
 import type { EnumAbilities } from "../abilities/types";
+import { getBreedInnateStats } from "../breed/innateStats";
 import { EnchantableEquipmentPositions } from "../enchantment/constants";
 import type { WakfuItem } from "../items";
 import { EnumWakfuRarity } from "../items/rarity";
@@ -318,15 +319,14 @@ export class WakfuBuild {
     return true;
   }
 
+  private getBreedInnateStats() {
+    const breedInnateStats = getBreedInnateStats(this.character.getBreed(), this.level);
+    return new WakfuStats(breedInnateStats);
+  }
+
   public getStats() {
-    const stats = new WakfuStats({
-      [EnumWakfuStat.HealthPoint]: 50 + this.level * 10,
-      [EnumWakfuStat.ActionPoint]: 6,
-      [EnumWakfuStat.MovementPoint]: 3,
-      [EnumWakfuStat.WakfuPoint]: 6,
-      [EnumWakfuStat.CriticalHit]: 3,
-      [EnumWakfuStat.Control]: 1,
-    });
+    const stats = this.getBreedInnateStats();
+
     stats.merge(this.abilities.getStats());
     for (const bonus of Object.values(EnumWakfuStatsBonuses)) {
       if (this.bonuses[bonus]) {
@@ -362,14 +362,8 @@ export class WakfuBuild {
   }
 
   public getStatsWithoutEquipment() {
-    const stats = new WakfuStats({
-      [EnumWakfuStat.HealthPoint]: 50 + this.level * 10,
-      [EnumWakfuStat.ActionPoint]: 6,
-      [EnumWakfuStat.MovementPoint]: 3,
-      [EnumWakfuStat.WakfuPoint]: 6,
-      [EnumWakfuStat.CriticalHit]: 3,
-      [EnumWakfuStat.Control]: 1,
-    });
+    const stats = this.getBreedInnateStats();
+
     stats.merge(this.abilities.getStats());
     for (const bonus of Object.values(EnumWakfuStatsBonuses)) {
       if (this.bonuses[bonus]) {

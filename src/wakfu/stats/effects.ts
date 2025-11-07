@@ -50,4 +50,12 @@ export const WakfuStatEffects: Partial<Record<EnumWakfuStat, (stat: WakfuStats) 
     stat.add(EnumWakfuStat.AirMastery, elementMastery);
     stat.delete(EnumWakfuStat.ElementalMastery);
   },
+  [EnumWakfuStat.EliotropeRangeToMovement]: (stat) => {
+    const elio = stat.get(EnumWakfuStat.EliotropeRangeToMovement);
+    const range = stat.get(EnumWakfuStat.Range);
+    if (elio === 1 && range >= 2) {
+      stat.remove(EnumWakfuStat.Range, 2);
+      stat.add(EnumWakfuStat.MovementPoint, 1);
+    }
+  },
 };

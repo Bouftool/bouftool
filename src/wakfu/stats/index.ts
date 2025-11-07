@@ -51,7 +51,7 @@ export class WakfuStats {
   }
 
   constructor(stats?: TWakfuStats) {
-    this.stats = stats ?? {};
+    this.stats = { ...stats };
   }
 
   public get(stat: EnumWakfuStat | EnumWakfuState) {

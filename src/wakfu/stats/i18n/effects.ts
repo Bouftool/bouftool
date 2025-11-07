@@ -326,6 +326,12 @@ export const WakfuStatI18nEffects: Record<EnumWakfuStat, TWakfuI18n> = {
     es: "%d%% Armadura recibida",
     pt: "%d%% Armadura recebida",
   },
+  [EnumWakfuStat.EliotropeRangeToMovement]: {
+    fr: "",
+    en: "",
+    es: "",
+    pt: "",
+  },
 };
 
 export const getWakfuStatEffectLabel = (lang: EnumWakfuLang, stat: EnumWakfuStat, value?: number) => {

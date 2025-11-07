@@ -55,4 +55,5 @@ export const WakfuStatIcons: Record<EnumWakfuStat, string | null> = {
   [EnumWakfuStat.IndirectDamages]: "INDIRECT_DMG",
   [EnumWakfuStat.ArmorGiven]: "ARMOR_GIVEN",
   [EnumWakfuStat.ArmorReceived]: "ARMOR_RECEIVED",
+  [EnumWakfuStat.EliotropeRangeToMovement]: null,
 };

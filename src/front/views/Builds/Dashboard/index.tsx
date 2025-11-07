@@ -1,5 +1,5 @@
 import { Stack } from "@mui/material";
-import { useLayoutEffect } from "react";
+import { useLayoutEffect, useMemo } from "react";
 import { ElectronEvents } from "src/electron/types";
 import { StackRow } from "src/front/components/Layout/StackRow";
 import { Loading } from "src/front/components/Loading";
@@ -17,11 +17,27 @@ export const BuildsDashboard = () => {
     getAllBuilds(undefined);
   }, []);
 
+  const hasResults = useMemo(() => {
+    return allBuildsResponse !== null && allBuildsResponse.length > 0;
+  }, [allBuildsResponse]);
+
   return (
     <ModalEditCharacterProvider>
       <ModalImportBuildProvider>
         <Stack sx={{ flex: 1, p: 2, gap: 2, overflow: "hidden" }}>
-          <StackRow sx={{ justifyContent: "end" }}>
+          <StackRow
+            sx={
+              hasResults
+                ? {
+                    justifyContent: "end",
+                  }
+                : {
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: "100%",
+                  }
+            }
+          >
             <ButtonCreateCharacter />
           </StackRow>
           <Stack sx={{ flex: 1, gap: 1, overflow: "auto" }}>

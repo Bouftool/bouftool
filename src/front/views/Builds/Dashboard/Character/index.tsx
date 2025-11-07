@@ -2,7 +2,8 @@ import AddIcon from "@mui/icons-material/Add";
 import ChevronRight from "@mui/icons-material/ChevronRight";
 import EditIcon from "@mui/icons-material/Edit";
 import ExpandMore from "@mui/icons-material/ExpandMore";
-import { Button, Collapse, Stack, Typography } from "@mui/material";
+import FileDownloadIcon from "@mui/icons-material/FileDownload";
+import { Button, Collapse, Stack, Tooltip, Typography } from "@mui/material";
 import { useState } from "react";
 import { ElectronEvents } from "src/electron/types";
 import { StackRow } from "src/front/components/Layout/StackRow";
@@ -79,12 +80,16 @@ export const Character = ({ character }: TCharacterProps) => {
           >
             Nouveau Build
           </Button>
-          <Button variant="push" onClick={handleClickPasteBuild}>
-            Importer
-          </Button>
-          <Button variant="push" onClick={handleClickEditCharacter}>
-            <EditIcon />
-          </Button>
+          <Tooltip title="Editer le personnage" placement="top" disableInteractive>
+            <Button variant="push" onClick={handleClickEditCharacter}>
+              <EditIcon />
+            </Button>
+          </Tooltip>
+          <Tooltip title="Importer un build" placement="top" disableInteractive>
+            <Button variant="push" onClick={handleClickPasteBuild}>
+              <FileDownloadIcon />
+            </Button>
+          </Tooltip>
           <Button variant="push" onClick={handleOpenCollapse}>
             {open ? <ExpandMore /> : <ChevronRight />}
           </Button>
