@@ -7,12 +7,14 @@ export enum EnumWakfuStuffConstraint {
   UniqueItem = "UniqueItem",
   UniqueEpic = "UniqueEpic",
   UniqueRelic = "UniqueRelic",
+  Level = "Level",
 }
 
 export const WakfuStuffConstraints = {
   [EnumWakfuStuffConstraint.UniqueItem]: "Un seul exemplaire de cet objet peut être équipé.",
   [EnumWakfuStuffConstraint.UniqueEpic]: "Un seul objet épique peut être équipé.",
   [EnumWakfuStuffConstraint.UniqueRelic]: "Un seul objet relique peut être équipé.",
+  [EnumWakfuStuffConstraint.Level]: "Vous n'avez pas le niveau requis pour équiper cet objet.",
 };
 
 export const WakfuStuffConstraintsCheckers = {
@@ -70,4 +72,12 @@ export const WakfuStuffConstraintsCheckers = {
     }
     return true;
   },
-};
+  [EnumWakfuStuffConstraint.Level]: (build: WakfuBuild, item: WakfuItem): boolean => {
+    const buildLevel = build.getLevel();
+    const itemLevel = item.getLevel();
+    return buildLevel >= itemLevel;
+  },
+} as const satisfies Record<
+  EnumWakfuStuffConstraint,
+  (build: WakfuBuild, item: WakfuItem, position: EnumWakfuEquipmentPosition) => boolean
+>;

@@ -7,7 +7,7 @@ export type TooltipToggleButtonProps = ToggleButtonProps & {
 
 export const TooltipToggleButton = ({ tooltip, ...props }: TooltipToggleButtonProps) => {
   return (
-    <Tooltip title={tooltip} enterDelay={500} disableInteractive>
+    <Tooltip title={tooltip} enterDelay={500} arrow disableInteractive>
       <ToggleButton {...props} />
     </Tooltip>
   );
