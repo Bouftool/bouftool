@@ -15,7 +15,7 @@ export const BonusTooltip = ({ bonus }: TBonusTooltipProps) => {
   return (
     <Stack>
       <Typography variant="subtitle2">{StatsBonusesLabels[bonus].fr}</Typography>
-      {Object.entries(stats).map(([key, value]) => {
+      {Object.entries(stats.toObject()).map(([key, value]) => {
         if (isWakfuStat(key)) {
           return (
             <Typography key={key} variant="caption">
