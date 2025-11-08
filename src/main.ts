@@ -2,6 +2,7 @@ import path from "node:path";
 import { app, BrowserWindow } from "electron";
 import started from "electron-squirrel-startup";
 import { registerElectronEvents } from "./electron/events";
+import { OverlayWindow } from "./electron/overlay";
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (started) {
@@ -16,7 +17,7 @@ const createWindow = () => {
     webPreferences: {
       contextIsolation: true,
       nodeIntegration: false,
-      preload: path.join(__dirname, "preload.js"),
+      preload: path.join(import.meta.dirname, "preload.js"),
     },
   });
 
@@ -25,8 +26,14 @@ const createWindow = () => {
     mainWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL);
   } else {
     mainWindow.setMenu(null);
-    mainWindow.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`));
+    mainWindow.loadFile(path.join(import.meta.dirname, `../renderer/index.html`));
   }
+
+  mainWindow.on("closed", () => {
+    if (OverlayWindow.hasInstance()) {
+      OverlayWindow.getInstance().close();
+    }
+  });
 };
 
 // This method will be called when Electron has finished

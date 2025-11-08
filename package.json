@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "description": "My Electron application description",
   "main": ".vite/build/main.js",
+  "type": "module",
   "scripts": {
     "start": "electron-forge start",
     "package": "electron-forge package",
@@ -51,5 +52,5 @@
     "react-dom": "^19.2.0",
     "react-window": "^2.2.2"
   },
-  "packageManager": "yarn@4.10.3"
+  "packageManager": "yarn@4.11.0"
 }

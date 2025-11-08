@@ -80,35 +80,30 @@ export const CraftManagerContextProvider = ({ children }: TItemToCraftProviderPr
       const itemIndex = items.findIndex((item) => item.item.id === itemId) ?? -1;
       if (itemIndex >= 0) {
         setQuantity({ itemId, quantity });
-
-        getItems(undefined);
       }
     },
-    [items, setQuantity, getItems],
+    [items, setQuantity],
   );
 
   const markAsCrafted = useCallback(
     (itemId: number, path: number[]) => {
       markIngredientAsCrafted({ itemId, path });
-      getItems(undefined);
     },
-    [markIngredientAsCrafted, getItems],
+    [markIngredientAsCrafted],
   );
 
   const unmarkAsCrafted = useCallback(
     (itemId: number, path: number[]) => {
       unmarkIngredientAsCrafted({ itemId, path });
-      getItems(undefined);
     },
-    [unmarkIngredientAsCrafted, getItems],
+    [unmarkIngredientAsCrafted],
   );
 
   const markAllIngredientsById = useCallback(
     (ingredientId: number) => {
       markAllIngredients({ ingredientId });
-      getItems(undefined);
     },
-    [markAllIngredients, getItems],
+    [markAllIngredients],
   );
 
   const [recipeCraftItem, setRecipeCraftItem] = useState<TCraftItem | null>(null);
@@ -119,13 +114,13 @@ export const CraftManagerContextProvider = ({ children }: TItemToCraftProviderPr
     (recipeIndex: number) => {
       if (recipeCraftItem) {
         setIngredientRecipe({ itemId: recipeCraftItem.item.id, path: recipePath, recipeIndex });
-        getItems(undefined);
+
         setRecipeCraftItem(null);
         setRecipePath([]);
         setCurrentRecipeIndex(0);
       }
     },
-    [recipeCraftItem, recipePath, setIngredientRecipe, getItems],
+    [recipeCraftItem, recipePath, setIngredientRecipe],
   );
 
   const onCloseRecipeModal = useCallback(() => {

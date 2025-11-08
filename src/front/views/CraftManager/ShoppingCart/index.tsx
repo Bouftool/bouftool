@@ -8,43 +8,7 @@ import { RarityIcon } from "src/front/components/Wakfu/RarityIcon";
 import { sendElectronEvent } from "src/front/hooks/electron";
 import type { TCraftItem } from "src/wakfu/craftManager/types";
 import { useCraftManagerContext } from "../context";
-
-type ShoppingCartItem = {
-  item: TCraftItem["item"];
-  quantity: number;
-};
-
-const extractItemsWithoutRecipe = (craftItems: TCraftItem[]): ShoppingCartItem[] => {
-  const itemsMap = new Map<number, ShoppingCartItem>();
-
-  const processItem = (craftItem: TCraftItem) => {
-    const { item, quantity } = craftItem;
-
-    if (item.isCrafted) {
-      return;
-    }
-
-    if (item.recipes.length === 0) {
-      const existingItem = itemsMap.get(item.id);
-      if (existingItem) {
-        existingItem.quantity += quantity;
-      } else {
-        itemsMap.set(item.id, { item, quantity });
-      }
-    } else {
-      for (const ingredient of item.recipes[craftItem.selectedRecipeIndex].ingredients) {
-        processItem(ingredient);
-      }
-    }
-  };
-
-  for (const craftItem of craftItems) {
-    processItem(craftItem);
-  }
-
-  //TODO: voir en fonction de la langue i18n
-  return Array.from(itemsMap.values()).sort((a, b) => a.item.title.fr.localeCompare(b.item.title.fr));
-};
+import { extractItemsWithoutRecipe } from "./utils";
 
 export const ShoppingCart = () => {
   const { items, markAllIngredientsById } = useCraftManagerContext();
@@ -59,6 +23,10 @@ export const ShoppingCart = () => {
 
   const handleOpenEncyclopedia = (item: TCraftItem["item"]) => {
     sendElectronEvent(ElectronEvents.OpenWebEncyclopedia, { itemTypeId: item.itemType.id, itemId: item.id });
+  };
+
+  const handleOpenOverlay = () => {
+    sendElectronEvent(ElectronEvents.CraftManagerOpenOverlay, undefined);
   };
 
   if (items.length === 0) {
@@ -79,6 +47,9 @@ export const ShoppingCart = () => {
       <Typography variant="subtitle2">
         Ressources ({shoppingCartItems.length} différentes, {totalQuantity} en tout)
       </Typography>
+      <Button variant="push" onClick={handleOpenOverlay}>
+        Open Overlay
+      </Button>
       {shoppingCartItems.map((shoppingItem) => (
         <StackRow
           key={shoppingItem.item.id}

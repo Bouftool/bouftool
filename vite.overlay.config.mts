@@ -16,9 +16,7 @@ export default defineConfig((env) => {
       watch: command === "serve" ? {} : null,
       minify: command === "build",
       rollupOptions: {
-        input: {
-          main_window: path.join(__dirname, "src/index.html")
-        }
+        input: path.join(__dirname, "src/overlay.html"),
       },
     },
     plugins: [react({
@@ -29,4 +27,3 @@ export default defineConfig((env) => {
     }), tsconfigPaths()],
   });
 });
-

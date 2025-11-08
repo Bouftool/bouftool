@@ -3,12 +3,11 @@
     "target": "ESNext",
     "module": "ESNext",
     "strict": true,
-    "allowJs": true,
     "skipLibCheck": true,
-    "esModuleInterop": true,
     "noImplicitAny": true,
     "sourceMap": true,
     "baseUrl": ".",
+    "noEmit": true,
     "paths": {
       "src/*": [
         "src/*"
@@ -19,5 +18,8 @@
     "resolveJsonModule": true,
     "jsx": "react-jsx"
   },
-  "include": ["src", "forge.env.d.ts"]
+  "include": [
+    "src",
+    "forge.env.d.ts"
+  ]
 }

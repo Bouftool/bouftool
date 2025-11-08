@@ -56,6 +56,11 @@ export enum ElectronEvents {
   CraftManagerUnmarkIngredientAsCrafted = "craftmanager:unmark-ingredient-as-crafted",
   CraftManagerMarkAllIngredientsById = "craftmanager:mark-all-ingredients-by-id",
   CraftManagerSetIngredientRecipe = "craftmanager:set-ingredient-recipe",
+  CraftManagerOpenOverlay = "craftmanager:open-overlay",
+  CraftManagerCloseOverlay = "craftmanager:close-overlay",
+  CraftManagerSetOverlayOpacity = "craftmanager:set-overlay-opacity",
+  CraftManagerSetOverlayMode = "craftmanager:set-overlay-mode",
+  CraftManagerGetOverlayMode = "craftmanager:get-overlay-mode",
 }
 
 export type ElectronEventsMain = {
@@ -119,6 +124,11 @@ export type ElectronEventsMain = {
   [ElectronEvents.CraftManagerUnmarkIngredientAsCrafted]: { itemId: number; path: number[] };
   [ElectronEvents.CraftManagerMarkAllIngredientsById]: { ingredientId: number };
   [ElectronEvents.CraftManagerSetIngredientRecipe]: { itemId: number; path: number[]; recipeIndex: number };
+  [ElectronEvents.CraftManagerOpenOverlay]: undefined;
+  [ElectronEvents.CraftManagerCloseOverlay]: undefined;
+  [ElectronEvents.CraftManagerSetOverlayOpacity]: { opacity: number };
+  [ElectronEvents.CraftManagerSetOverlayMode]: boolean;
+  [ElectronEvents.CraftManagerGetOverlayMode]: undefined;
 };
 
 export type ElectronEventsRenderer = {
@@ -200,6 +210,11 @@ export type ElectronEventsRenderer = {
   [ElectronEvents.CraftManagerUnmarkIngredientAsCrafted]: undefined;
   [ElectronEvents.CraftManagerMarkAllIngredientsById]: undefined;
   [ElectronEvents.CraftManagerSetIngredientRecipe]: undefined;
+  [ElectronEvents.CraftManagerOpenOverlay]: undefined;
+  [ElectronEvents.CraftManagerCloseOverlay]: undefined;
+  [ElectronEvents.CraftManagerSetOverlayOpacity]: undefined;
+  [ElectronEvents.CraftManagerSetOverlayMode]: undefined;
+  [ElectronEvents.CraftManagerGetOverlayMode]: boolean;
 };
 
 export type TElectronPackage<Payload> = {

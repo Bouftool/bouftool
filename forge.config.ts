@@ -41,6 +41,10 @@ const config: ForgeConfig = {
           name: "main_window",
           config: "vite.renderer.config.mts",
         },
+        {
+          name: "overlay_window",
+          config: "vite.overlay.config.mts",
+        },
       ],
     }),
     // Fuses are used to enable/disable various Electron functionality

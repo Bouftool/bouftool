@@ -12,10 +12,26 @@ export class ElectronEventManager {
     }
   }
 
+  static sendTo<E extends ElectronEvents>(event: E, pkg: ElectronEventsRenderer[E], title: string): void {
+    const win = BrowserWindow.getAllWindows().find((w) => w.title === title);
+
+    if (win) {
+      win.webContents.send(event, { id: null, payload: pkg });
+    }
+  }
+
+  static sendToMany<E extends ElectronEvents>(event: E, pkg: ElectronEventsRenderer[E], titles: string[]): void {
+    const windows = BrowserWindow.getAllWindows().filter((w) => titles.includes(w.title));
+
+    for (const win of windows) {
+      win.webContents.send(event, { id: null, payload: pkg });
+    }
+  }
+
   public register<E extends ElectronEvents>(event: E, callback: EventCallback<E>): void {
-    console.log("registering event:", event);
+    console.info("registering event:", event);
     ipcMain.handle(event, (evt, pkg: TElectronPackage<ElectronEventsMain[E]>) => {
-      console.log("event received:", event, pkg);
+      console.info("event received:", event, pkg);
       console.time(`Event: ${event}`);
       callback((payload: ElectronEventsRenderer[E]) => {
         evt.sender.send(event, { id: pkg.id, payload });
