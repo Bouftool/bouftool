@@ -1,6 +1,6 @@
 import CheckIcon from "@mui/icons-material/Check";
 import { Button, Slider, Stack, Typography, useColorScheme } from "@mui/material";
-import { useLayoutEffect, useMemo } from "react";
+import { useLayoutEffect, useMemo, useState } from "react";
 import { ElectronEvents } from "src/electron/types";
 import { StackRow } from "src/front/components/Layout/StackRow";
 import { ItemIcon } from "src/front/components/Wakfu/ItemIcon";
@@ -14,6 +14,8 @@ export const OverlayShoppingList = () => {
 
   const [getItems, items] = useElectronEvent(ElectronEvents.CraftManagerGetItems);
   const [getOverlayMode, overlayMode] = useElectronEvent(ElectronEvents.CraftManagerGetOverlayMode);
+
+  const [opacity, SetOpacity] = useState(1);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: load one time
   useLayoutEffect(() => {
@@ -46,6 +48,7 @@ export const OverlayShoppingList = () => {
   };
 
   const handleSetOpacity = (opacity: number) => {
+    SetOpacity(opacity);
     sendElectronEvent(ElectronEvents.CraftManagerSetOverlayOpacity, { opacity });
   };
 
@@ -53,31 +56,32 @@ export const OverlayShoppingList = () => {
     <Stack
       sx={{
         overflow: "hidden",
-        p: 1,
         borderRadius: "8px",
         bgcolor: "surface.100",
         justifyContent: "center",
-        alignItems: "center",
       }}
     >
       {!overlayMode && (
-        <Slider
-          sx={{ width: "80%" }}
-          size="medium"
-          defaultValue={1}
-          min={0.4}
-          max={1}
-          step={0.01}
-          onChange={(_e, value) => handleSetOpacity(value)}
-        />
+        <StackRow sx={{ px: 1, pt: 1, width: "100%", alignItems: "center", gap: 1 }}>
+          <Typography variant="subtitle2">Opacité</Typography>
+          <Slider
+            sx={{ width: "80%" }}
+            color="error"
+            size="medium"
+            defaultValue={opacity}
+            value={opacity}
+            min={0.4}
+            max={1}
+            step={0.01}
+            onChange={(_e, value) => handleSetOpacity(value)}
+            valueLabelDisplay="off"
+          />
+        </StackRow>
       )}
-      {/* <Button variant="push" onClick={handleOpenOverlay}>
-          Open Overlay
-          </Button> */}
-      <Stack sx={{ gap: 1, overflowY: "auto" }}>
-        <Typography variant="subtitle2">
-          Ressources ({shoppingCartItems.length} différentes, {totalQuantity} en tout)
-        </Typography>
+      <Typography variant="subtitle2" sx={{ px: 1, pt: 1 }}>
+        Ressources ({shoppingCartItems.length} différentes, {totalQuantity} en tout)
+      </Typography>
+      <Stack sx={{ p: 1, gap: 1, overflowY: "auto" }}>
         {shoppingCartItems.map((shoppingItem) => (
           <StackRow
             key={shoppingItem.item.id}

@@ -1,3 +1,4 @@
+import ClearIcon from "@mui/icons-material/Clear";
 import { Button, Stack } from "@mui/material";
 import { useLayoutEffect } from "react";
 import { ElectronEvents } from "src/electron/types";
@@ -32,7 +33,9 @@ export const OverlayTopBar = () => {
         }}
       />
       <StackRow>
-        <Button onClick={handleClose}>Close</Button>
+        <Button variant="text" color="error" sx={{ minWidth: 0, p: 0.5, aspectRatio: "1" }} onClick={handleClose}>
+          <ClearIcon />
+        </Button>
       </StackRow>
     </StackRow>
   );

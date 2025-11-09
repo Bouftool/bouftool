@@ -1,5 +1,6 @@
 import CheckIcon from "@mui/icons-material/Check";
-import { Button, Stack, Typography } from "@mui/material";
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
+import { Button, Stack, Tooltip, Typography } from "@mui/material";
 import { useMemo } from "react";
 import { ElectronEvents } from "src/electron/types";
 import { StackRow } from "src/front/components/Layout/StackRow";
@@ -44,12 +45,16 @@ export const ShoppingCart = () => {
         bgcolor: "surface.100",
       }}
     >
-      <Typography variant="subtitle2">
-        Ressources ({shoppingCartItems.length} différentes, {totalQuantity} en tout)
-      </Typography>
-      <Button variant="push" onClick={handleOpenOverlay}>
-        Open Overlay
-      </Button>
+      <StackRow sx={{ justifyContent: "space-between" }}>
+        <Typography variant="subtitle2">
+          Ressources ({shoppingCartItems.length} différentes, {totalQuantity} en tout)
+        </Typography>
+        <Tooltip title="Ouvrir la liste de ressources dans l'overlay">
+          <Button variant="push" sx={{ minWidth: 0, p: 0.5, aspectRatio: "1" }} onClick={handleOpenOverlay}>
+            <OpenInNewIcon fontSize="small" />
+          </Button>
+        </Tooltip>
+      </StackRow>
       {shoppingCartItems.map((shoppingItem) => (
         <StackRow
           key={shoppingItem.item.id}
