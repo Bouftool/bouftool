@@ -30,4 +30,15 @@ export const I18nHelperTooltip = {
       (couleurs non respectées) alors les chasses seront affichées comme vide.
     </Typography>
   ),
+  SwitchOverlayMode: () => (
+    <Typography variant="body2">
+      Le raccourci clavier Ctrl + Maj + O permet de passer l'overlay des ressources en mode transparent.
+      <br />
+      <br />
+      En mode transparent, l'overlay reste au premier plan mais les interactions de la souris sont désactivées.
+      <br />
+      <br />
+      Pour quitter le mode transparent, utiliser à nouveau le raccourci clavier.
+    </Typography>
+  ),
 } as const;
