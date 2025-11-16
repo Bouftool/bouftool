@@ -8,6 +8,12 @@ export const WakfuStatI18nLabels: Record<EnumWakfuStat, TWakfuI18n> = {
     es: "PdV",
     pt: "PV",
   },
+  [EnumWakfuStat.HealthPointByLevel]: {
+    fr: "PV par niveau",
+    en: "HP by level",
+    es: "PdV por nivel",
+    pt: "PV por nível",
+  },
   [EnumWakfuStat.HealingMastery]: {
     fr: "Maîtrise Soin",
     en: "Healing Mastery",
@@ -67,6 +73,12 @@ export const WakfuStatI18nLabels: Record<EnumWakfuStat, TWakfuI18n> = {
     en: "Elemental Mastery",
     es: "Dominio elemental",
     pt: "Domínio elemental",
+  },
+  [EnumWakfuStat.ElementalMasteryByLevel]: {
+    fr: "Maîtrise par niveau",
+    en: "Mastery by level",
+    es: "Dominio por nivel",
+    pt: "Domínio por nível",
   },
   [EnumWakfuStat.FireMastery]: {
     fr: "Maîtrise Feu",
@@ -265,6 +277,12 @@ export const WakfuStatI18nLabels: Record<EnumWakfuStat, TWakfuI18n> = {
     en: "Harvesting Quantity in Trapper",
     es: "Cantidad recolectada en Peletero",
     pt: "Quantidade de coleta em Caçador",
+  },
+  [EnumWakfuStat.HarvestBonus]: {
+    fr: "Quantité Récolte",
+    en: "Harvesting Quantity",
+    es: "Cantidad recolectada",
+    pt: "Quantidade de coleta",
   },
   [EnumWakfuStat.PercentHealthPoint]: {
     fr: "% Points de Vie",

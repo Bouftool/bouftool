@@ -9,6 +9,10 @@ import { SearchItemsPreferencesProvider } from "../../SearchEquipments/contexts/
 
 const context = createContext<ElectronEventsRenderer[ElectronEvents.GetBuild] | undefined>(undefined);
 
+export const useOptionalBuildDetailsContext = () => {
+  return useContext(context);
+};
+
 export const useBuildDetailsContext = () => {
   const contextValue = useContext(context);
   if (!contextValue) {

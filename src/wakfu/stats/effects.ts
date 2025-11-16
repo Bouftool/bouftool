@@ -21,7 +21,17 @@ export const ElementOnXStats = [
  * ORDER IS IMPORTANT
  */
 
-export const WakfuStatEffects: Partial<Record<EnumWakfuStat, (stat: WakfuStats) => void>> = {
+export const WakfuStatEffects: Partial<Record<EnumWakfuStat, (stat: WakfuStats, level: number) => void>> = {
+  [EnumWakfuStat.HealthPointByLevel]: (stat, level) => {
+    const healthPointByLevel = stat.get(EnumWakfuStat.HealthPointByLevel);
+    stat.add(EnumWakfuStat.HealthPoint, Math.floor((healthPointByLevel / 100) * level));
+    stat.delete(EnumWakfuStat.HealthPointByLevel);
+  },
+  [EnumWakfuStat.ElementalMasteryByLevel]: (stat, level) => {
+    const elementalMasteryByLevel = stat.get(EnumWakfuStat.ElementalMasteryByLevel);
+    stat.add(EnumWakfuStat.ElementalMastery, Math.floor((elementalMasteryByLevel / 100) * level));
+    stat.delete(EnumWakfuStat.ElementalMasteryByLevel);
+  },
   [EnumWakfuStat.PercentHealthPoint]: (stat) => {
     const percentHp = stat.get(EnumWakfuStat.PercentHealthPoint);
     const baseHp = stat.get(EnumWakfuStat.HealthPoint);

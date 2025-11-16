@@ -359,7 +359,7 @@ export class WakfuBuild {
       }
     }
     stats.applyElementalPreferences(this.elementalPreferences);
-    stats.applyEffects();
+    stats.applyEffects(this.level);
     return stats;
   }
 
@@ -374,7 +374,7 @@ export class WakfuBuild {
     }
 
     stats.applyElementalPreferences(this.elementalPreferences);
-    stats.applyEffects();
+    stats.applyEffects(this.level);
     return stats;
   }
 

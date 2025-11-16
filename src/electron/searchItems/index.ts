@@ -38,13 +38,14 @@ const isItemFiltered = (item: WakfuItem, filters: TSearchItemsFilters) => {
 export const searchItems = (
   filters: TSearchItemsFilters,
   sort: TSearchItemsSort,
+  buildLevel: number = 1,
 ): ReturnType<WakfuItem["toObject"]>[] => {
   const store = WakfuStore.getInstance();
   const itemWeightCache: Record<number, number> = {};
   return store.getItems(
     (item) => isItemFiltered(item, filters),
     (a, b) => {
-      let comparison = searchItemsSortWeight(a, b, sort, itemWeightCache);
+      let comparison = searchItemsSortWeight(a, b, sort, buildLevel, itemWeightCache);
       if (comparison === 0) {
         comparison = searchItemsSortLevel(a, b);
         if (comparison === 0) {

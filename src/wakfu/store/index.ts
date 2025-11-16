@@ -19,6 +19,7 @@ import { DefaultWakfuI18n } from "../utils/constants";
 import { EnumWakfuLang } from "../utils/types";
 import { WakfuAPI } from "./api";
 import { ExcludeEnchantments } from "./constants";
+import { CustomItems } from "./customs/items";
 import { WakfuFile } from "./file";
 import { EnumWakfuGamedataType, type TPickWakfuGamedata, type TWakfuGamedataTypes } from "./types";
 
@@ -186,8 +187,8 @@ export class WakfuStore {
           this.items.set(
             item.definition.item.id,
             new WakfuItem({
-              id: item.definition.item.id || 1,
-              level: item.definition.item.level,
+              id: item.definition.item.id,
+              level: item.definition.item.level || 1,
               itemType: itemType,
               rarity: item.definition.item.baseParameters.rarity,
               gfxId: item.definition.item.graphicParameters.gfxId,
@@ -205,6 +206,17 @@ export class WakfuStore {
           );
         }
       }
+    }
+  }
+
+  private loadCustomItems() {
+    for (const customItem of CustomItems) {
+      const itemType = this.itemTypes.get(customItem.itemType);
+      if (!itemType) {
+        continue;
+      }
+      const item = new WakfuItem({ ...customItem, itemType: itemType });
+      this.items.set(item.getId(), item);
     }
   }
 
@@ -297,6 +309,7 @@ export class WakfuStore {
     this.loadItemTypes(gamedata.itemTypes);
     this.loadItemTypes(gamedata.equipmentItemTypes);
     this.loadItems(gamedata.items);
+    this.loadCustomItems();
     this.loadJobItems(gamedata.jobsItems);
     this.loadRecipeCategories(gamedata.recipeCategories);
     this.loadRecipes(gamedata.recipes, gamedata.recipeIngredients, gamedata.recipeResults);

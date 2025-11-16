@@ -26,8 +26,8 @@ export const registerElectronEvents = () => {
     reply(undefined);
   });
 
-  manager.register(ElectronEvents.SearchItems, (reply, { filters, sort }) => {
-    const results = searchItems(filters, sort);
+  manager.register(ElectronEvents.SearchItems, (reply, { filters, sort, buildLevel }) => {
+    const results = searchItems(filters, sort, buildLevel);
     reply(results);
   });
 

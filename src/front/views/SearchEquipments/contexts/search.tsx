@@ -4,6 +4,7 @@ import { ElectronEvents } from "src/electron/types";
 import { useElectronEvent } from "src/front/hooks/electron";
 import type { WakfuItem } from "src/wakfu/items";
 import { EnumWakfuStat } from "src/wakfu/stats/types";
+import { useOptionalBuildDetailsContext } from "../../Builds/Details/context";
 import type { TSearchItemsFiltersForm } from "../filters";
 import type { TSearchItemsPreferences } from "../preferences/logics";
 import { useSearchItemsFiltersContext } from "./filters";
@@ -77,6 +78,7 @@ const DefaultValues: TSearchItemsContext = [];
 export const SearchItemsProvider = ({ children }: TSearchItemsProviderProps) => {
   const { filters } = useSearchItemsFiltersContext();
   const { preferences } = useSearchItemsPreferencesContext();
+  const build = useOptionalBuildDetailsContext();
   const [searchItems, items] = useElectronEvent(ElectronEvents.SearchItems);
 
   useLayoutEffect(() => {
@@ -86,15 +88,19 @@ export const SearchItemsProvider = ({ children }: TSearchItemsProviderProps) => 
   // biome-ignore lint/correctness/useExhaustiveDependencies: Only depends on filters and preferences
   useLayoutEffect(() => {
     if (SearchItemsBehavior.shouldSkipNextTimeout()) {
-      searchItems({ filters: formatFilters(filters), sort: formatPreferences(preferences) });
+      searchItems({ filters: formatFilters(filters), sort: formatPreferences(preferences), buildLevel: build?.level });
       SearchItemsBehavior.setSkipNextTimeout(false);
     } else {
       const timeout = setTimeout(() => {
-        searchItems({ filters: formatFilters(filters), sort: formatPreferences(preferences) });
+        searchItems({
+          filters: formatFilters(filters),
+          sort: formatPreferences(preferences),
+          buildLevel: build?.level,
+        });
       }, 750);
       return () => clearTimeout(timeout);
     }
-  }, [filters, preferences]);
+  }, [filters, preferences, build?.level]);
 
   return <SearchContext.Provider value={items ?? DefaultValues}>{children}</SearchContext.Provider>;
 };

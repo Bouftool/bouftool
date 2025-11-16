@@ -117,11 +117,14 @@ export const registerElectronBuildsEvents = (manager: ElectronEventManager) => {
           sourceItems.push(disabledItem);
         }
       }
-      const targetItemStats = targetItem.getStats().toApplyEffects().applyElementalPreferences(elementalPreferences);
+      const targetItemStats = targetItem
+        .getStats()
+        .toApplyEffects(build.getLevel())
+        .applyElementalPreferences(elementalPreferences);
       const sourceItemsStats = sourceItems.map((item) =>
         isWakfuEquipmentPosition(item)
           ? new WakfuStats()
-          : item.getStats().toApplyEffects().applyElementalPreferences(elementalPreferences),
+          : item.getStats().toApplyEffects(build.getLevel()).applyElementalPreferences(elementalPreferences),
       );
       const delta = targetItemStats.compare(sourceItemsStats);
       results.push({

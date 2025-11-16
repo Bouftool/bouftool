@@ -2,6 +2,7 @@ import { EnumWakfuStat } from "./types";
 
 export const WakfuStatIcons: Record<EnumWakfuStat, string | null> = {
   [EnumWakfuStat.HealthPoint]: "HP",
+  [EnumWakfuStat.HealthPointByLevel]: "HP",
   [EnumWakfuStat.HealingMastery]: "HEAL_IN_PERCENT",
   [EnumWakfuStat.ActionPoint]: "AP",
   [EnumWakfuStat.MovementPoint]: "MP",
@@ -12,6 +13,7 @@ export const WakfuStatIcons: Record<EnumWakfuStat, string | null> = {
   [EnumWakfuStat.AirResistance]: "RES_AIR_PERCENT",
   [EnumWakfuStat.RearResistance]: "RES_BACKSTAB",
   [EnumWakfuStat.ElementalMastery]: "DMG_IN_PERCENT",
+  [EnumWakfuStat.ElementalMasteryByLevel]: "DMG_IN_PERCENT",
   [EnumWakfuStat.FireMastery]: "DMG_FIRE_PERCENT",
   [EnumWakfuStat.EarthMastery]: "DMG_EARTH_PERCENT",
   [EnumWakfuStat.WaterMastery]: "DMG_WATER_PERCENT",
@@ -39,6 +41,7 @@ export const WakfuStatIcons: Record<EnumWakfuStat, string | null> = {
   [EnumWakfuStat.HarvestBonusTrapper]: null,
   [EnumWakfuStat.HarvestBonusFisherman]: null,
   [EnumWakfuStat.HarvestBonusHerbalist]: null,
+  [EnumWakfuStat.HarvestBonus]: null,
   [EnumWakfuStat.MasteryOneElement]: "DMG_IN_PERCENT",
   [EnumWakfuStat.MasteryTwoElements]: "DMG_IN_PERCENT",
   [EnumWakfuStat.MasteryThreeElements]: "DMG_IN_PERCENT",

@@ -40,6 +40,7 @@ export type TSearchItemsFilters = {
 export type TSearchItemsPayload = {
   filters: TSearchItemsFilters;
   sort: TSearchItemsSort;
+  buildLevel?: number;
 };
 
 export type TSearchItemsResult = ReturnType<WakfuItem["toObject"]>;

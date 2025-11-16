@@ -2,6 +2,7 @@ import type { EnumWakfuState } from "../states/types";
 
 export enum EnumWakfuStat {
   HealthPoint = "HealthPoint",
+  HealthPointByLevel = "HealthPointByLevel",
   HealingMastery = "HealingMastery",
   ActionPoint = "ActionPoint",
   MovementPoint = "MovementPoint",
@@ -12,6 +13,7 @@ export enum EnumWakfuStat {
   AirResistance = "AirResistance",
   RearResistance = "RearResistance",
   ElementalMastery = "ElementalMastery",
+  ElementalMasteryByLevel = "ElementalMasteryByLevel",
   FireMastery = "FireMastery",
   EarthMastery = "EarthMastery",
   WaterMastery = "WaterMastery",
@@ -49,6 +51,7 @@ export enum EnumWakfuStat {
   HarvestBonusMiner = "HarvestBonusMiner",
   HarvestBonusTrapper = "HarvestBonusTrapper",
   HarvestBonusFisherman = "HarvestBonusFisherman",
+  HarvestBonus = "HarvestBonus",
   MasteryOneElement = "MasteryOneElement",
   MasteryTwoElements = "MasteryTwoElements",
   MasteryThreeElements = "MasteryThreeElements",

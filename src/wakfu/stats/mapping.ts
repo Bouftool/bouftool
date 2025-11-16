@@ -8,6 +8,7 @@ export const WakfuStatMapping: Record<
     gainActionId: [20],
     lossActionId: [21],
   },
+  [EnumWakfuStat.HealthPointByLevel]: {},
   [EnumWakfuStat.HealingMastery]: {
     gainActionId: [26],
   },
@@ -46,6 +47,7 @@ export const WakfuStatMapping: Record<
     gainActionId: [120],
     lossActionId: [130],
   },
+  [EnumWakfuStat.ElementalMasteryByLevel]: {},
   [EnumWakfuStat.FireMastery]: {
     gainActionId: [122],
     lossActionId: [132],
@@ -147,6 +149,7 @@ export const WakfuStatMapping: Record<
     gainActionId: [2001],
     filterParams: (params) => params[2] === 72,
   },
+  [EnumWakfuStat.HarvestBonus]: {},
   [EnumWakfuStat.MasteryOneElement]: {
     gainActionId: [1068],
     filterParams: (params) => params[2] === 1,

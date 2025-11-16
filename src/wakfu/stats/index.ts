@@ -98,16 +98,16 @@ export class WakfuStats {
     return delta;
   }
 
-  public applyEffects() {
+  public applyEffects(level?: number): WakfuStats {
     for (const effect of Object.values(WakfuStatEffects)) {
-      effect(this);
+      effect(this, level ?? 1);
     }
     return this;
   }
 
-  public toApplyEffects(): WakfuStats {
+  public toApplyEffects(level?: number): WakfuStats {
     const applied = WakfuStats.copy(this);
-    applied.applyEffects();
+    applied.applyEffects(level);
     return applied;
   }
 
