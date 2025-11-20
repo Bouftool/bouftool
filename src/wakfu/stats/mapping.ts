@@ -200,7 +200,7 @@ export const getWakfuStatForMapping = (actionId: number, params: number[]) => {
     const mapping = WakfuStatMapping[stat];
     if (
       (mapping.gainActionId?.includes(actionId) || mapping.lossActionId?.includes(actionId)) &&
-      (!mapping.filterParams || !mapping.filterParams(params) || mapping.filterParams(params))
+      (!mapping.filterParams || mapping.filterParams(params))
     ) {
       return stat;
     }
