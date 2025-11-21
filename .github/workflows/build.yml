@@ -36,6 +36,12 @@ jobs:
     if: needs.check-version.outputs.version-changed == 'true'
     runs-on: ${{ matrix.os }}
 
+    permissions:
+      contents: read
+      packages: write
+      attestations: write
+      id-token: write
+
     strategy:
       matrix:
         os: [windows-latest, ubuntu-latest]
