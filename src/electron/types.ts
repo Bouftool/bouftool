@@ -37,6 +37,7 @@ export enum ElectronEvents {
   BuildSetPreferences = "build:set-preferences",
   BuildAddAbilityLevel = "build:add-ability-level",
   BuildRemoveAbilityLevel = "build:remove-ability-level",
+  BuildSetAbilitiesFromCode = "build:set-abilities-from-code",
   BuildSetBonuses = "build:set-bonuses",
   BuildAssignEnchantment = "build:assign-enchantment",
   BuildAssignSublimation = "build:assign-sublimation",
@@ -85,6 +86,7 @@ export type ElectronEventsMain = {
   [ElectronEvents.BuildSetPreferences]: { buildId: string; preferences: TElementalPreferences };
   [ElectronEvents.BuildAddAbilityLevel]: { buildId: string; ability: EnumAbilities; level: number };
   [ElectronEvents.BuildRemoveAbilityLevel]: { buildId: string; ability: EnumAbilities; level: number };
+  [ElectronEvents.BuildSetAbilitiesFromCode]: { buildId: string; abilitiesCode: string };
   [ElectronEvents.BuildSetInfo]: { buildId: string; name: string; level: number };
   [ElectronEvents.BuildSetBonuses]: {
     buildId: string;
@@ -186,6 +188,7 @@ export type ElectronEventsRenderer = {
   [ElectronEvents.BuildSetPreferences]: undefined;
   [ElectronEvents.BuildAddAbilityLevel]: undefined;
   [ElectronEvents.BuildRemoveAbilityLevel]: undefined;
+  [ElectronEvents.BuildSetAbilitiesFromCode]: undefined;
   [ElectronEvents.BuildSetInfo]: undefined;
   [ElectronEvents.BuildSetBonuses]: undefined;
   [ElectronEvents.BuildAssignEnchantment]: undefined;

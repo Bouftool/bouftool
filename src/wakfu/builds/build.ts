@@ -433,6 +433,11 @@ export class WakfuBuild {
     this.save();
   }
 
+  public setAbilitiesFromCode(abilitiesCode: string) {
+    this.abilities.setAbilitiesFromCode(abilitiesCode);
+    this.save();
+  }
+
   public assignEnchantment(
     position: (typeof EnchantableEquipmentPositions)[number],
     slot: number,

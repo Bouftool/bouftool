@@ -7,12 +7,14 @@ import { WakfuStore } from "src/wakfu/store";
 import { lauchOptimization } from "../../../wakfu/optimization/optimizationLauncher";
 import { ElectronEvents } from "../../types";
 import { ElectronEventManager } from "../manager";
+import { registerElectronBuildsAbilitiesEvents } from "./abilities";
 import { registerElectronBuildsElementalPreferencesEvents } from "./elementalPreferences";
 import { registerElectronBuildsEquipEvents } from "./equip";
 
 export const registerElectronBuildsEvents = (manager: ElectronEventManager) => {
   registerElectronBuildsEquipEvents(manager);
   registerElectronBuildsElementalPreferencesEvents(manager);
+  registerElectronBuildsAbilitiesEvents(manager);
 
   manager.register(ElectronEvents.BuildCreateCharacter, async (reply, { name, breed }) => {
     const character = await WakfuCharacter.create(name, breed);
@@ -134,36 +136,6 @@ export const registerElectronBuildsEvents = (manager: ElectronEventManager) => {
       });
     }
     reply(results);
-  });
-
-  manager.register(ElectronEvents.BuildSetPreferences, (reply, { buildId, preferences }) => {
-    const build = WakfuBuild.getById(buildId);
-    if (!build) {
-      throw new Error(`Build with ID ${buildId} not found`);
-    }
-    build.setElementalPreferences(preferences);
-    ElectronEventManager.send(ElectronEvents.GetBuild, build.toDisplay());
-    reply(undefined);
-  });
-
-  manager.register(ElectronEvents.BuildAddAbilityLevel, (reply, { buildId, ability, level }) => {
-    const build = WakfuBuild.getById(buildId);
-    if (!build) {
-      throw new Error(`Build with ID ${buildId} not found`);
-    }
-    build.addAbilityLevel(ability, level);
-    ElectronEventManager.send(ElectronEvents.GetBuild, build.toDisplay());
-    reply(undefined);
-  });
-
-  manager.register(ElectronEvents.BuildRemoveAbilityLevel, (reply, { buildId, ability, level }) => {
-    const build = WakfuBuild.getById(buildId);
-    if (!build) {
-      throw new Error(`Build with ID ${buildId} not found`);
-    }
-    build.removeAbilityLevel(ability, level);
-    ElectronEventManager.send(ElectronEvents.GetBuild, build.toDisplay());
-    reply(undefined);
   });
 
   manager.register(ElectronEvents.BuildSetBonuses, (reply, { buildId, bonuses }) => {
