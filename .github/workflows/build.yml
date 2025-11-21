@@ -44,7 +44,13 @@ jobs:
 
     strategy:
       matrix:
-        os: [windows-latest, ubuntu-latest]
+        include:
+          - os: windows-latest
+            portable: "false"
+          - os: windows-latest
+            portable: "true"
+          - os: ubuntu-latest
+            portable: "false"
 
     steps:
       - name: Checkout code
@@ -67,4 +73,5 @@ jobs:
       - name: Publish to GitHub Releases
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PORTABLE_BUILD: ${{ matrix.portable }}
         run: yarn publish

@@ -1,13 +1,14 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { Debounce } from "./Debounce";
+import { resolvePath } from "./PathManager";
 
 export class FileHandler<T> {
   private path: string;
   private writeDebounce = new Debounce(this._write.bind(this), 1000);
 
-  constructor(path: string) {
-    this.path = path;
+  constructor(filePath: string) {
+    this.path = resolvePath(filePath);
   }
 
   private async _write(data: T) {

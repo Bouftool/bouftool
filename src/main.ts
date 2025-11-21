@@ -4,11 +4,15 @@ import started from "electron-squirrel-startup";
 import { UpdateSourceType, updateElectronApp } from "update-electron-app";
 import { registerElectronEvents } from "./electron/events";
 import { OverlayWindow } from "./electron/overlay";
+import { initializePathManager } from "./wakfu/utils/PathManager";
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (started) {
   app.quit();
 }
+
+// Initialize PathManager before any file operations
+initializePathManager();
 
 const createWindow = () => {
   // Create the browser window.

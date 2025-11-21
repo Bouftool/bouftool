@@ -3,6 +3,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { EnumWakfuBreed } from "../breed/types";
 import { FileHandler } from "../utils/FileHandler";
+import { resolvePath } from "../utils/PathManager";
 import { WakfuBuild } from "./build";
 import type { TWakfuCharacterDisplay, TWakfuCharacterRaw } from "./types";
 
@@ -24,7 +25,7 @@ export class WakfuCharacter {
 
   public static async loadCharacters() {
     try {
-      const files = await fs.readdir(WakfuCharacter.CharactersDir, { withFileTypes: true });
+      const files = await fs.readdir(resolvePath(WakfuCharacter.CharactersDir), { withFileTypes: true });
       for (const file of files) {
         if (file.isDirectory()) {
           const character = new WakfuCharacter(file.name, "", EnumWakfuBreed.Feca);
@@ -78,7 +79,7 @@ export class WakfuCharacter {
       build.delete();
     }
     WakfuCharacter.CharactersMap.delete(this.id);
-    await fs.rm(path.join(WakfuCharacter.CharactersDir, this.id), { recursive: true, force: true });
+    await fs.rm(resolvePath(WakfuCharacter.CharactersDir, this.id), { recursive: true, force: true });
   }
 
   public deleteBuild(buildId: string) {

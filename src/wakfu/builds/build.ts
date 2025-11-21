@@ -12,6 +12,7 @@ import { WakfuStats } from "../stats";
 import { EnumWakfuStat, type TElementalPreferences } from "../stats/types";
 import { WakfuStore } from "../store";
 import { FileHandler } from "../utils/FileHandler";
+import { resolvePath } from "../utils/PathManager";
 import { EnumWakfuStatsBonuses, StatsBonuses } from "./bonus";
 import { WakfuCharacter } from "./character";
 import { EnumWakfuStuffConstraint, WakfuStuffConstraints, WakfuStuffConstraintsCheckers } from "./constraints";
@@ -124,7 +125,7 @@ export class WakfuBuild {
 
   public static async loadBuilds(character: WakfuCharacter) {
     const builds: WakfuBuild[] = [];
-    const buildsFiles = await fs.readdir(path.join(WakfuCharacter.CharactersDir, character.getId()));
+    const buildsFiles = await fs.readdir(resolvePath(WakfuCharacter.CharactersDir, character.getId()));
     for (const buildFile of buildsFiles) {
       if (buildFile !== "character.json" && buildFile.endsWith(".json")) {
         const filename = path.basename(buildFile, ".json");

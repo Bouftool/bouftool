@@ -5,7 +5,18 @@ import { MakerSquirrel } from "@electron-forge/maker-squirrel";
 import { MakerZIP } from "@electron-forge/maker-zip";
 import { FusesPlugin } from "@electron-forge/plugin-fuses";
 import { VitePlugin } from "@electron-forge/plugin-vite";
-import type { ForgeConfig } from "@electron-forge/shared-types";
+import type { ForgeConfig, ForgeConfigMaker } from "@electron-forge/shared-types";
+
+const makers: ForgeConfigMaker[] = [
+  new MakerRpm({}),
+  new MakerDeb({}),
+];
+
+if (process.env.PORTABLE_BUILD === "true") {
+  makers.push(new MakerZIP({}, ["win32", "linux"]));
+} else {
+  makers.push(new MakerSquirrel({}));
+}
 
 const config: ForgeConfig = {
   packagerConfig: {
@@ -13,12 +24,7 @@ const config: ForgeConfig = {
     icon: "app.ico",
   },
   rebuildConfig: {},
-  makers: [
-    new MakerSquirrel({}),
-    new MakerZIP({}, ["win32", "darwin"]),
-    new MakerRpm({}),
-    new MakerDeb({}),
-  ],
+  makers,
   publishers: [
     {
       name: '@electron-forge/publisher-github',

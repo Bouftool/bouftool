@@ -2,6 +2,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import Ajv, { type ValidateFunction } from "ajv";
 import { isArray } from "src/types/utils";
+import { resolvePath } from "src/wakfu/utils/PathManager";
 import { WakfuGamedataSchemas } from "../resolvers";
 import type { EnumWakfuGamedataType, TPickWakfuGamedata, TWakfuGamedataTypes } from "../types";
 
@@ -17,9 +18,9 @@ export class WakfuFile<GamedataTypes extends readonly EnumWakfuGamedataType[]> {
     }
   }
 
-  private async readData(path: string) {
+  private async readData(filePath: string) {
     try {
-      const data = await fs.readFile(path, "utf-8");
+      const data = await fs.readFile(resolvePath(filePath), "utf-8");
       return JSON.parse(data);
     } catch (error) {
       console.error("Error reading data:", error);
@@ -27,7 +28,7 @@ export class WakfuFile<GamedataTypes extends readonly EnumWakfuGamedataType[]> {
   }
 
   private async readVersion(): Promise<string> {
-    const data = await this.readData(`${WakfuFile.FolderPath}/version.json`);
+    const data = await this.readData(path.join(WakfuFile.FolderPath, "version.json"));
     if (data && typeof data === "object" && "version" in data && typeof data.version === "string") {
       return data.version;
     } else {
@@ -67,12 +68,12 @@ export class WakfuFile<GamedataTypes extends readonly EnumWakfuGamedataType[]> {
   }
 
   public async saveGamedata(version: string, gamedata: TPickWakfuGamedata<GamedataTypes>) {
-    await fs.mkdir(WakfuFile.FolderPath, { recursive: true });
-    await fs.writeFile(`${WakfuFile.FolderPath}/version.json`, JSON.stringify({ version }, null, 2), {
+    await fs.mkdir(resolvePath(WakfuFile.FolderPath), { recursive: true });
+    await fs.writeFile(resolvePath(WakfuFile.FolderPath, "version.json"), JSON.stringify({ version }, null, 2), {
       encoding: "utf-8",
     });
     for (const [type, data] of Object.entries(gamedata)) {
-      await fs.writeFile(path.join(WakfuFile.FolderPath, `${type}.json`), JSON.stringify(data, null, 2), {
+      await fs.writeFile(resolvePath(WakfuFile.FolderPath, `${type}.json`), JSON.stringify(data, null, 2), {
         encoding: "utf-8",
       });
     }
