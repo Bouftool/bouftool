@@ -33,6 +33,9 @@ export const getBreedInnateStats = (breed: EnumWakfuBreed, level: number): TWakf
     case EnumWakfuBreed.Eliotrop:
       defaultStats[EnumWakfuStat.EliotropeRangeToMovement] = 1;
       break;
+    case EnumWakfuBreed.Xelor:
+      defaultStats[EnumWakfuStat.WakfuPoint] = 12;
+      break;
   }
   return defaultStats;
 };
