@@ -1,9 +1,9 @@
 import path from "node:path";
 import { app, BrowserWindow } from "electron";
 import started from "electron-squirrel-startup";
-import { UpdateSourceType, updateElectronApp } from "update-electron-app";
 import { registerElectronEvents } from "./electron/events";
 import { OverlayWindow } from "./electron/overlay";
+import { updateApp } from "./utils/autoUpdate";
 import { initializePathManager } from "./wakfu/utils/PathManager";
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -66,10 +66,4 @@ app.on("activate", () => {
 });
 
 registerElectronEvents();
-updateElectronApp({
-  updateInterval: "1 hour",
-  updateSource: {
-    type: UpdateSourceType.ElectronPublicUpdateService,
-    repo: "Bouftool/bouftool",
-  },
-});
+updateApp();
