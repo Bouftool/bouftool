@@ -4,6 +4,7 @@ import { isWakfuEnchantmentColor } from "../enchantment/types";
 import { WakfuItem } from "../items";
 import { WakfuBaseItem } from "../items/base";
 import { WakfuItemType } from "../itemTypes";
+import { getWakfuItemTypeGroup } from "../itemTypes/groups";
 import {
   EnumWakfuEquipmentPosition,
   EnumWakfuItemType,
@@ -124,19 +125,21 @@ export class WakfuStore {
       | TWakfuGamedataTypes[EnumWakfuGamedataType.EquipmentItemTypes][],
   ) {
     for (const itemType of itemTypes) {
+      const itemTypeId = itemType.definition.id;
+      const parentId = itemType.definition.parentId;
       if (
-        isWakfuItemTypeId(itemType.definition.id) &&
-        (!itemType.definition.parentId || isWakfuItemTypeId(itemType.definition.parentId)) &&
+        isWakfuItemTypeId(itemTypeId) &&
+        (parentId === undefined || isWakfuItemTypeId(parentId)) &&
         itemType.definition.equipmentPositions.every(isWakfuEquipmentPosition) &&
         itemType.definition.equipmentDisabledPositions.every(isWakfuEquipmentPosition)
       ) {
         this.itemTypes.set(
-          itemType.definition.id,
+          itemTypeId,
           new WakfuItemType({
-            id: itemType.definition.id,
-            parentId: itemType.definition.parentId,
+            id: itemTypeId,
+            parentId: parentId ?? getWakfuItemTypeGroup(itemTypeId),
             equipmentPositions:
-              ItemTypesOverrideEquipmentPositions[itemType.definition.id] || itemType.definition.equipmentPositions,
+              ItemTypesOverrideEquipmentPositions[itemTypeId] || itemType.definition.equipmentPositions,
             equipmentDisabledPositions: itemType.definition.equipmentDisabledPositions,
             title: itemType.title,
           }),

@@ -1,0 +1,65 @@
+pkgname=bouftool
+pkgver=0.4.2
+pkgrel=1
+pkgdesc='Wakfu build and crafting tool'
+arch=('x86_64')
+url='https://github.com/Bouftool/bouftool'
+license=('MIT')
+depends=(
+  'alsa-lib'
+  'at-spi2-core'
+  'cairo'
+  'dbus'
+  'expat'
+  'glib2'
+  'glibc'
+  'gtk3'
+  'hicolor-icon-theme'
+  'libcups'
+  'libgcc'
+  'libx11'
+  'libxcb'
+  'libxcomposite'
+  'libxdamage'
+  'libxext'
+  'libxfixes'
+  'libxkbcommon'
+  'libxrandr'
+  'mesa'
+  'nspr'
+  'nss'
+  'pango'
+  'systemd-libs'
+  'xdg-utils'
+)
+options=('!strip')
+source=(
+  'bouftool.desktop'
+  'bouftool.png'
+  'LICENSE'
+)
+sha256sums=(
+  '349cd940a443217bcba521a07cb25f8b8b08440f868ce7617940f7bdad9e8669'
+  '6d01eab5b4611e43dc6c580d97f43302215f8dca71f0b09fcf8991bface4869f'
+  '5a360869696f392e64de22ef28bed86adbb2b70a23c0e6fbd1dd2d444dff606c'
+)
+
+package() {
+  : "${BOUFTOOL_BUNDLE_DIR:?BOUFTOOL_BUNDLE_DIR must reference the Electron Forge bundle}"
+  test -x "${BOUFTOOL_BUNDLE_DIR}/bouftool"
+  test -f "${BOUFTOOL_BUNDLE_DIR}/resources/app.asar"
+
+  install -d "${pkgdir}/opt/bouftool"
+  cp -a --no-preserve=ownership "${BOUFTOOL_BUNDLE_DIR}/." "${pkgdir}/opt/bouftool/"
+  chmod 755 "${pkgdir}/opt/bouftool"
+
+  install -d "${pkgdir}/usr/bin"
+  ln -s '/opt/bouftool/bouftool' "${pkgdir}/usr/bin/bouftool"
+
+  install -Dm644 "${srcdir}/bouftool.desktop" \
+    "${pkgdir}/usr/share/applications/bouftool.desktop"
+  install -Dm644 "${srcdir}/bouftool.png" \
+    "${pkgdir}/usr/share/icons/hicolor/256x256/apps/bouftool.png"
+  install -Dm644 "${srcdir}/LICENSE" \
+    "${pkgdir}/usr/share/licenses/bouftool/LICENSE"
+}

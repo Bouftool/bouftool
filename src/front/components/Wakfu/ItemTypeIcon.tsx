@@ -1,33 +1,6 @@
 import type { HTMLProps } from "react";
+import { getWakfuItemTypeGroup } from "src/wakfu/itemTypes/groups";
 import { EnumWakfuEquipmentPosition, EnumWakfuItemType, isWakfuEquipmentPosition } from "src/wakfu/itemTypes/types";
-
-const Exceptions = [
-  {
-    originTypes: [
-      EnumWakfuItemType.WandOneHanded,
-      EnumWakfuItemType.SwordOneHanded,
-      EnumWakfuItemType.StaffOneHanded,
-      EnumWakfuItemType.NeedleOneHanded,
-      EnumWakfuItemType.CardOneHanded,
-    ],
-    replacedBy: EnumWakfuItemType.OneHandedWeapon,
-  },
-  {
-    originTypes: [
-      EnumWakfuItemType.AxeTwoHanded,
-      EnumWakfuItemType.ShovelTwoHanded,
-      EnumWakfuItemType.HammerTwoHanded,
-      EnumWakfuItemType.BowTwoHanded,
-      EnumWakfuItemType.SwordTwoHanded,
-      EnumWakfuItemType.StaffTwoHanded,
-    ],
-    replacedBy: EnumWakfuItemType.TwoHandedWeapon,
-  },
-  {
-    originTypes: [EnumWakfuItemType.DaggerSecondHand, EnumWakfuItemType.ShieldSecondHand],
-    replacedBy: EnumWakfuItemType.SecondHand,
-  },
-];
 
 const PositionToItemTypeMap: Record<EnumWakfuEquipmentPosition, EnumWakfuItemType> = {
   [EnumWakfuEquipmentPosition.FirstWeapon]: EnumWakfuItemType.Weapon,
@@ -52,7 +25,6 @@ export interface ItemTypeIconProps extends Omit<HTMLProps<HTMLImageElement>, "ch
 
 export const ItemTypeIcon = ({ children, ...props }: ItemTypeIconProps) => {
   const itemType = isWakfuEquipmentPosition(children) ? PositionToItemTypeMap[children] : children;
-  const exception = Exceptions.find((ex) => ex.originTypes.includes(itemType));
-  const effectiveType = exception ? exception.replacedBy : itemType;
+  const effectiveType = getWakfuItemTypeGroup(itemType) ?? itemType;
   return <img src={`wakfu/itemTypes/${effectiveType}.png`} alt={String(effectiveType)} {...props} />;
 };

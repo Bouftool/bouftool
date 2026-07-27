@@ -596,4 +596,10 @@ export const ItemTypeLabels: Record<EnumWakfuItemType, TWakfuI18n> = {
     es: "Desconocido",
     pt: "Desconhecido",
   },
+  [EnumWakfuItemType.LuckyCharm]: {
+    fr: "Porte-bonheur",
+    en: "Lucky Charm",
+    es: "Amuletejo",
+    pt: "Patuá",
+  },
 };
