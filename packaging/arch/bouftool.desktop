@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Bouftool
+Comment=Wakfu build and crafting tool
+Exec=bouftool
+Icon=bouftool
+Terminal=false
+Categories=Game;
+StartupWMClass=bouftool
+StartupNotify=true

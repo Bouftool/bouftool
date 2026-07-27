@@ -100,6 +100,7 @@ export enum EnumWakfuItemType {
   MiscellaneousResource = 822,
   PetSkin = 827,
   Unknown840 = 840,
+  LuckyCharm = 849,
 }
 
 export enum EnumWakfuEquipmentPosition {
