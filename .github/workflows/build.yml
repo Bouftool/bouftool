@@ -56,19 +56,20 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v7
 
-      - name: Setup Latest Yarn
-        uses: threeal/setup-yarn-action@v2.0.0
-        with:
-          version: stable
-
       - name: Setup Node.js
         uses: actions/setup-node@v7
         with:
-          node-version: "lts/*"
-          cache: "yarn"
+          node-version: "24"
+
+      - name: Setup Corepack
+        run: |
+          npm install --global corepack@0.35.0
+          corepack enable
+          corepack --version
+          yarn --version
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: yarn install --immutable
 
       - name: Publish to GitHub Releases
         env:
