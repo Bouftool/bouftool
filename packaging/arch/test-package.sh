@@ -44,6 +44,15 @@ test -f "${extract_root}/usr/share/applications/bouftool.desktop"
 test -f "${extract_root}/usr/share/icons/hicolor/256x256/apps/bouftool.png"
 test -f "${extract_root}/usr/share/licenses/bouftool/LICENSE"
 
+main_process_bundle="${extract_root}/main.js"
+node -e \
+  'const { extractFile } = require("@electron/asar"); process.stdout.write(extractFile(process.argv[1], ".vite/build/main.js"));' \
+  "${extract_root}/opt/bouftool/resources/app.asar" >"${main_process_bundle}"
+if rg -Fq 'Calling `require` for' "${main_process_bundle}"; then
+  printf 'Packaged Electron main process contains Rolldown runtime require failures.\n' >&2
+  exit 1
+fi
+
 if ! desktop_validation=$(desktop-file-validate \
   "${extract_root}/usr/share/applications/bouftool.desktop" 2>&1); then
   printf '%s\n' "${desktop_validation}" >&2

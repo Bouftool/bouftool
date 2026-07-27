@@ -8,7 +8,10 @@ export default defineConfig({
       entry: "src/main.ts",
       formats: ["es"],
       fileName: "main",
-    }
+    },
+    rolldownOptions: {
+      platform: "node",
+    },
   },
   plugins: [tsconfigPaths()],
 });
