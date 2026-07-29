@@ -6,11 +6,10 @@
     "skipLibCheck": true,
     "noImplicitAny": true,
     "sourceMap": true,
-    "baseUrl": ".",
     "noEmit": true,
     "paths": {
       "src/*": [
-        "src/*"
+        "./src/*"
       ]
     },
     "outDir": "dist",
