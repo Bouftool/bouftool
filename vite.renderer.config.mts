@@ -2,7 +2,6 @@ import path from "node:path";
 import babel from "@rolldown/plugin-babel";
 import react, { reactCompilerPreset } from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
-import tsconfigPaths from "vite-tsconfig-paths";
 
 // https://vitejs.dev/config
 export default defineConfig((env) => {
@@ -21,6 +20,7 @@ export default defineConfig((env) => {
         }
       },
     },
-    plugins: [react(), babel({ presets: [reactCompilerPreset()] }), tsconfigPaths()],
+    plugins: [react(), babel({ presets: [reactCompilerPreset()] })],
+    resolve: { tsconfigPaths: true },
   });
 });
