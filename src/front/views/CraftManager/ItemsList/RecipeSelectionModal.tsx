@@ -22,7 +22,12 @@ const recipeToTreeNode = (recipe: TCraftItem["item"]["recipes"][number]): TreeNo
         <Typography>
           {recipe.result.item.title.fr} (x{recipe.result.quantity})
         </Typography>
-        <Typography variant="caption" color="text.secondary">
+        <Typography
+          variant="caption"
+          sx={{
+            color: "text.secondary",
+          }}
+        >
           {recipe.recipeCategory.title.fr} - Niveau {recipe.level}
         </Typography>
       </Stack>
@@ -44,7 +49,12 @@ const recipeToTreeNode = (recipe: TCraftItem["item"]["recipes"][number]): TreeNo
           {ingredient.item.title.fr} (x{ingredient.quantity})
         </Typography>
         {ingredient.item.recipes.length > 0 && ingredient.item.recipes[0] && (
-          <Typography variant="caption" color="text.secondary">
+          <Typography
+            variant="caption"
+            sx={{
+              color: "text.secondary",
+            }}
+          >
             {ingredient.item.recipes[0].recipeCategory.title.fr} - Niveau {ingredient.item.recipes[0].level}
           </Typography>
         )}
@@ -87,12 +97,22 @@ export const RecipeSelectionModal = ({
     <Dialog open={craftItem != null} onClose={onClose} maxWidth="sm" fullWidth>
       <DialogTitle>
         Choisir une recette - {craftItem?.item.title.fr}
-        <Typography variant="caption" display="block" color="text.secondary">
+        <Typography
+          variant="caption"
+          sx={{
+            display: "block",
+            color: "text.secondary",
+          }}
+        >
           {craftItem?.item.recipes.length} recettes disponibles
         </Typography>
       </DialogTitle>
       <DialogContent>
-        <Stack gap={1}>
+        <Stack
+          sx={{
+            gap: 1,
+          }}
+        >
           {treeNodes.map((node, index) => {
             const isSelected = index === selectedIndex;
             const isCurrent = index === currentRecipeIndex;
@@ -111,7 +131,14 @@ export const RecipeSelectionModal = ({
                   <Typography variant="subtitle1">
                     Recette #{index + 1}
                     {isCurrent && (
-                      <Typography component="span" variant="caption" color="success.main" sx={{ ml: 1 }}>
+                      <Typography
+                        component="span"
+                        variant="caption"
+                        sx={{
+                          color: "success.main",
+                          ml: 1,
+                        }}
+                      >
                         (Actuelle)
                       </Typography>
                     )}

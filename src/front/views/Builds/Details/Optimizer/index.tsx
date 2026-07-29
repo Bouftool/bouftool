@@ -278,7 +278,13 @@ export const BuildOptimizer = () => {
           <Typography variant="h6" gutterBottom>
             Contraintes de statistiques
           </Typography>
-          <Typography variant="body2" color="text.secondary" gutterBottom>
+          <Typography
+            variant="body2"
+            gutterBottom
+            sx={{
+              color: "text.secondary",
+            }}
+          >
             Les contraintes bloquantes invalident les solutions qui ne les respectent pas. Les contraintes d'objectif
             appliquent une pénalité.
           </Typography>
@@ -357,7 +363,13 @@ export const BuildOptimizer = () => {
           <Typography variant="h6" gutterBottom>
             Poids des statistiques
           </Typography>
-          <Typography variant="body2" color="text.secondary" gutterBottom>
+          <Typography
+            variant="body2"
+            gutterBottom
+            sx={{
+              color: "text.secondary",
+            }}
+          >
             Définissez l'importance relative de chaque statistique dans le score global.
           </Typography>
 
@@ -448,7 +460,13 @@ export const BuildOptimizer = () => {
           <Typography variant="h6" gutterBottom>
             Exclusion de types d'items
           </Typography>
-          <Typography variant="body2" color="text.secondary" gutterBottom>
+          <Typography
+            variant="body2"
+            gutterBottom
+            sx={{
+              color: "text.secondary",
+            }}
+          >
             Sélectionnez les types d'items à exclure de l'optimisation.
           </Typography>
 
@@ -479,7 +497,13 @@ export const BuildOptimizer = () => {
           <Typography variant="h6" gutterBottom>
             Exclusion de raretés
           </Typography>
-          <Typography variant="body2" color="text.secondary" gutterBottom>
+          <Typography
+            variant="body2"
+            gutterBottom
+            sx={{
+              color: "text.secondary",
+            }}
+          >
             Sélectionnez les raretés d'items à exclure de l'optimisation.
           </Typography>
 
@@ -526,7 +550,13 @@ export const BuildOptimizer = () => {
           {progress && (
             <>
               <LinearProgress variant="determinate" value={(progress.current / progress.total) * 100} sx={{ mt: 2 }} />
-              <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+              <Typography
+                variant="body2"
+                sx={{
+                  color: "text.secondary",
+                  mt: 1,
+                }}
+              >
                 Progression: {progress.current} / {progress.total} (
                 {((progress.current / progress.total) * 100).toFixed(1)}
                 %)
@@ -540,7 +570,12 @@ export const BuildOptimizer = () => {
       <Dialog open={showResultsModal} onClose={() => setShowResultsModal(false)} maxWidth="lg" fullWidth>
         <DialogTitle>
           <Typography variant="h5">Résultats de l'optimisation</Typography>
-          <Typography variant="body2" color="text.secondary">
+          <Typography
+            variant="body2"
+            sx={{
+              color: "text.secondary",
+            }}
+          >
             {optimizationResults.length} builds trouvés
           </Typography>
         </DialogTitle>
@@ -570,11 +605,24 @@ export const BuildOptimizer = () => {
 
                       {result.violations.length > 0 && (
                         <Box>
-                          <Typography variant="body2" color="text.secondary" gutterBottom>
+                          <Typography
+                            variant="body2"
+                            gutterBottom
+                            sx={{
+                              color: "text.secondary",
+                            }}
+                          >
                             Violations:
                           </Typography>
                           {result.violations.map((violation) => (
-                            <Typography key={violation} variant="caption" display="block" color="error">
+                            <Typography
+                              key={violation}
+                              variant="caption"
+                              color="error"
+                              sx={{
+                                display: "block",
+                              }}
+                            >
                               • {violation}
                             </Typography>
                           ))}
@@ -583,7 +631,12 @@ export const BuildOptimizer = () => {
 
                       <Divider />
 
-                      <Typography variant="body2" fontWeight="bold">
+                      <Typography
+                        variant="body2"
+                        sx={{
+                          fontWeight: "bold",
+                        }}
+                      >
                         Équipement:
                       </Typography>
                       <Grid container spacing={1}>
@@ -604,7 +657,12 @@ export const BuildOptimizer = () => {
                                 </Box>
                               </Box>
                             ) : (
-                              <Typography variant="caption" color="text.secondary">
+                              <Typography
+                                variant="caption"
+                                sx={{
+                                  color: "text.secondary",
+                                }}
+                              >
                                 {position}: Vide
                               </Typography>
                             )}

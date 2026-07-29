@@ -32,7 +32,12 @@ export const craftItemToTreeNode = (
           {item.title.fr} (x{quantity})
         </Typography>
         {hasRecipes && recipe && (
-          <Typography variant="caption" color="text.secondary">
+          <Typography
+            variant="caption"
+            sx={{
+              color: "text.secondary",
+            }}
+          >
             {recipe.recipeCategory.title.fr} - Niveau {recipe.level}
           </Typography>
         )}
