@@ -49,7 +49,7 @@ export const CardCharacterBuild = ({ characterId, build }: TCardCharacterBuildPr
         <Typography variant="subtitle2">{build.name}</Typography>
         <Typography variant="caption">Niv. {build.level}</Typography>
       </Stack>
-      <StackRow flexWrap="wrap">
+      <StackRow sx={{ flexWrap: "wrap" }}>
         {Object.values(EnumWakfuEquipmentPosition).map((position) => (
           <ItemSlot key={position} position={position} item={build.stuff[position]} size={40} disableTooltip />
         ))}

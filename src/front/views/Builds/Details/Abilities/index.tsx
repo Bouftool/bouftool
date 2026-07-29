@@ -20,7 +20,7 @@ export const BuildAbilities = () => {
     >
       <BuildAbilitiesCode />
       <Stack sx={{ alignSelf: "stretch", justifyContent: "center", alignItems: "center", flexDirection: "row" }}>
-        <StackGrid columns={2} gap={2} p={2} sx={{ flex: 1, maxWidth: 800 }}>
+        <StackGrid columns={2} gap={2} sx={{ flex: 1, maxWidth: 800, p: 2 }}>
           <Stack sx={{ gap: 1 }}>
             <AbilitiesCategory category={EnumAbilitiesCategories.Intelligence} level={build.level} />
             <AbilitiesCategory category={EnumAbilitiesCategories.Strength} level={build.level} />
