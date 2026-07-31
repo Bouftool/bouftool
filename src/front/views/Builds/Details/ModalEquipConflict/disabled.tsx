@@ -1,5 +1,5 @@
 import { Button, Dialog, DialogActions, DialogContent, Typography } from "@mui/material";
-import { ElectronEvents, type ElectronEventsRenderer } from "src/electron/types";
+import { ElectronEvents, type TElectronBuildEquipItemResult } from "src/electron/types";
 import { StackRow } from "src/front/components/Layout/StackRow";
 import { ItemSlot } from "src/front/components/Wakfu/ItemSlot";
 import { sendElectronEvent } from "src/front/hooks/electron";
@@ -8,7 +8,7 @@ import type { EnumWakfuEquipmentPosition } from "src/wakfu/itemTypes/types";
 import { useBuildDetailsContext } from "../context";
 
 const isBuildEquipDisabledConflict = (
-  response: ElectronEventsRenderer[ElectronEvents.BuildEquipItem],
+  response: TElectronBuildEquipItemResult,
 ): response is {
   itemId: number;
   disablingItems: ReturnType<WakfuItem["toObject"]>[];
@@ -18,7 +18,7 @@ const isBuildEquipDisabledConflict = (
 };
 
 export type TModalEquipConflictDisabledProps = {
-  conflict: ElectronEventsRenderer[ElectronEvents.BuildEquipItem];
+  conflict: TElectronBuildEquipItemResult;
   onClose: () => void;
 };
 

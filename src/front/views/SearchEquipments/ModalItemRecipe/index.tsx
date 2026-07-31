@@ -18,12 +18,11 @@ export const ModalItemRecipe = ({ open, item, onClose }: TModalItemRecipeProps) 
   const [send, recipes] = useElectronEvent(ElectronEvents.GetItemRecipes);
   const [addToCraft] = useElectronEvent(ElectronEvents.CraftManagerAddItem);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Never deps on send
   useLayoutEffect(() => {
     if (item) {
       send({ itemId: item.id });
     }
-  }, [item]);
+  }, [item, send]);
 
   const onAddToCraft = useCallback(() => {
     if (item) {

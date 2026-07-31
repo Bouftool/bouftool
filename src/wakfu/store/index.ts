@@ -3,6 +3,7 @@ import { fromBonusPositionToEquipmentPosition, fromEquipmentEffectToEnchantmentE
 import { isWakfuEnchantmentColor } from "../enchantment/types";
 import { WakfuItem } from "../items";
 import { WakfuBaseItem } from "../items/base";
+import { isWakfuRarity } from "../items/rarity";
 import { WakfuItemType } from "../itemTypes";
 import { getWakfuItemTypeGroup } from "../itemTypes/groups";
 import {
@@ -22,7 +23,17 @@ import { WakfuAPI } from "./api";
 import { ExcludeEnchantments } from "./constants";
 import { CustomItems } from "./customs/items";
 import { WakfuFile } from "./file";
-import { EnumWakfuGamedataType, type TPickWakfuGamedata, type TWakfuGamedataTypes } from "./types";
+import type {
+  TWakfuGamedataEquipmentItemType,
+  TWakfuGamedataItem,
+  TWakfuGamedataItemType,
+  TWakfuGamedataJobItem,
+  TWakfuGamedataRecipe,
+  TWakfuGamedataRecipeCategory,
+  TWakfuGamedataRecipeIngredient,
+  TWakfuGamedataRecipeResult,
+  TWakfuStoreGamedata,
+} from "./types";
 
 export const ItemTypesOverrideLevel: Record<number, number> = {
   [EnumWakfuItemType.Pet]: 50,
@@ -44,16 +55,6 @@ export const ItemTypesOverrideEquipmentPositions: Record<number, EnumWakfuEquipm
 };
 
 export class WakfuStore {
-  private static readonly GamedataToLoad = [
-    EnumWakfuGamedataType.ItemTypes,
-    EnumWakfuGamedataType.EquipmentItemTypes,
-    EnumWakfuGamedataType.Items,
-    EnumWakfuGamedataType.JobsItems,
-    EnumWakfuGamedataType.RecipeCategories,
-    EnumWakfuGamedataType.Recipes,
-    EnumWakfuGamedataType.RecipeIngredients,
-    EnumWakfuGamedataType.RecipeResults,
-  ] as const;
   private static instance: WakfuStore | null = null;
   private lang = EnumWakfuLang.French;
   private gamedataVersion: string | null = null;
@@ -62,9 +63,14 @@ export class WakfuStore {
   private jobItems: Map<number, WakfuBaseItem> = new Map();
   private recipeCategories: Map<number, WakfuRecipeCategory> = new Map();
   private recipes: Map<number, WakfuRecipe> = new Map();
-  private enchantment = {
-    shardLevelingCurve: [] as number[],
-    shardLevelRequirement: [] as number[],
+  private enchantment: {
+    shardLevelingCurve: number[];
+    shardLevelRequirement: number[];
+    enchantments: Map<number, WakfuEnchantment>;
+    sublimations: Map<number, WakfuSublimation>;
+  } = {
+    shardLevelingCurve: [],
+    shardLevelRequirement: [],
     enchantments: new Map<number, WakfuEnchantment>(),
     sublimations: new Map<number, WakfuSublimation>(),
   };
@@ -84,12 +90,24 @@ export class WakfuStore {
     return WakfuStore.instance;
   }
 
+  private getFilterSortTransform<Input>(
+    iterator: MapIterator<Input>,
+    filter: ((item: Input) => boolean) | null,
+    sort: ((a: Input, b: Input) => number) | null,
+    transform: null,
+  ): Input[];
   private getFilterSortTransform<Input, Output>(
     iterator: MapIterator<Input>,
-    filter: ((item: Input) => boolean) | null = null,
-    sort: ((a: Input, b: Input) => number) | null = null,
-    transform: ((item: Input) => Output) | null = null,
-  ) {
+    filter: ((item: Input) => boolean) | null,
+    sort: ((a: Input, b: Input) => number) | null,
+    transform: (item: Input) => Output,
+  ): Output[];
+  private getFilterSortTransform<Input, Output>(
+    iterator: MapIterator<Input>,
+    filter: ((item: Input) => boolean) | null,
+    sort: ((a: Input, b: Input) => number) | null,
+    transform: ((item: Input) => Output) | null,
+  ): Input[] | Output[] {
     const filtered: Input[] = [];
     for (const item of iterator) {
       if (!filter || filter(item)) {
@@ -106,7 +124,7 @@ export class WakfuStore {
       }
       return result;
     } else {
-      return filtered as unknown as Output[];
+      return filtered;
     }
   }
 
@@ -119,11 +137,7 @@ export class WakfuStore {
     this.recipes.clear();
   }
 
-  private loadItemTypes(
-    itemTypes:
-      | TWakfuGamedataTypes[EnumWakfuGamedataType.ItemTypes][]
-      | TWakfuGamedataTypes[EnumWakfuGamedataType.EquipmentItemTypes][],
-  ) {
+  private loadItemTypes(itemTypes: TWakfuGamedataItemType[] | TWakfuGamedataEquipmentItemType[]) {
     for (const itemType of itemTypes) {
       const itemTypeId = itemType.definition.id;
       const parentId = itemType.definition.parentId;
@@ -148,7 +162,7 @@ export class WakfuStore {
     }
   }
 
-  private loadItems(items: TWakfuGamedataTypes[EnumWakfuGamedataType.Items][]) {
+  private loadItems(items: TWakfuGamedataItem[]) {
     for (const item of items) {
       const itemType = this.itemTypes.get(item.definition.item.baseParameters.itemTypeId);
       if (!itemType) {
@@ -187,13 +201,17 @@ export class WakfuStore {
           break;
         }
         default: {
+          const rarity = item.definition.item.baseParameters.rarity;
+          if (!isWakfuRarity(rarity)) {
+            break;
+          }
           this.items.set(
             item.definition.item.id,
             new WakfuItem({
               id: item.definition.item.id,
               level: item.definition.item.level || 1,
               itemType: itemType,
-              rarity: item.definition.item.baseParameters.rarity,
+              rarity,
               gfxId: item.definition.item.graphicParameters.gfxId,
               stats: WakfuStats.fromGamedata(
                 ItemIdOverrideLevel[item.definition.item.id] ||
@@ -223,13 +241,14 @@ export class WakfuStore {
     }
   }
 
-  private loadJobItems(jobItems: TWakfuGamedataTypes[EnumWakfuGamedataType.JobsItems][]) {
+  private loadJobItems(jobItems: TWakfuGamedataJobItem[]) {
     for (const item of jobItems) {
       if (this.items.has(item.definition.id)) {
         continue;
       }
       const itemType = this.itemTypes.get(item.definition.itemTypeId);
-      if (!itemType) {
+      const rarity = item.definition.rarity;
+      if (!itemType || !isWakfuRarity(rarity)) {
         continue;
       }
       this.jobItems.set(
@@ -238,7 +257,7 @@ export class WakfuStore {
           id: item.definition.id,
           level: item.definition.level,
           itemType: itemType,
-          rarity: item.definition.rarity,
+          rarity,
           gfxId: item.definition.graphicParameters.gfxId,
           recipes: [],
           title: item.title,
@@ -248,7 +267,7 @@ export class WakfuStore {
     }
   }
 
-  private loadRecipeCategories(recipeCategories: TWakfuGamedataTypes[EnumWakfuGamedataType.RecipeCategories][]) {
+  private loadRecipeCategories(recipeCategories: TWakfuGamedataRecipeCategory[]) {
     for (const category of recipeCategories) {
       this.recipeCategories.set(
         category.definition.id,
@@ -261,9 +280,9 @@ export class WakfuStore {
   }
 
   private loadRecipes(
-    recipes: TWakfuGamedataTypes[EnumWakfuGamedataType.Recipes][],
-    recipesIngredients: TWakfuGamedataTypes[EnumWakfuGamedataType.RecipeIngredients][],
-    recipeResults: TWakfuGamedataTypes[EnumWakfuGamedataType.RecipeResults][],
+    recipes: TWakfuGamedataRecipe[],
+    recipesIngredients: TWakfuGamedataRecipeIngredient[],
+    recipeResults: TWakfuGamedataRecipeResult[],
   ) {
     const ingredientsByRecipeId: Record<number, { item: WakfuBaseItem; quantity: number }[]> = {};
     const resultsByRecipeId: Record<number, { item: WakfuBaseItem; quantity: number }> = {};
@@ -306,7 +325,7 @@ export class WakfuStore {
     }
   }
 
-  private loadStore(version: string, gamedata: TPickWakfuGamedata<typeof WakfuStore.GamedataToLoad>) {
+  private loadStore(version: string, gamedata: TWakfuStoreGamedata) {
     this.resetStore();
     this.gamedataVersion = version;
     this.loadItemTypes(gamedata.itemTypes);
@@ -318,8 +337,8 @@ export class WakfuStore {
     this.loadRecipes(gamedata.recipes, gamedata.recipeIngredients, gamedata.recipeResults);
   }
 
-  private async loadFromApi(fileLoader: WakfuFile<typeof WakfuStore.GamedataToLoad>) {
-    const apiLoader = new WakfuAPI(...WakfuStore.GamedataToLoad);
+  private async loadFromApi(fileLoader: WakfuFile) {
+    const apiLoader = new WakfuAPI();
     const { version, gamedata } = await apiLoader.getGamedata();
     this.loadStore(version, gamedata);
     await fileLoader.saveGamedata(version, gamedata);
@@ -342,7 +361,7 @@ export class WakfuStore {
   }
 
   private async load() {
-    const fileLoader = new WakfuFile(...WakfuStore.GamedataToLoad);
+    const fileLoader = new WakfuFile();
     try {
       const { version, gamedata } = await fileLoader.getGamedata();
       const apiVersion = await WakfuAPI.fetchVersion();
@@ -378,24 +397,48 @@ export class WakfuStore {
     return this.itemTypes.get(id) || null;
   }
 
-  public getItemTypes<T = WakfuItemType>(
-    filter: ((itemType: WakfuItemType) => boolean) | null = null,
-    sort: ((a: WakfuItemType, b: WakfuItemType) => number) | null = null,
-    transform: ((itemType: WakfuItemType) => T) | null = null,
-  ): T[] {
-    return this.getFilterSortTransform(this.itemTypes.values(), filter, sort, transform);
+  public getItemTypes(
+    filter: ((itemType: WakfuItemType) => boolean) | null,
+    sort: ((a: WakfuItemType, b: WakfuItemType) => number) | null,
+    transform: null,
+  ): WakfuItemType[];
+  public getItemTypes<T>(
+    filter: ((itemType: WakfuItemType) => boolean) | null,
+    sort: ((a: WakfuItemType, b: WakfuItemType) => number) | null,
+    transform: (itemType: WakfuItemType) => T,
+  ): T[];
+  public getItemTypes<T>(
+    filter: ((itemType: WakfuItemType) => boolean) | null,
+    sort: ((a: WakfuItemType, b: WakfuItemType) => number) | null,
+    transform: ((itemType: WakfuItemType) => T) | null,
+  ): WakfuItemType[] | T[] {
+    return transform === null
+      ? this.getFilterSortTransform(this.itemTypes.values(), filter, sort, null)
+      : this.getFilterSortTransform(this.itemTypes.values(), filter, sort, transform);
   }
 
   public getItemById(id: number) {
     return this.items.get(id) || null;
   }
 
-  public getItems<T = WakfuItem>(
-    filter: ((item: WakfuItem) => boolean) | null = null,
-    sort: ((a: WakfuItem, b: WakfuItem) => number) | null = null,
-    transform: ((item: WakfuItem) => T) | null = null,
-  ): T[] {
-    return this.getFilterSortTransform(this.items.values(), filter, sort, transform);
+  public getItems(
+    filter: ((item: WakfuItem) => boolean) | null,
+    sort: ((a: WakfuItem, b: WakfuItem) => number) | null,
+    transform: null,
+  ): WakfuItem[];
+  public getItems<T>(
+    filter: ((item: WakfuItem) => boolean) | null,
+    sort: ((a: WakfuItem, b: WakfuItem) => number) | null,
+    transform: (item: WakfuItem) => T,
+  ): T[];
+  public getItems<T>(
+    filter: ((item: WakfuItem) => boolean) | null,
+    sort: ((a: WakfuItem, b: WakfuItem) => number) | null,
+    transform: ((item: WakfuItem) => T) | null,
+  ): WakfuItem[] | T[] {
+    return transform === null
+      ? this.getFilterSortTransform(this.items.values(), filter, sort, null)
+      : this.getFilterSortTransform(this.items.values(), filter, sort, transform);
   }
 
   public getJobItemById(id: number) {
@@ -418,24 +461,48 @@ export class WakfuStore {
     return this.enchantment.shardLevelRequirement;
   }
 
-  public getEnchantments<T = WakfuEnchantment>(
-    filter: ((enchantment: WakfuEnchantment) => boolean) | null = null,
-    sort: ((a: WakfuEnchantment, b: WakfuEnchantment) => number) | null = null,
-    transform: ((enchantment: WakfuEnchantment) => T) | null = null,
-  ): T[] {
-    return this.getFilterSortTransform(this.enchantment.enchantments.values(), filter, sort, transform);
+  public getEnchantments(
+    filter: ((enchantment: WakfuEnchantment) => boolean) | null,
+    sort: ((a: WakfuEnchantment, b: WakfuEnchantment) => number) | null,
+    transform: null,
+  ): WakfuEnchantment[];
+  public getEnchantments<T>(
+    filter: ((enchantment: WakfuEnchantment) => boolean) | null,
+    sort: ((a: WakfuEnchantment, b: WakfuEnchantment) => number) | null,
+    transform: (enchantment: WakfuEnchantment) => T,
+  ): T[];
+  public getEnchantments<T>(
+    filter: ((enchantment: WakfuEnchantment) => boolean) | null,
+    sort: ((a: WakfuEnchantment, b: WakfuEnchantment) => number) | null,
+    transform: ((enchantment: WakfuEnchantment) => T) | null,
+  ): WakfuEnchantment[] | T[] {
+    return transform === null
+      ? this.getFilterSortTransform(this.enchantment.enchantments.values(), filter, sort, null)
+      : this.getFilterSortTransform(this.enchantment.enchantments.values(), filter, sort, transform);
   }
 
   public getEnchantmentById(id: number) {
     return this.enchantment.enchantments.get(id) || null;
   }
 
-  public getSublimations<T = WakfuSublimation>(
-    filter: ((sublimation: WakfuSublimation) => boolean) | null = null,
-    sort: ((a: WakfuSublimation, b: WakfuSublimation) => number) | null = null,
-    transform: ((sublimation: WakfuSublimation) => T) | null = null,
-  ): T[] {
-    return this.getFilterSortTransform(this.enchantment.sublimations.values(), filter, sort, transform);
+  public getSublimations(
+    filter: ((sublimation: WakfuSublimation) => boolean) | null,
+    sort: ((a: WakfuSublimation, b: WakfuSublimation) => number) | null,
+    transform: null,
+  ): WakfuSublimation[];
+  public getSublimations<T>(
+    filter: ((sublimation: WakfuSublimation) => boolean) | null,
+    sort: ((a: WakfuSublimation, b: WakfuSublimation) => number) | null,
+    transform: (sublimation: WakfuSublimation) => T,
+  ): T[];
+  public getSublimations<T>(
+    filter: ((sublimation: WakfuSublimation) => boolean) | null,
+    sort: ((a: WakfuSublimation, b: WakfuSublimation) => number) | null,
+    transform: ((sublimation: WakfuSublimation) => T) | null,
+  ): WakfuSublimation[] | T[] {
+    return transform === null
+      ? this.getFilterSortTransform(this.enchantment.sublimations.values(), filter, sort, null)
+      : this.getFilterSortTransform(this.enchantment.sublimations.values(), filter, sort, transform);
   }
 
   public getSublimationById(id: number) {

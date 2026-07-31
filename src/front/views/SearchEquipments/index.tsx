@@ -1,4 +1,5 @@
 import { Stack } from "@mui/material";
+import { useOptionalBuildDetailsContext } from "../Builds/Details/context";
 import { SearchItemsFiltersProvider } from "./contexts/filters";
 import { SearchItemsPreferencesProvider } from "./contexts/preferences";
 import { SearchItemsProvider } from "./contexts/search";
@@ -14,6 +15,7 @@ export type TSearchEquipmentsProps = {
 };
 
 export const SearchEquipments = ({ controlled, buildId }: TSearchEquipmentsProps) => {
+  const build = useOptionalBuildDetailsContext();
   return (
     <Stack sx={{ flex: 1, p: 1, gap: 1, overflow: "hidden" }}>
       <ModalItemRecipeProvider>
@@ -30,7 +32,7 @@ export const SearchEquipments = ({ controlled, buildId }: TSearchEquipmentsProps
               <SearchItemsPreferences />
               <SearchItemsFilters />
             </Stack>
-            <SearchItemsProvider>
+            <SearchItemsProvider buildLevel={build?.level}>
               <SearchItemsList buildId={buildId} />
             </SearchItemsProvider>
           </SearchItemsPreferencesProvider>

@@ -1,6 +1,6 @@
 import CompareArrowsIcon from "@mui/icons-material/CompareArrows";
 import { Stack } from "@mui/material";
-import type { ElectronEvents, ElectronEventsRenderer } from "src/electron/types";
+import type { TElectronBuildCompareItemResult } from "src/electron/types";
 import { StackRow } from "src/front/components/Layout/StackRow";
 import { ItemSlot } from "src/front/components/Wakfu/ItemSlot";
 import { isWakfuEquipmentPosition } from "src/wakfu/itemTypes/types";
@@ -24,7 +24,7 @@ const splitStats = (stats: TWakfuStats) => {
 };
 
 export type TModalCompareItemCardProps = {
-  results: ElectronEventsRenderer[ElectronEvents.BuildCompareItem][number];
+  results: TElectronBuildCompareItemResult[number];
 };
 
 export const ModalCompareItemCard = ({ results }: TModalCompareItemCardProps) => {

@@ -1,20 +1,12 @@
-import Ajv, { type ValidateFunction } from "ajv";
+import Ajv from "ajv";
 import { isArray } from "src/types/utils";
 import { WakfuGamedataSchemas } from "../resolvers";
-import type { EnumWakfuGamedataType, TPickWakfuGamedata, TWakfuGamedataTypes } from "../types";
+import { EnumWakfuGamedataType, type TWakfuGamedataTypes, type TWakfuStoreGamedata } from "../types";
 
-export class WakfuAPI<GamedataTypes extends EnumWakfuGamedataType[]> {
+export class WakfuAPI {
   private static readonly VersionUrl = "https://wakfu.cdn.ankama.com/gamedata/config.json";
   private static readonly GamedataUrl = "https://wakfu.cdn.ankama.com/gamedata/{version}/{type}.json";
-  private validators: Map<GamedataTypes[number], ValidateFunction>;
-
-  constructor(...gamedataTypes: GamedataTypes) {
-    this.validators = new Map();
-    const ajvInstance = new Ajv();
-    for (const gdType of gamedataTypes) {
-      this.validators.set(gdType, ajvInstance.compile(WakfuGamedataSchemas[gdType]));
-    }
-  }
+  private readonly ajv = new Ajv();
 
   private static async fetchData(url: string) {
     try {
@@ -34,41 +26,42 @@ export class WakfuAPI<GamedataTypes extends EnumWakfuGamedataType[]> {
     }
   }
 
-  private async fetchGamedataByType<Type extends GamedataTypes[number]>(
+  private async fetchGamedataByType<Type extends EnumWakfuGamedataType>(
     type: Type,
     version: string,
   ): Promise<TWakfuGamedataTypes[Type][]> {
     const url = WakfuAPI.GamedataUrl.replace("{version}", version).replace("{type}", type);
     const data = await WakfuAPI.fetchData(url);
-    const validator = this.validators.get(type);
-    if (!validator) {
-      throw new Error(`No validator found for type ${type}`);
-    }
-    if (
-      isArray(data) &&
-      data.every((item) => {
-        const v = validator(item);
-        if (!v) {
-          console.error("Validation errors for item:", item, validator.errors);
-        }
-        return v;
-      })
-    ) {
-      return data as TWakfuGamedataTypes[Type][];
-    } else {
+    const validator = this.ajv.compile<TWakfuGamedataTypes[Type]>(WakfuGamedataSchemas[type]);
+    if (!isArray(data)) {
       throw new Error(`Invalid data for ${type}`);
     }
+    const result: TWakfuGamedataTypes[Type][] = [];
+    for (const item of data) {
+      if (!validator(item)) {
+        console.error("Validation errors for item:", item, validator.errors);
+        throw new Error(`Invalid data for ${type}`);
+      }
+      result.push(item);
+    }
+    return result;
   }
 
   public async getGamedata(): Promise<{
     version: string;
-    gamedata: TPickWakfuGamedata<GamedataTypes>;
+    gamedata: TWakfuStoreGamedata;
   }> {
     const version = await WakfuAPI.fetchVersion();
-    const gamedata = {} as TPickWakfuGamedata<GamedataTypes>;
-    for (const gdType of this.validators.keys()) {
-      gamedata[gdType] = await this.fetchGamedataByType(gdType, version);
-    }
+    const gamedata: TWakfuStoreGamedata = {
+      itemTypes: await this.fetchGamedataByType(EnumWakfuGamedataType.ItemTypes, version),
+      equipmentItemTypes: await this.fetchGamedataByType(EnumWakfuGamedataType.EquipmentItemTypes, version),
+      items: await this.fetchGamedataByType(EnumWakfuGamedataType.Items, version),
+      jobsItems: await this.fetchGamedataByType(EnumWakfuGamedataType.JobsItems, version),
+      recipeCategories: await this.fetchGamedataByType(EnumWakfuGamedataType.RecipeCategories, version),
+      recipes: await this.fetchGamedataByType(EnumWakfuGamedataType.Recipes, version),
+      recipeIngredients: await this.fetchGamedataByType(EnumWakfuGamedataType.RecipeIngredients, version),
+      recipeResults: await this.fetchGamedataByType(EnumWakfuGamedataType.RecipeResults, version),
+    };
     return {
       version,
       gamedata,

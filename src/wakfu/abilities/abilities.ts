@@ -113,13 +113,15 @@ export const AbilitiesDefinitions: Record<
   },
 };
 
-export enum EnumAbilitiesCategories {
-  Intelligence = "Intelligence",
-  Strength = "Strength",
-  Agility = "Agility",
-  Chance = "Chance",
-  Major = "Major",
-}
+export const EnumAbilitiesCategories = {
+  Intelligence: "Intelligence",
+  Strength: "Strength",
+  Agility: "Agility",
+  Chance: "Chance",
+  Major: "Major",
+} as const;
+
+export type EnumAbilitiesCategories = (typeof EnumAbilitiesCategories)[keyof typeof EnumAbilitiesCategories];
 
 export const AbilitiesCategories: Record<
   EnumAbilitiesCategories,

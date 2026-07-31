@@ -10,7 +10,7 @@ import {
   useState,
 } from "react";
 import type { TSearchItemsFiltersForm } from "../filters";
-import { SearchItemsBehavior } from "./search";
+import { setSkipNextSearchTimeout } from "./behavior";
 
 const initialSearchItemsFilters: TSearchItemsFiltersForm = {
   title: "",
@@ -52,12 +52,11 @@ export const SearchItemsFiltersProvider = ({
   const [filters, setFilters] = useState<TSearchItemsFiltersForm>({ ...initialSearchItemsFilters, ...defaultFilters });
 
   const resetFilters = useCallback(() => {
-    SearchItemsBehavior.setSkipNextTimeout(true);
+    setSkipNextSearchTimeout(true);
     setFilters({ ...initialSearchItemsFilters, ...defaultFiltersRef.current });
   }, []);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: resetFilters is immutable
-  const contextValue = useMemo(() => ({ filters, setFilters, resetFilters }), [filters]);
+  const contextValue = useMemo(() => ({ filters, setFilters, resetFilters }), [filters, resetFilters]);
 
   if (controlled) {
     return children;

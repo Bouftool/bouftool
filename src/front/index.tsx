@@ -2,6 +2,7 @@ import { CssBaseline, Stack, ThemeProvider, Typography } from "@mui/material";
 import { useEffect } from "react";
 import { type ElectronAPI, ElectronEvents } from "src/electron/types";
 import { AppContainer } from "./components/AppContainer";
+import { FatalError } from "./components/FatalError";
 import { Loading } from "./components/Loading";
 import { ModalConfirmationProvider } from "./components/Modal/Confirmation";
 import { useElectronEvent } from "./hooks/electron";
@@ -30,6 +31,8 @@ export const App = () => {
           <Loading>
             <Typography variant="body1">Loading...</Typography>
           </Loading>
+        ) : !response.ok ? (
+          <FatalError />
         ) : (
           <ModalConfirmationProvider>
             <NavigationProvider>

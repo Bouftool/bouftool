@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { ElectronEvents } from "src/electron/types";
 import { useElectronEvent } from "src/front/hooks/electron";
 import { ModalCompareItemCard } from "./card";
+import { getModalCompareItemCardKey } from "./key";
 
 export const ModalCompareItem = () => {
   const [, results] = useElectronEvent(ElectronEvents.BuildCompareItem, true);
@@ -21,9 +22,11 @@ export const ModalCompareItem = () => {
     <Dialog open={open} onClose={() => setOpen(false)} slotProps={{ paper: { sx: { width: 600, maxWidth: "100%" } } }}>
       <DialogContent sx={{ overflowY: "auto", overflowX: "hidden" }}>
         <Stack sx={{ gap: 1.5 }}>
-          {results.map((result, index) => (
-            // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-            <ModalCompareItemCard key={index} results={result} />
+          {results.map((result) => (
+            <ModalCompareItemCard
+              key={getModalCompareItemCardKey(result.position, result.targetItem.id, result.sourceItems)}
+              results={result}
+            />
           ))}
         </Stack>
       </DialogContent>

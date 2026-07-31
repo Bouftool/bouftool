@@ -4,6 +4,7 @@ import { Button, Stack, TextField } from "@mui/material";
 import type { TSearchItemsFilters } from "src/electron/searchItems/types";
 import { TooltipInfo } from "src/front/components/TooltipInfo";
 import { I18n } from "src/front/i18n";
+import type { EnumWakfuItemType } from "src/wakfu/itemTypes/types";
 import type { EnumWakfuStat } from "src/wakfu/stats/types";
 import { RangeFields } from "../../../components/Input/RangeFields";
 import { useSearchItemsFiltersContext } from "../contexts/filters";
@@ -14,7 +15,7 @@ import { StatsFilters, StatsFiltersCards } from "./stats";
 export type TSearchItemsFiltersForm = {
   title: string;
   rarities: number[];
-  itemTypes: number[];
+  itemTypes: EnumWakfuItemType[];
   levels: { min: number; max: number };
   stats: Partial<Record<EnumWakfuStat, Omit<TSearchItemsFilters["stats"][number], "stats">>>;
 };

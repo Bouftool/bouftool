@@ -42,7 +42,9 @@ export type TPopoverProps = {
 };
 
 const getAnchorPosition = (anchorEl: HTMLElement | null, anchorOrigin?: TPopoverProps["anchorOrigin"]) => {
-  if (!anchorEl) return { top: 0, left: 0 };
+  if (!anchorEl) {
+    return { top: 0, left: 0 };
+  }
   const clientRect = anchorEl.getBoundingClientRect();
   return {
     top: anchorOrigin?.vertical === "bottom" ? clientRect.bottom : clientRect.top,

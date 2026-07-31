@@ -50,10 +50,9 @@ export const CraftManagerContextProvider = ({ children }: TItemToCraftProviderPr
 
   const [items, SetItems] = useState<TCraftItem[]>([]);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: load one time
   useLayoutEffect(() => {
     getItems(undefined);
-  }, []);
+  }, [getItems]);
 
   useEffect(() => {
     if (craftItems) {

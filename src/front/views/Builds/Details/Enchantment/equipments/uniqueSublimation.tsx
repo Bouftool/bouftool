@@ -3,7 +3,7 @@ import clsx from "clsx";
 import { ElectronEvents } from "src/electron/types";
 import { ItemIcon } from "src/front/components/Wakfu/ItemIcon";
 import { sendElectronEvent } from "src/front/hooks/electron";
-import { EnumWakfuRarity } from "src/wakfu/items/rarity";
+import { EnumWakfuRarity, type TWakfuUniqueRarity } from "src/wakfu/items/rarity";
 import { useBuildDetailsContext } from "../../context";
 import { EpicSublimationIconGfxId, RelicSublimationIconGfxId } from "../constants";
 import { useEnchantmentContext } from "../context";
@@ -37,7 +37,7 @@ const GlobalClickListenerTags = {
 };
 
 export type TEquipmentsEnchantmentsRowUniqueSublimationProps = {
-  rarity: EnumWakfuRarity.Epic | EnumWakfuRarity.Relic;
+  rarity: TWakfuUniqueRarity;
 };
 
 export const EquipmentsEnchantmentsRowUniqueSublimation = ({

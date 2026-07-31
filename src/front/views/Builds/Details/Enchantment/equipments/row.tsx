@@ -1,6 +1,6 @@
 import { clsx } from "clsx";
 import { ItemTypeIcon } from "src/front/components/Wakfu/ItemTypeIcon";
-import type { EnchantableEquipmentPositions } from "src/wakfu/enchantment/constants";
+import type { TEnchantableEquipmentPosition } from "src/wakfu/enchantment/constants";
 import { EnumWakfuEnchantmentColor } from "src/wakfu/enchantment/types";
 import type { EnumWakfuEquipmentPosition } from "src/wakfu/itemTypes/types";
 import { useBuildDetailsContext } from "../../context";
@@ -34,7 +34,7 @@ const getCurrentEnchantmentEffect = (
 export type TBuildEnchantmentEquipmentsRowProps = {
   enchantments: TWakfuEnchantment[];
   shardLevelRequirement: number[];
-  position: (typeof EnchantableEquipmentPositions)[number];
+  position: TEnchantableEquipmentPosition;
 };
 
 export const EquipmentsEnchantmentsRow = ({
@@ -69,8 +69,10 @@ export const EquipmentsEnchantmentsRow = ({
           const currentEnchantment = (e && enchantments.find((enchant) => enchant.id === e.id)) ?? null;
           return (
             <EnchantmentSlot
-              // biome-ignore lint/suspicious/noArrayIndexKey: No better key available
-              key={index}
+              key={
+                // biome-ignore lint/suspicious/noArrayIndexKey: The ordinal identifies a fixed enchantment slot.
+                index
+              }
               position={position}
               slot={index}
               effect={getCurrentEnchantmentEffect(position, selectedEnchantment, e, enchantments)}

@@ -3,12 +3,14 @@ import { EnumWakfuRarity } from "../items/rarity";
 import { EnumWakfuEquipmentPosition } from "../itemTypes/types";
 import type { WakfuBuild } from "./build";
 
-export enum EnumWakfuStuffConstraint {
-  UniqueItem = "UniqueItem",
-  UniqueEpic = "UniqueEpic",
-  UniqueRelic = "UniqueRelic",
-  Level = "Level",
-}
+export const EnumWakfuStuffConstraint = {
+  UniqueItem: "UniqueItem",
+  UniqueEpic: "UniqueEpic",
+  UniqueRelic: "UniqueRelic",
+  Level: "Level",
+} as const;
+
+export type EnumWakfuStuffConstraint = (typeof EnumWakfuStuffConstraint)[keyof typeof EnumWakfuStuffConstraint];
 
 export const WakfuStuffConstraints = {
   [EnumWakfuStuffConstraint.UniqueItem]: "Un seul exemplaire de cet objet peut être équipé.",

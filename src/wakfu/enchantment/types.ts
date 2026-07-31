@@ -1,11 +1,13 @@
 import type { EnumWakfuStat } from "../stats/types";
 
-export enum EnumWakfuEnchantmentColor {
-  Red = 1,
-  Green = 2,
-  Blue = 3,
-  Yellow = 4,
-}
+export const EnumWakfuEnchantmentColor = {
+  Red: 1,
+  Green: 2,
+  Blue: 3,
+  Yellow: 4,
+} as const;
+
+export type EnumWakfuEnchantmentColor = (typeof EnumWakfuEnchantmentColor)[keyof typeof EnumWakfuEnchantmentColor];
 
 export type TWakfuEnchantmentEffect = {
   stat: EnumWakfuStat;

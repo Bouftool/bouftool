@@ -60,7 +60,7 @@ export const ListSublimations = ({ sublimations }: TListSublimationsProps) => {
     [sublimations, filters],
   );
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Reset scroll on filter change
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Filters intentionally trigger resetting the imperative list position.
   useEffect(() => {
     listRef.current?.scrollToRow({ align: "start", index: 0 });
   }, [filters]);

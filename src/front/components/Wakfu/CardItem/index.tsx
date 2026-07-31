@@ -58,7 +58,7 @@ export const CardItem = ({ item, buildId, displayActions, constraints, elemental
       {constraints && constraints.length > 0 && (
         <List sx={{ listStyleType: "disc", pt: 2, pl: 2 }} disablePadding>
           {constraints.map((constraint, index) => (
-            // biome-ignore lint/suspicious/noArrayIndexKey: No other valid keys available
+            // biome-ignore lint/suspicious/noArrayIndexKey: The source contract only provides display strings, which can be duplicated.
             <ListItem key={index} sx={{ display: "list-item", "&::marker": { color: "error.main" } }} disablePadding>
               <Typography variant="caption" color="error">
                 {constraint}

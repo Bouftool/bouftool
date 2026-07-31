@@ -1,11 +1,14 @@
 import type { WakfuItem } from "src/wakfu/items";
 import type { EnumWakfuStat, TWakfuStatElementalMastery, TWakfuStatElementalResistance } from "src/wakfu/stats/types";
 
-export enum SearchItemsFilterStatsOperator {
-  Equal = "equal",
-  GreaterThanOrEqual = "greaterThanOrEqual",
-  LessThanOrEqual = "lessThanOrEqual",
-}
+export const SearchItemsFilterStatsOperator = {
+  Equal: "equal",
+  GreaterThanOrEqual: "greaterThanOrEqual",
+  LessThanOrEqual: "lessThanOrEqual",
+} as const;
+
+export type SearchItemsFilterStatsOperator =
+  (typeof SearchItemsFilterStatsOperator)[keyof typeof SearchItemsFilterStatsOperator];
 
 export type TSearchItemsSort = {
   mastery: {

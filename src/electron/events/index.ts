@@ -1,5 +1,7 @@
 import { app, shell } from "electron";
 import { WakfuCraftManager } from "src/wakfu/craftManager/craftManager";
+import { failure, success } from "src/wakfu/equipment/result";
+import { loadBundledRulePack } from "src/wakfu/equipment/rules";
 import { WakfuStore } from "src/wakfu/store";
 import { DefaultEncyclopediaBaseUrl, EncyclopediaBaseUrlsMap } from "src/wakfu/utils/encyclopedia";
 import { searchItems } from "../searchItems";
@@ -12,12 +14,19 @@ import { ElectronEventManager } from "./manager";
 const manager = new ElectronEventManager();
 export const registerElectronEvents = () => {
   manager.register(ElectronEvents.AppReady, async (reply) => {
+    const rulePack = loadBundledRulePack();
+    if (!rulePack.ok) {
+      reply(failure({ kind: "RulePackUnavailable" }));
+      return;
+    }
     const store = await WakfuStore.initialize();
     await WakfuCraftManager.initialize();
-    reply({
-      version: store.getGamedataVersion(),
-      lang: store.getLang(),
-    });
+    reply(
+      success({
+        version: store.getGamedataVersion(),
+        lang: store.getLang(),
+      }),
+    );
   });
 
   manager.register(ElectronEvents.AppVersion, (reply) => {

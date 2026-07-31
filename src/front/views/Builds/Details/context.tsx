@@ -1,13 +1,13 @@
 import { Typography } from "@mui/material";
 import { createContext, type ReactNode, useContext, useEffect } from "react";
-import { ElectronEvents, type ElectronEventsRenderer } from "src/electron/types";
+import { ElectronEvents, type TElectronGetBuildResult } from "src/electron/types";
 import { Loading } from "src/front/components/Loading";
 import { useElectronEvent } from "src/front/hooks/electron";
 import { WakfuLevelsRange } from "src/wakfu/utils/constants";
 import { SearchItemsFiltersProvider } from "../../SearchEquipments/contexts/filters";
 import { SearchItemsPreferencesProvider } from "../../SearchEquipments/contexts/preferences";
 
-const context = createContext<ElectronEventsRenderer[ElectronEvents.GetBuild] | undefined>(undefined);
+const context = createContext<TElectronGetBuildResult | undefined>(undefined);
 
 export const useOptionalBuildDetailsContext = () => {
   return useContext(context);
@@ -29,10 +29,9 @@ export type TBuildDetailsProviderProps = {
 export const BuildDetailsProvider = ({ buildId, children }: TBuildDetailsProviderProps) => {
   const [send, response] = useElectronEvent(ElectronEvents.GetBuild);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Get build when buildId change
   useEffect(() => {
     send({ buildId });
-  }, [buildId]);
+  }, [buildId, send]);
 
   if (response === null) {
     return (

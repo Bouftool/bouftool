@@ -16,24 +16,26 @@ import type { WakfuResourceSchema } from "./resolvers/resource";
 import type { WakfuResourceTypeSchema } from "./resolvers/resourceType";
 import type { WakfuStateSchema } from "./resolvers/state";
 
-export enum EnumWakfuGamedataType {
-  Actions = "actions",
-  Blueprints = "blueprints",
-  CollectibleResources = "collectibleResources",
-  EquipmentItemTypes = "equipmentItemTypes",
-  HarvestLoots = "harvestLoots",
-  ItemTypes = "itemTypes",
-  ItemProperties = "itemProperties",
-  Items = "items",
-  JobsItems = "jobsItems",
-  RecipeCategories = "recipeCategories",
-  RecipeIngredients = "recipeIngredients",
-  RecipeResults = "recipeResults",
-  Recipes = "recipes",
-  ResourceTypes = "resourceTypes",
-  Resources = "resources",
-  States = "states",
-}
+export const EnumWakfuGamedataType = {
+  Actions: "actions",
+  Blueprints: "blueprints",
+  CollectibleResources: "collectibleResources",
+  EquipmentItemTypes: "equipmentItemTypes",
+  HarvestLoots: "harvestLoots",
+  ItemTypes: "itemTypes",
+  ItemProperties: "itemProperties",
+  Items: "items",
+  JobsItems: "jobsItems",
+  RecipeCategories: "recipeCategories",
+  RecipeIngredients: "recipeIngredients",
+  RecipeResults: "recipeResults",
+  Recipes: "recipes",
+  ResourceTypes: "resourceTypes",
+  Resources: "resources",
+  States: "states",
+} as const;
+
+export type EnumWakfuGamedataType = (typeof EnumWakfuGamedataType)[keyof typeof EnumWakfuGamedataType];
 
 export type TWakfuGamedataTypes = {
   [EnumWakfuGamedataType.Actions]: FromSchema<typeof WakfuActionSchema>;
@@ -54,6 +56,28 @@ export type TWakfuGamedataTypes = {
   [EnumWakfuGamedataType.States]: FromSchema<typeof WakfuStateSchema>;
 };
 
+export type TWakfuGamedataEquipmentItemType = TWakfuGamedataTypes["equipmentItemTypes"];
+export type TWakfuGamedataItem = TWakfuGamedataTypes["items"];
+export type TWakfuGamedataItemType = TWakfuGamedataTypes["itemTypes"];
+export type TWakfuGamedataJobItem = TWakfuGamedataTypes["jobsItems"];
+export type TWakfuGamedataRecipe = TWakfuGamedataTypes["recipes"];
+export type TWakfuGamedataRecipeCategory = TWakfuGamedataTypes["recipeCategories"];
+export type TWakfuGamedataRecipeIngredient = TWakfuGamedataTypes["recipeIngredients"];
+export type TWakfuGamedataRecipeResult = TWakfuGamedataTypes["recipeResults"];
+
 export type TPickWakfuGamedata<GamedataTypes extends EnumWakfuGamedataType[] | readonly EnumWakfuGamedataType[]> = {
   [Key in GamedataTypes[number]]: TWakfuGamedataTypes[Key][];
 };
+
+export const WakfuStoreGamedataTypes = [
+  EnumWakfuGamedataType.ItemTypes,
+  EnumWakfuGamedataType.EquipmentItemTypes,
+  EnumWakfuGamedataType.Items,
+  EnumWakfuGamedataType.JobsItems,
+  EnumWakfuGamedataType.RecipeCategories,
+  EnumWakfuGamedataType.Recipes,
+  EnumWakfuGamedataType.RecipeIngredients,
+  EnumWakfuGamedataType.RecipeResults,
+] as const;
+
+export type TWakfuStoreGamedata = TPickWakfuGamedata<typeof WakfuStoreGamedataTypes>;

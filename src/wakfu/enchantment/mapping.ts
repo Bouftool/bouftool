@@ -1,6 +1,6 @@
 import { EnumWakfuEquipmentPosition } from "../itemTypes/types";
 import { getWakfuStatForMapping } from "../stats/mapping";
-import type { EnumWakfuGamedataType, TWakfuGamedataTypes } from "../store/types";
+import type { TWakfuGamedataItem } from "../store/types";
 import type { TWakfuEnchantmentEffect } from "./types";
 
 const DoubleBonusPositionMapping: Record<number, EnumWakfuEquipmentPosition> = {
@@ -28,7 +28,7 @@ export const fromBonusPositionToEquipmentPosition = (position: number[]): EnumWa
 };
 
 export const fromEquipmentEffectToEnchantmentEffect = (
-  effects: TWakfuGamedataTypes[EnumWakfuGamedataType.Items]["definition"]["equipEffects"],
+  effects: TWakfuGamedataItem["definition"]["equipEffects"],
 ): TWakfuEnchantmentEffect[] => {
   const enchantmentEffects: TWakfuEnchantmentEffect[] = [];
   for (const effect of effects) {

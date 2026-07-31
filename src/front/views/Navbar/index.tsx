@@ -6,7 +6,7 @@ import { ElectronEvents } from "src/electron/types";
 import { AppIcon } from "src/front/components/AppIcon";
 import { StackRow } from "src/front/components/Layout/StackRow";
 import { useElectronEvent } from "src/front/hooks/electron";
-import { useNavigationContext } from "../Navigation";
+import { useNavigationContext } from "../Navigation/context";
 import { NavigationView } from "../Navigation/types";
 
 export const Navbar = () => {
@@ -14,10 +14,9 @@ export const Navbar = () => {
   const { mode, setMode } = useColorScheme();
   const [getVersion, version] = useElectronEvent(ElectronEvents.AppVersion);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: load one time
   useLayoutEffect(() => {
     getVersion(undefined);
-  }, []);
+  }, [getVersion]);
 
   return (
     <StackRow

@@ -1,10 +1,9 @@
 import { useCallback, useRef } from "react";
 
-// biome-ignore lint/suspicious/noExplicitAny: Generic function
-export const useStableCallback = <T extends (...args: any[]) => any>(callback: T) => {
+export const useStableCallback = <Args extends unknown[], Return>(callback: (...args: Args) => Return) => {
   const ref = useRef(callback);
   ref.current = callback;
-  return useCallback((...args: Parameters<T>): ReturnType<T> => {
+  return useCallback((...args: Args): Return => {
     return ref.current(...args);
   }, []);
 };

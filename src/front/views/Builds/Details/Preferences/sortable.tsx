@@ -1,7 +1,7 @@
 import { closestCenter, DndContext, type DragEndEvent, PointerSensor, useSensor, useSensors } from "@dnd-kit/core";
 import { horizontalListSortingStrategy, SortableContext } from "@dnd-kit/sortable";
 import { useLayoutEffect, useState } from "react";
-import type { TElementalPreferences, TWakfuStatElementalMastery } from "src/wakfu/stats/types";
+import { isWakfuStatElementalMastery, type TElementalPreferences } from "src/wakfu/stats/types";
 import { BuildDetailsPreferencesSortableItem } from "./sortableItem";
 
 export type TBuildDetailsMasteryPreferencesProps = {
@@ -25,15 +25,19 @@ export const BuildDetailsPreferencesSortable = ({
 
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
-    const activeId = active.id as TWakfuStatElementalMastery;
-    const overId = over !== null ? (over.id as TWakfuStatElementalMastery) : null;
-    if (overId !== null && activeId !== overId) {
+    const activeId = active.id;
+    const overId = over?.id;
+    if (!isWakfuStatElementalMastery(activeId) || !isWakfuStatElementalMastery(overId)) {
+      return;
+    }
+    if (activeId !== overId) {
       const oldIndex = value.indexOf(activeId);
       const newIndex = value.indexOf(overId);
       if (oldIndex !== -1 && newIndex !== -1) {
-        const newValue = [...value] as TElementalPreferences;
-        newValue.splice(oldIndex, 1);
-        newValue.splice(newIndex, 0, activeId);
+        const reordered = [...value];
+        reordered.splice(oldIndex, 1);
+        reordered.splice(newIndex, 0, activeId);
+        const newValue: TElementalPreferences = [reordered[0], reordered[1], reordered[2], reordered[3]];
         setLocalValue(newValue);
         onChange(newValue);
       }

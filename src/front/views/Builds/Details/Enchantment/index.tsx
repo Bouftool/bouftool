@@ -10,10 +10,9 @@ import { ListSublimations } from "./sublimations";
 export const BuildEnchantment = () => {
   const [getEnchantments, enchantment] = useElectronEvent(ElectronEvents.GetEnchantments);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Run once
   useEffect(() => {
     getEnchantments(undefined);
-  }, []);
+  }, [getEnchantments]);
 
   if (!enchantment) {
     return null;

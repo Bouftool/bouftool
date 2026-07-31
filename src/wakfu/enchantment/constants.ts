@@ -12,3 +12,5 @@ export const EnchantableEquipmentPositions = [
   EnumWakfuEquipmentPosition.Legs,
   EnumWakfuEquipmentPosition.FirstWeapon,
 ] as const satisfies EnumWakfuEquipmentPosition[];
+
+export type TEnchantableEquipmentPosition = (typeof EnchantableEquipmentPositions)[number];

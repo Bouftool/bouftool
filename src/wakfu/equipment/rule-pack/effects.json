@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "source": "Gate 0 fixture action map for WAKFU 1.92.1.59",
+  "actions": [
+    { "actionId": 20, "stat": "healthPoint" },
+    { "actionId": 31, "stat": "actionPoint" },
+    { "actionId": 41, "stat": "movementPoint" },
+    { "actionId": 71, "stat": "rearResistance" },
+    { "actionId": 80, "stat": "elementalResistance" },
+    { "actionId": 82, "stat": "fireResistance" },
+    { "actionId": 83, "stat": "waterResistance" },
+    { "actionId": 84, "stat": "earthResistance" },
+    { "actionId": 85, "stat": "airResistance" },
+    { "actionId": 120, "stat": "elementalMastery" },
+    { "actionId": 150, "stat": "criticalHit" },
+    { "actionId": 171, "stat": "initiative" },
+    { "actionId": 173, "stat": "lock" },
+    { "actionId": 175, "stat": "dodge" },
+    { "actionId": 180, "stat": "rearMastery" },
+    { "actionId": 875, "stat": "block" },
+    { "actionId": 988, "stat": "criticalResistance" },
+    { "actionId": 1052, "stat": "meleeMastery" },
+    { "actionId": 1055, "stat": "berserkMastery" }
+  ]
+}

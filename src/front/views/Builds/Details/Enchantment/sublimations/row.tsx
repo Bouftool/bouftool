@@ -52,7 +52,7 @@ export const ListSublimationsRow = ({ sublimation }: TListSublimationsRowProps) 
       </StackRow>
       <StackRow sx={{ p: 1 }}>
         {sublimation.colorPattern.map((color, index) => (
-          // biome-ignore lint/suspicious/noArrayIndexKey: No other valid key
+          // biome-ignore lint/suspicious/noArrayIndexKey: The ordinal identifies a color in this ordered sublimation pattern.
           <EnchantmentIcon key={index} height={20} color={color} isFull />
         ))}
       </StackRow>

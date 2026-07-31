@@ -1,8 +1,8 @@
-import type { EnumWakfuGamedataType, TWakfuGamedataTypes } from "../store/types";
+import type { TWakfuGamedataItem } from "../store/types";
 import { DefaultWakfuI18n } from "../utils/constants";
 import { WakfuSublimation } from "./index";
 
-export const createWakfuSublimationFromGamedata = (item: TWakfuGamedataTypes[EnumWakfuGamedataType.Items]) => {
+export const createWakfuSublimationFromGamedata = (item: TWakfuGamedataItem) => {
   if (item.definition.item.sublimationParameters === undefined) {
     throw new Error("Item does not have sublimation parameters");
   }

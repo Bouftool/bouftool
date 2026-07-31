@@ -1,10 +1,12 @@
 import { WakfuStats } from "../stats";
 import { EnumWakfuStat } from "../stats/types";
 
-export enum EnumWakfuStatsBonuses {
-  Guild = "guild",
-  HavenWorld = "havenWorld",
-}
+export const EnumWakfuStatsBonuses = {
+  Guild: "guild",
+  HavenWorld: "havenWorld",
+} as const;
+
+export type EnumWakfuStatsBonuses = (typeof EnumWakfuStatsBonuses)[keyof typeof EnumWakfuStatsBonuses];
 
 export const StatsBonuses: Record<EnumWakfuStatsBonuses, WakfuStats> = {
   [EnumWakfuStatsBonuses.Guild]: new WakfuStats({

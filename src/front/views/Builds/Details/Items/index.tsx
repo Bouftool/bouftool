@@ -5,8 +5,8 @@ import { StackGrid } from "src/front/components/Layout/StackGrid";
 import { ItemSlot } from "src/front/components/Wakfu/ItemSlot";
 import { StatsIcon } from "src/front/components/Wakfu/StatsIcon";
 import { sendElectronEvent } from "src/front/hooks/electron";
+import { setSkipNextSearchTimeout } from "src/front/views/SearchEquipments/contexts/behavior";
 import { useSearchItemsFiltersContext } from "src/front/views/SearchEquipments/contexts/filters";
-import { SearchItemsBehavior } from "src/front/views/SearchEquipments/contexts/search";
 import { EnumWakfuEquipmentPosition } from "src/wakfu/itemTypes/types";
 import { EnumWakfuStat } from "src/wakfu/stats/types";
 import { WakfuLevelsRange } from "src/wakfu/utils/constants";
@@ -25,7 +25,7 @@ export const BuildDetailsItems = () => {
   const handleClick = async (position: EnumWakfuEquipmentPosition) => {
     const levelsRange = WakfuLevelsRange.find((range) => range.min <= build.level && range.max >= build.level);
     const itemTypes = await sendElectronEvent(ElectronEvents.GetItemTypesByEquipmentPosition, { position });
-    SearchItemsBehavior.setSkipNextTimeout(true);
+    setSkipNextSearchTimeout(true);
     setFilters((prev) => ({ ...prev, ...(levelsRange && { levels: levelsRange }), itemTypes }));
   };
 

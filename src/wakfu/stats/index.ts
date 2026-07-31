@@ -1,16 +1,18 @@
 import { getWakfuState, WakfuStateActionId } from "../states/definitions";
-import { EnumWakfuState } from "../states/types";
-import type { EnumWakfuGamedataType, TWakfuGamedataTypes } from "../store/types";
+import { EnumWakfuState, isWakfuState } from "../states/types";
+import type { TWakfuGamedataItem } from "../store/types";
 import { ElementOnXStats, WakfuStatEffects } from "./effects";
 import { getWakfuStatForMapping, WakfuStatMapping } from "./mapping";
-import { EnumWakfuStat, type TElementalPreferences, type TWakfuStats } from "./types";
+import { EnumWakfuStat, isWakfuStat, type TElementalPreferences, type TWakfuStats } from "./types";
 
 export class WakfuStats {
   private stats: TWakfuStats;
 
   private static baseMergeStats(merged: WakfuStats, b: WakfuStats) {
     for (const [stat, value] of Object.entries(b.stats)) {
-      merged.stats[stat as EnumWakfuStat] = (merged.stats[stat as EnumWakfuStat] ?? 0) + value;
+      if (isWakfuStat(stat) || isWakfuState(stat)) {
+        merged.stats[stat] = (merged.stats[stat] ?? 0) + value;
+      }
     }
     return merged;
   }
@@ -25,10 +27,7 @@ export class WakfuStats {
     return merged;
   }
 
-  public static fromGamedata(
-    level: number,
-    data: TWakfuGamedataTypes[EnumWakfuGamedataType.Items]["definition"]["equipEffects"],
-  ) {
+  public static fromGamedata(level: number, data: TWakfuGamedataItem["definition"]["equipEffects"]) {
     const stats = new WakfuStats();
     for (const effect of data) {
       if (effect.effect.definition.actionId === WakfuStateActionId) {
@@ -74,7 +73,6 @@ export class WakfuStats {
     delete this.stats[stat];
   }
 
-  // biome-ignore lint/suspicious/useAdjacentOverloadSignatures: Don't mix up static and instance methods
   public merge(other: WakfuStats): WakfuStats {
     return WakfuStats.baseMergeStats(this, other);
   }
