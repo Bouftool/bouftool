@@ -20,6 +20,12 @@ const EnchantmentsIconsPath = {
   },
 } as const satisfies Record<EnumWakfuEnchantmentColor, { full: string; empty: string }>;
 const DefaultEnchantmentsIconPath = "wakfu/enchantments/shardMultiEmpty.png";
+const EnchantmentColorNames = {
+  [EnumWakfuEnchantmentColor.Red]: "Red",
+  [EnumWakfuEnchantmentColor.Green]: "Green",
+  [EnumWakfuEnchantmentColor.Blue]: "Blue",
+  [EnumWakfuEnchantmentColor.Yellow]: "Yellow",
+} as const satisfies Record<EnumWakfuEnchantmentColor, string>;
 
 export const getEnchantmentIconSrc = (color?: EnumWakfuEnchantmentColor, isFull: boolean = false) => {
   return color
@@ -37,7 +43,5 @@ export type TEnchantmentIconProps = Omit<TStyledImgProps, "src" | "alt" | "color
 export const EnchantmentIcon = ({ color, isFull, ...props }: TEnchantmentIconProps) => {
   const iconSrc = getEnchantmentIconSrc(color, isFull);
 
-  return (
-    <StyledImg {...props} src={iconSrc} alt={`Enchantment ${color ? EnumWakfuEnchantmentColor[color] : "empty"}`} />
-  );
+  return <StyledImg {...props} src={iconSrc} alt={`Enchantment ${color ? EnchantmentColorNames[color] : "empty"}`} />;
 };

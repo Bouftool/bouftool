@@ -1,5 +1,7 @@
+import { isArray, isObject } from "src/types/utils";
 import { WakfuBuild } from "../builds/build";
 import type { WakfuBaseItem } from "../items/base";
+import { EnumWakfuEquipmentPosition } from "../itemTypes/types";
 import { WakfuStore } from "../store";
 import { FileHandler } from "../utils/FileHandler";
 import type {
@@ -14,13 +16,39 @@ const DefaultCraftManagerData: TWakfuCraftManagerRaw = {
   itemsToCraft: [],
 };
 
+const isCraftedIngredientNodeRaw = (value: unknown): value is TCraftedIngredientNodeRaw => {
+  return (
+    isObject(value) &&
+    typeof value.itemId === "number" &&
+    typeof value.isCrafted === "boolean" &&
+    typeof value.selectedRecipeIndex === "number" &&
+    isObject(value.children) &&
+    Object.values(value.children).every(isCraftedIngredientNodeRaw)
+  );
+};
+
+const isWakfuCraftManagerRaw = (value: unknown): value is TWakfuCraftManagerRaw => {
+  return (
+    isObject(value) &&
+    isArray(value.itemsToCraft) &&
+    value.itemsToCraft.every(
+      (item) =>
+        isObject(item) &&
+        typeof item.id === "number" &&
+        typeof item.quantity === "number" &&
+        isObject(item.craftedIngredients) &&
+        Object.values(item.craftedIngredients).every(isCraftedIngredientNodeRaw),
+    )
+  );
+};
+
 export class WakfuCraftManager {
   private static instance: WakfuCraftManager | null = null;
   private fileHandler: FileHandler<TWakfuCraftManagerRaw>;
   private itemsToCraft: TWakfuCraftManagerItem[] = [];
 
   private constructor() {
-    this.fileHandler = new FileHandler<TWakfuCraftManagerRaw>("crafting/craftManager.json");
+    this.fileHandler = new FileHandler<TWakfuCraftManagerRaw>("crafting/craftManager.json", isWakfuCraftManagerRaw);
   }
 
   private serializeCraftedIngredientsMap(
@@ -164,8 +192,8 @@ export class WakfuCraftManager {
 
     const buildDisplay = build.toDisplay();
 
-    for (const position in buildDisplay.stuff) {
-      const equipment = buildDisplay.stuff[position as keyof typeof buildDisplay.stuff];
+    for (const position of Object.values(EnumWakfuEquipmentPosition)) {
+      const equipment = buildDisplay.stuff[position];
       if (equipment.item) {
         const itemId = equipment.item.id;
         const itemToCraft = this.itemsToCraft.find((i) => i.item.getId() === itemId);

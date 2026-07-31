@@ -4,24 +4,11 @@ import { ElectronEvents } from "src/electron/types";
 import { useElectronEvent } from "src/front/hooks/electron";
 import type { WakfuItem } from "src/wakfu/items";
 import { EnumWakfuStat } from "src/wakfu/stats/types";
-import { useOptionalBuildDetailsContext } from "../../Builds/Details/context";
 import type { TSearchItemsFiltersForm } from "../filters";
 import type { TSearchItemsPreferences } from "../preferences/logics";
+import { setSkipNextSearchTimeout, shouldSkipNextSearchTimeout } from "./behavior";
 import { useSearchItemsFiltersContext } from "./filters";
 import { useSearchItemsPreferencesContext } from "./preferences";
-
-// biome-ignore lint/complexity/noStaticOnlyClass: This class is a simple state holder
-export class SearchItemsBehavior {
-  private static skipNextTimeout = false;
-
-  public static shouldSkipNextTimeout(): boolean {
-    return SearchItemsBehavior.skipNextTimeout;
-  }
-
-  public static setSkipNextTimeout(value: boolean): void {
-    SearchItemsBehavior.skipNextTimeout = value;
-  }
-}
 
 const formatFilters = (filters: TSearchItemsFiltersForm): TSearchItemsFilters => {
   const stats: TSearchItemsFilters["stats"] = [];
@@ -71,36 +58,35 @@ export const useSearchItemsContext = () => {
 
 export type TSearchItemsProviderProps = {
   children: ReactNode;
+  buildLevel?: number;
 };
 
 const DefaultValues: TSearchItemsContext = [];
 
-export const SearchItemsProvider = ({ children }: TSearchItemsProviderProps) => {
+export const SearchItemsProvider = ({ children, buildLevel }: TSearchItemsProviderProps) => {
   const { filters } = useSearchItemsFiltersContext();
   const { preferences } = useSearchItemsPreferencesContext();
-  const build = useOptionalBuildDetailsContext();
   const [searchItems, items] = useElectronEvent(ElectronEvents.SearchItems);
 
   useLayoutEffect(() => {
-    SearchItemsBehavior.setSkipNextTimeout(true);
+    setSkipNextSearchTimeout(true);
   }, []);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Only depends on filters and preferences
   useLayoutEffect(() => {
-    if (SearchItemsBehavior.shouldSkipNextTimeout()) {
-      searchItems({ filters: formatFilters(filters), sort: formatPreferences(preferences), buildLevel: build?.level });
-      SearchItemsBehavior.setSkipNextTimeout(false);
+    if (shouldSkipNextSearchTimeout()) {
+      searchItems({ filters: formatFilters(filters), sort: formatPreferences(preferences), buildLevel });
+      setSkipNextSearchTimeout(false);
     } else {
       const timeout = setTimeout(() => {
         searchItems({
           filters: formatFilters(filters),
           sort: formatPreferences(preferences),
-          buildLevel: build?.level,
+          buildLevel,
         });
       }, 750);
       return () => clearTimeout(timeout);
     }
-  }, [filters, preferences, build?.level]);
+  }, [filters, preferences, buildLevel, searchItems]);
 
   return <SearchContext.Provider value={items ?? DefaultValues}>{children}</SearchContext.Provider>;
 };

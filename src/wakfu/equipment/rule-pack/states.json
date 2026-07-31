@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "rules": [
+    { "stateId": 2411, "classification": "health-conditional-non-objective" },
+    { "stateId": 2413, "classification": "health-conditional-stat" },
+    { "stateId": 2505, "classification": "health-conditional-stat" },
+    { "stateId": 2512, "classification": "health-conditional-stat" },
+    { "stateId": 2513, "classification": "health-conditional-non-objective" },
+    { "stateId": 2514, "classification": "health-conditional-stat" },
+    { "stateId": 2515, "classification": "health-conditional-stat" },
+    { "stateId": 2570, "classification": "health-conditional-stat" },
+    { "stateId": 2571, "classification": "health-conditional-stat" },
+    { "stateId": 2572, "classification": "health-conditional-non-objective" },
+    { "stateId": 2573, "classification": "health-conditional-non-objective" },
+    { "stateId": 2574, "classification": "health-conditional-non-objective" },
+    { "stateId": 2636, "classification": "post-aggregation-stat" },
+    { "stateId": 9077, "classification": "scenario-disabled" },
+    { "stateId": 9078, "classification": "scenario-disabled" }
+  ]
+}

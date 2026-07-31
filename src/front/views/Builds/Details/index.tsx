@@ -29,6 +29,9 @@ export const BuildDetails = () => {
           <BuildDetailsPreferences />
         </StackRow>
         <BuildDetailsItems />
+        <Typography variant="caption" color="text.secondary">
+          Statistiques affichées hors combat : les bonus dépendant des points de vie manquants ne sont pas inclus.
+        </Typography>
         <BuildDetailsStatsBase />
         <Typography variant="subtitle2" sx={{ alignSelf: "center" }}>
           Maîtrises et Résistances

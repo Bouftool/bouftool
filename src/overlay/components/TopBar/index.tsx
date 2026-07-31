@@ -10,10 +10,9 @@ import { I18n } from "src/front/i18n";
 export const OverlayTopBar = () => {
   const [getOverlayMode, overlayMode] = useElectronEvent(ElectronEvents.CraftManagerGetOverlayMode);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: load one time
   useLayoutEffect(() => {
     getOverlayMode(undefined);
-  }, []);
+  }, [getOverlayMode]);
 
   const handleClose = () => {
     sendElectronEvent(ElectronEvents.CraftManagerCloseOverlay, undefined);

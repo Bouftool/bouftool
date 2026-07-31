@@ -9,7 +9,7 @@ import { ElectronEvents } from "src/electron/types";
 import { StackRow } from "src/front/components/Layout/StackRow";
 import { BreedFaceIcon } from "src/front/components/Wakfu/BreedFaceIcon";
 import { sendElectronEvent, useElectronEvent } from "src/front/hooks/electron";
-import { useNavigationContext } from "src/front/views/Navigation";
+import { useNavigationContext } from "src/front/views/Navigation/context";
 import { NavigationView } from "src/front/views/Navigation/types";
 import type { TWakfuCharacterDisplay } from "src/wakfu/builds/types";
 import { useModalEditCharacterContext } from "../ModalEditCharacter/context";

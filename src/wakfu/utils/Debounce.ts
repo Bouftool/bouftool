@@ -1,5 +1,4 @@
-// biome-ignore lint/suspicious/noExplicitAny: Generic class
-export class Debounce<Args extends any[], Return> {
+export class Debounce<Args extends unknown[], Return> {
   private timeoutDuration: number;
   private timeout: NodeJS.Timeout | null = null;
   private promise: Promise<Return> | null = null;

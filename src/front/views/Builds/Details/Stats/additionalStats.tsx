@@ -1,5 +1,5 @@
 import { Stack, Tooltip, Typography } from "@mui/material";
-import type { ElectronEvents, ElectronEventsRenderer } from "src/electron/types";
+import type { TElectronGetBuildResult } from "src/electron/types";
 import { StackRow, stackRowClasses } from "src/front/components/Layout/StackRow";
 import { StatsIcon } from "src/front/components/Wakfu/StatsIcon";
 import { getWakfuStatEffectLabel } from "src/wakfu/stats/i18n/effects";
@@ -10,7 +10,7 @@ import { BuildStats } from "../stats";
 import { getStatsColor } from "./logics";
 import { StatsRow, statsRowClasses } from "./styles";
 
-const getElementalMastery = (build: ElectronEventsRenderer[ElectronEvents.GetBuild], value: number) => {
+const getElementalMastery = (build: TElectronGetBuildResult, value: number) => {
   switch (value) {
     case build.stats[EnumWakfuStat.FireMastery]:
       return EnumWakfuStat.FireMastery;
@@ -25,7 +25,7 @@ const getElementalMastery = (build: ElectronEventsRenderer[ElectronEvents.GetBui
   }
 };
 
-const getRangeMastery = (build: ElectronEventsRenderer[ElectronEvents.GetBuild], value: number) => {
+const getRangeMastery = (build: TElectronGetBuildResult, value: number) => {
   switch (value) {
     case build.stats[EnumWakfuStat.DistanceMastery]:
       return EnumWakfuStat.DistanceMastery;

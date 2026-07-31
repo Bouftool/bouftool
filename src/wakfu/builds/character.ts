@@ -1,15 +1,21 @@
 import { randomUUID } from "node:crypto";
 import fs from "node:fs/promises";
 import path from "node:path";
-import { EnumWakfuBreed } from "../breed/types";
+import { isObject } from "src/types/utils";
+import { EnumWakfuBreed, isWakfuBreed } from "../breed/types";
 import { FileHandler } from "../utils/FileHandler";
 import { resolvePath } from "../utils/PathManager";
 import { WakfuBuild } from "./build";
+import { WakfuCharactersDirectory } from "./paths";
 import type { TWakfuCharacterDisplay, TWakfuCharacterRaw } from "./types";
+
+const isWakfuCharacterRaw = (value: unknown): value is TWakfuCharacterRaw => {
+  return isObject(value) && typeof value.id === "string" && typeof value.name === "string" && isWakfuBreed(value.breed);
+};
 
 export class WakfuCharacter {
   private static CharactersMap: Map<string, WakfuCharacter> = new Map();
-  public static CharactersDir = "characters";
+  public static CharactersDir = WakfuCharactersDirectory;
   private id: string;
   private name: string;
   private breed: EnumWakfuBreed;
@@ -52,6 +58,7 @@ export class WakfuCharacter {
     this.builds = [];
     this.fileHandler = new FileHandler<TWakfuCharacterRaw>(
       path.join(WakfuCharacter.CharactersDir, this.id, "character.json"),
+      isWakfuCharacterRaw,
     );
     WakfuCharacter.CharactersMap.set(this.id, this);
   }

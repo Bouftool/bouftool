@@ -1,17 +1,17 @@
 import { useReducer } from "react";
-import type { EnumWakfuStat, TWakfuStatElementalMastery, TWakfuStatElementalResistance } from "src/wakfu/stats/types";
+import type {
+  TWakfuStatElementalMastery,
+  TWakfuStatElementalResistance,
+  TWakfuStatRangeMastery,
+  TWakfuStatSubMastery,
+} from "src/wakfu/stats/types";
 import { searchItemsPreferencesReducer } from "./reducer";
 
 export type TSearchItemsPreferences = {
   mastery: {
     elementsPriority: TWakfuStatElementalMastery[];
-    rangeMastery: EnumWakfuStat.MeleeMastery | EnumWakfuStat.DistanceMastery | null;
-    subMasteries: (
-      | EnumWakfuStat.CriticalMastery
-      | EnumWakfuStat.RearMastery
-      | EnumWakfuStat.BerserkMastery
-      | EnumWakfuStat.HealingMastery
-    )[];
+    rangeMastery: TWakfuStatRangeMastery | null;
+    subMasteries: TWakfuStatSubMastery[];
   };
   resistance: {
     elementsPriority: TWakfuStatElementalResistance[];

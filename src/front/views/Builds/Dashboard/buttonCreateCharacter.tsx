@@ -2,7 +2,7 @@ import AddIcon from "@mui/icons-material/Add";
 import { Button } from "@mui/material";
 import { ElectronEvents } from "src/electron/types";
 import { sendElectronEvent } from "src/front/hooks/electron";
-import { useNavigationContext } from "src/front/views/Navigation";
+import { useNavigationContext } from "src/front/views/Navigation/context";
 import { NavigationView } from "src/front/views/Navigation/types";
 import type { EnumWakfuBreed } from "src/wakfu/breed/types";
 import { useModalEditCharacterContext } from "./ModalEditCharacter/context";

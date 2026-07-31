@@ -1,10 +1,10 @@
-import type { EnumWakfuStat } from "src/wakfu/stats/types";
+import type { TWakfuStatRangeMastery } from "src/wakfu/stats/types";
 import type { TSearchItemsPreferences } from "./index";
 
 export type TSearchItemsPreferencesAction =
   | { type: "set:mastery"; payload: TSearchItemsPreferences["mastery"] }
   | { type: "set:mastery:elementsPriority"; payload: TSearchItemsPreferences["mastery"]["elementsPriority"] }
-  | { type: "set:mastery:rangeMastery"; payload: EnumWakfuStat.MeleeMastery | EnumWakfuStat.DistanceMastery | null }
+  | { type: "set:mastery:rangeMastery"; payload: TWakfuStatRangeMastery | null }
   | { type: "set:mastery:subMasteries"; payload: TSearchItemsPreferences["mastery"]["subMasteries"] }
   | { type: "set:resistance"; payload: TSearchItemsPreferences["resistance"] }
   | { type: "set:resistance:elementsPriority"; payload: TSearchItemsPreferences["resistance"]["elementsPriority"] };

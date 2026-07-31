@@ -1,10 +1,10 @@
 import { Button, buttonClasses, Typography } from "@mui/material";
 import { StackRow } from "src/front/components/Layout/StackRow";
-import { EnumBuildDetailsTabs } from "./index";
+import { EnumBuildDetailsTabs, type EnumBuildDetailsTabs as TBuildDetailsTab } from "./types";
 
 export type TBuildDetailsNavbarProps = {
-  selectedTab: EnumBuildDetailsTabs;
-  onTabChange: (tab: EnumBuildDetailsTabs) => void;
+  selectedTab: TBuildDetailsTab;
+  onTabChange: (tab: TBuildDetailsTab) => void;
 };
 
 export const BuildDetailsNavbar = ({ selectedTab, onTabChange }: TBuildDetailsNavbarProps) => {
@@ -49,16 +49,6 @@ export const BuildDetailsNavbar = ({ selectedTab, onTabChange }: TBuildDetailsNa
               Enchantement
             </Typography>
           </Button>
-          {/* <Button
-            variant="text"
-            color="inherit"
-            className={selectedTab === EnumBuildDetailsTabs.Optimizer ? "Mui-selected" : undefined}
-            onClick={() => onTabChange(EnumBuildDetailsTabs.Optimizer)}
-          >
-            <Typography variant="subtitle2" sx={{ textTransform: "none" }}>
-              Optimiseur
-            </Typography>
-          </Button> */}
         </StackRow>
       </StackRow>
     </StackRow>

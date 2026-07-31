@@ -1,0 +1,8 @@
+`$value as $type` as $assertion where {
+  $type <: not r"^const$",
+  register_diagnostic(
+    span = $assertion,
+    message = "Type assertions are forbidden. Narrow or validate the value instead.",
+    severity = "error"
+  )
+}

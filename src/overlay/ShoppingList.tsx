@@ -17,11 +17,10 @@ export const OverlayShoppingList = () => {
 
   const [opacity, SetOpacity] = useState(1);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: load one time
   useLayoutEffect(() => {
     getItems(undefined);
     getOverlayMode(undefined);
-  }, []);
+  }, [getItems, getOverlayMode]);
 
   useLayoutEffect(() => {
     setMode("dark");

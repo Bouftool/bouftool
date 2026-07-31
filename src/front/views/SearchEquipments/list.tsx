@@ -82,7 +82,7 @@ export const SearchItemsList = ({ buildId }: TSearchItemsListProps) => {
     );
   };
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Reset on new items
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Item and width changes intentionally reset the imperative grid position.
   useLayoutEffect(() => {
     if (gridRef.current && items.length > 0) {
       gridRef.current.scrollToRow({ index: 0, align: "start" });

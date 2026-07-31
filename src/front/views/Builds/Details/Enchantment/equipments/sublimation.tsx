@@ -6,18 +6,15 @@ import { EnchantmentIcon } from "src/front/components/Wakfu/EnchantmentIcon";
 import { ItemIcon } from "src/front/components/Wakfu/ItemIcon";
 import { sendElectronEvent } from "src/front/hooks/electron";
 import type { TWakfuBuildDisplay } from "src/wakfu/builds/types";
-import type { EnchantableEquipmentPositions } from "src/wakfu/enchantment/constants";
+import type { TEnchantableEquipmentPosition } from "src/wakfu/enchantment/constants";
 import { useBuildDetailsContext } from "../../context";
 import { BaseSublimationIconGfxId } from "../constants";
 import { useEnchantmentContext } from "../context";
 import { equipmentsEnchantmentsClasses } from "./styles";
 
 const isPatternSegmentRespected = (
-  enchantments: TWakfuBuildDisplay["enchantments"][(typeof EnchantableEquipmentPositions)[number]]["enchantments"],
-  sublimation: Exclude<
-    TWakfuBuildDisplay["enchantments"][(typeof EnchantableEquipmentPositions)[number]]["sublimation"],
-    null
-  >,
+  enchantments: TWakfuBuildDisplay["enchantments"][TEnchantableEquipmentPosition]["enchantments"],
+  sublimation: Exclude<TWakfuBuildDisplay["enchantments"][TEnchantableEquipmentPosition]["sublimation"], null>,
   startIndex: number,
 ) => {
   for (let i = 0; i < sublimation.colorPattern.length; i++) {
@@ -30,8 +27,8 @@ const isPatternSegmentRespected = (
 };
 
 const isPatternRespected = (
-  enchantments: TWakfuBuildDisplay["enchantments"][(typeof EnchantableEquipmentPositions)[number]]["enchantments"],
-  sublimation: TWakfuBuildDisplay["enchantments"][(typeof EnchantableEquipmentPositions)[number]]["sublimation"],
+  enchantments: TWakfuBuildDisplay["enchantments"][TEnchantableEquipmentPosition]["enchantments"],
+  sublimation: TWakfuBuildDisplay["enchantments"][TEnchantableEquipmentPosition]["sublimation"],
 ) => {
   if (!sublimation) {
     return false;
@@ -45,7 +42,7 @@ const isPatternRespected = (
 };
 
 export interface TEquipmentsEnchantmentsRowSublimationProps {
-  position: (typeof EnchantableEquipmentPositions)[number];
+  position: TEnchantableEquipmentPosition;
 }
 
 export const EquipmentsEnchantmentsRowSublimation = ({ position }: TEquipmentsEnchantmentsRowSublimationProps) => {
@@ -99,7 +96,7 @@ export const EquipmentsEnchantmentsRowSublimation = ({ position }: TEquipmentsEn
       </StackRow>
       <StackRow>
         {buildEnchantments[position].sublimation?.colorPattern.map((color, index) => (
-          // biome-ignore lint/suspicious/noArrayIndexKey: No better key available
+          // biome-ignore lint/suspicious/noArrayIndexKey: The ordinal identifies a color in this ordered sublimation pattern.
           <EnchantmentIcon key={index} height={26} color={color} isFull={patternRespected} />
         ))}
       </StackRow>

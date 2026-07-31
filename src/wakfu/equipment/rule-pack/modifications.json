@@ -1,0 +1,7 @@
+{
+  "schemaVersion": 1,
+  "phase": 1,
+  "candidateEnchantments": false,
+  "candidateSublimations": false,
+  "existingBuildContributionPolicy": "evaluate"
+}

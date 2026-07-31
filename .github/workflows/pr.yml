@@ -1,0 +1,39 @@
+name: Pull Request
+
+on:
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+
+      - name: Setup Corepack
+        run: |
+          npm install --global corepack@0.35.0
+          corepack enable
+          corepack --version
+          yarn --version
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Check source
+        run: yarn biome check src
+
+      - name: Typecheck
+        run: yarn tsc --noEmit
+
+      - name: Test with coverage
+        run: yarn vitest run --coverage
+
+      - name: Package application
+        run: yarn package

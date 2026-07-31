@@ -4,7 +4,7 @@ import { ElectronEvents } from "src/electron/types";
 import { EnchantmentIcon } from "src/front/components/Wakfu/EnchantmentIcon";
 import { sendElectronEvent } from "src/front/hooks/electron";
 import type { TWakfuBuildDisplay } from "src/wakfu/builds/types";
-import type { EnchantableEquipmentPositions } from "src/wakfu/enchantment/constants";
+import type { TEnchantableEquipmentPosition } from "src/wakfu/enchantment/constants";
 import { EnumWakfuEnchantmentColor } from "src/wakfu/enchantment/types";
 import type { EnumWakfuEquipmentPosition } from "src/wakfu/itemTypes/types";
 import { useBuildDetailsContext } from "../../context";
@@ -15,10 +15,12 @@ import { equipmentsEnchantmentsClasses } from "./styles";
 const isEnchantmentLevelValid = (
   equippedItem: TWakfuBuildDisplay["stuff"][EnumWakfuEquipmentPosition],
   buildLevel: number,
-  enchantment: TWakfuBuildDisplay["enchantments"][(typeof EnchantableEquipmentPositions)[number]]["enchantments"][number],
+  enchantment: TWakfuBuildDisplay["enchantments"][TEnchantableEquipmentPosition]["enchantments"][number],
   shardLevelRequirement: number[],
 ) => {
-  if (!enchantment) return false;
+  if (!enchantment) {
+    return false;
+  }
 
   const targetLevel = equippedItem.item?.level ?? buildLevel;
   const requiredLevel = shardLevelRequirement[enchantment.level - 1];
@@ -26,10 +28,10 @@ const isEnchantmentLevelValid = (
 };
 
 export type TEnchantmentSlotProps = {
-  position: (typeof EnchantableEquipmentPositions)[number];
+  position: TEnchantableEquipmentPosition;
   slot: number;
   effect: string | null;
-  enchantment: TWakfuBuildDisplay["enchantments"][(typeof EnchantableEquipmentPositions)[number]]["enchantments"][number];
+  enchantment: TWakfuBuildDisplay["enchantments"][TEnchantableEquipmentPosition]["enchantments"][number];
   currentEnchantment?: TWakfuEnchantment | null;
   shardLevelRequirement: number[];
 };

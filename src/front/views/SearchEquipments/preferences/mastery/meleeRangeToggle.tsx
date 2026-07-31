@@ -2,12 +2,12 @@ import { ToggleButtonGroup } from "@mui/material";
 import { TooltipToggleButton } from "src/front/components/TooltipToggleButton";
 import { StatsIcon } from "src/front/components/Wakfu/StatsIcon";
 import { getWakfuStatLabel } from "src/wakfu/stats/i18n/label";
-import { EnumWakfuStat } from "src/wakfu/stats/types";
+import { EnumWakfuStat, type TWakfuStatRangeMastery } from "src/wakfu/stats/types";
 import { EnumWakfuLang } from "src/wakfu/utils/types";
 
 export type TSearchItemsMeleeRangeMasteryPreferencesProps = {
-  value: EnumWakfuStat.MeleeMastery | EnumWakfuStat.DistanceMastery | null;
-  onChange: (value: EnumWakfuStat.MeleeMastery | EnumWakfuStat.DistanceMastery | null) => void;
+  value: TWakfuStatRangeMastery | null;
+  onChange: (value: TWakfuStatRangeMastery | null) => void;
 };
 
 export const SearchItemsMeleeRangeMasteryPreferences = ({

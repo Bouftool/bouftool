@@ -10,29 +10,14 @@ import { searchItemsSortLevel } from "./sort/level";
 import { searchItemsSortWeight } from "./sort/weight";
 import type { TSearchItemsFilters, TSearchItemsSort } from "./types";
 
-const ItemFiltersMap: {
-  [Key in keyof TSearchItemsFilters]: (
-    item: WakfuItem,
-    text: TSearchItemsFilters[Key],
-    filters: TSearchItemsFilters,
-  ) => boolean;
-} = {
-  title: searchItemsTitleFilter,
-  itemTypes: searchItemsItemTypesFilter,
-  rarities: searchItemsRaritiesFilter,
-  levels: searchItemsLevelsFilter,
-  stats: searchItemsStatsFilter,
-};
-
 const isItemFiltered = (item: WakfuItem, filters: TSearchItemsFilters) => {
-  for (const key in filters) {
-    if (
-      !ItemFiltersMap[key as keyof TSearchItemsFilters](item, filters[key as keyof TSearchItemsFilters] as any, filters)
-    ) {
-      return false;
-    }
-  }
-  return true;
+  return (
+    searchItemsTitleFilter(item, filters.title) &&
+    searchItemsItemTypesFilter(item, filters.itemTypes) &&
+    searchItemsRaritiesFilter(item, filters.rarities, filters) &&
+    searchItemsLevelsFilter(item, filters.levels, filters) &&
+    searchItemsStatsFilter(item, filters.stats)
+  );
 };
 
 export const searchItems = (

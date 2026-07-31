@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "wakfuVersion": "1.92.1.59",
+  "modules": {
+    "effects": "77c815048231ef2025cd133b990d0efbcd49c8ae003666fb73a150563ddea7e5",
+    "eligibility": "d4fa688cb0409e393461312890037a090d279069e0622a429a502142d1aa6e6d",
+    "states": "fa8537a3b92905b4e0c2ed99c0d1ffcec08b4b9ae9cc3e50f9a3ecf8b191e3ae",
+    "modifications": "66ccdc4f8700314cbcd0a6365ef1415199a6ed33ffdc197707c7ddc0543d3c8d"
+  }
+}

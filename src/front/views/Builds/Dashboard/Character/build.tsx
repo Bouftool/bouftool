@@ -7,7 +7,7 @@ import { StackRow } from "src/front/components/Layout/StackRow";
 import { useModalConfirmationContext } from "src/front/components/Modal/Confirmation";
 import { ItemSlot } from "src/front/components/Wakfu/ItemSlot";
 import { useElectronEvent } from "src/front/hooks/electron";
-import { useNavigationContext } from "src/front/views/Navigation";
+import { useNavigationContext } from "src/front/views/Navigation/context";
 import { NavigationView } from "src/front/views/Navigation/types";
 import type { TWakfuBuildMinimalDisplay } from "src/wakfu/builds/types";
 import { EnumWakfuEquipmentPosition } from "src/wakfu/itemTypes/types";

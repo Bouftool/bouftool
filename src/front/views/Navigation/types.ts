@@ -1,11 +1,13 @@
 import type { ReactNode } from "react";
 
-export enum NavigationView {
-  Builds = 100,
-  BuildDetails = 101,
-  EncyclopediaEquipment = 200,
-  CraftManager = 300,
-}
+export const NavigationView = {
+  Builds: 100,
+  BuildDetails: 101,
+  EncyclopediaEquipment: 200,
+  CraftManager: 300,
+} as const;
+
+export type NavigationView = (typeof NavigationView)[keyof typeof NavigationView];
 
 export type TNavigationParams = {
   [NavigationView.Builds]: undefined;

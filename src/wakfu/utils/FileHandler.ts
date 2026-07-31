@@ -5,10 +5,12 @@ import { resolvePath } from "./PathManager";
 
 export class FileHandler<T> {
   private path: string;
+  private isValid: (value: unknown) => value is T;
   private writeDebounce = new Debounce(this._write.bind(this), 1000);
 
-  constructor(filePath: string) {
+  constructor(filePath: string, isValid: (value: unknown) => value is T) {
     this.path = resolvePath(filePath);
+    this.isValid = isValid;
   }
 
   private async _write(data: T) {
@@ -27,7 +29,11 @@ export class FileHandler<T> {
 
   public async read(): Promise<T> {
     const result = await fs.readFile(this.path, "utf-8");
-    return JSON.parse(result) as T;
+    const parsed: unknown = JSON.parse(result);
+    if (!this.isValid(parsed)) {
+      throw new Error(`Invalid JSON data in ${this.path}`);
+    }
+    return parsed;
   }
 
   public write(data: T, skipTimeout: boolean = false) {

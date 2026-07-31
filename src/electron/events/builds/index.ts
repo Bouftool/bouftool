@@ -4,7 +4,6 @@ import type { WakfuItem } from "src/wakfu/items";
 import { type EnumWakfuEquipmentPosition, isWakfuEquipmentPosition } from "src/wakfu/itemTypes/types";
 import { WakfuStats } from "src/wakfu/stats";
 import { WakfuStore } from "src/wakfu/store";
-import { lauchOptimization } from "../../../wakfu/optimization/optimizationLauncher";
 import { ElectronEvents } from "../../types";
 import { ElectronEventManager } from "../manager";
 import { registerElectronBuildsAbilitiesEvents } from "./abilities";
@@ -101,6 +100,7 @@ export const registerElectronBuildsEvents = (manager: ElectronEventManager) => {
     }
     const itemType = targetItem.getItemType();
     const results: {
+      position: EnumWakfuEquipmentPosition;
       sourceItems: (ReturnType<WakfuItem["toObject"]> | EnumWakfuEquipmentPosition)[];
       targetItem: ReturnType<WakfuItem["toObject"]>;
       stats: ReturnType<WakfuStats["toObject"]>;
@@ -130,6 +130,7 @@ export const registerElectronBuildsEvents = (manager: ElectronEventManager) => {
       );
       const delta = targetItemStats.compare(sourceItemsStats);
       results.push({
+        position,
         sourceItems: sourceItems.map((item) => (isWakfuEquipmentPosition(item) ? item : item.toObject())),
         targetItem: targetItem.toObject(),
         stats: delta.toObject(),
@@ -208,16 +209,5 @@ export const registerElectronBuildsEvents = (manager: ElectronEventManager) => {
     }
     const build = await WakfuBuild.deserializeFromBase64(character, serializedBuild);
     reply({ buildId: build.getId() });
-  });
-
-  manager.register(ElectronEvents.BuildOptimize, (reply, { buildId, config }) => {
-    const build = WakfuBuild.getById(buildId);
-    if (!build) {
-      throw new Error(`Build with ID ${buildId} not found`);
-    }
-
-    reply(undefined);
-
-    lauchOptimization(build, config);
   });
 };

@@ -12,10 +12,9 @@ import { ModalImportBuildProvider } from "./ModalImportBuild/context";
 export const BuildsDashboard = () => {
   const [getAllBuilds, allBuildsResponse, allBuildsLoading] = useElectronEvent(ElectronEvents.GetAllBuilds);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Only call once
   useLayoutEffect(() => {
     getAllBuilds(undefined);
-  }, []);
+  }, [getAllBuilds]);
 
   const hasResults = useMemo(() => {
     return allBuildsResponse !== null && allBuildsResponse.length > 0;
